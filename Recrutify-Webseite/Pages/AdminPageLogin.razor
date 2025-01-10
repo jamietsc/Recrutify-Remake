@@ -1,0 +1,37 @@
+﻿@page "/adminlogin"
+
+@using Recrutify.Pages
+@using Recrutify.Models
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@using Recrutify.DataAccessLayer.SqlDataAccess
+
+@inject NavigationManager navigationManager
+@inject AdminModel adminModel
+@inject IAdmin<AdminModel> adminData
+
+<h3>AdminPageLogin</h3>
+
+<div class="mb-3" style="margin: 30px  40px 5px 40px;">
+    <label for="Nutzername" class="form-label">Benutzername:</label>
+    <input @bind-value="@adminModel.Benutzername" type="text" class="form-control" id="Nutzername" placeholder="Benutzername" />
+    <label for="Passwort" class="form-label">Passwort:</label>
+    <input @bind-value="@adminModel.Passwort" type="password" class="form-control" id="Passwort" placeholder="********" />
+    <button type="button" @onclick="checkLogin">Anmelden</button>
+</div>
+
+@code {
+    async Task checkLogin()
+    {
+        bool result = await adminData.CheckCredentials(adminModel);
+        if (result)
+        {
+            adminModel.UID = await adminData.GetUID(adminModel);
+            navigationManager.NavigateTo("/admin");
+        }
+        else
+        {
+            System.Console.WriteLine("anmeldedaten nicht vorhanden");
+        }
+    }
+}

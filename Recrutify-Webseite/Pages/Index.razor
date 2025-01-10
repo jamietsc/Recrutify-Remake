@@ -1,0 +1,71 @@
+<<<<<<< HEAD
+﻿@using Recrutify.Models
+=======
+﻿﻿@using Recrutify.Models
+>>>>>>> FLR3
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@inject IBewerber<BewerberModel> bewerberData
+@inject BewerberModel bewerberModel
+<<<<<<< HEAD
+@inject BewerberTestModel bewerberTestModel 
+@inject NavigationManager navigationManager
+@inject IBewerberTest<BewerberTestModel> bewerberTestData
+=======
+@inject BewerberTestModel bewerberTestModel
+@inject NavigationManager navigationManager
+@inject IBewerberTest<BewerberTestModel> bewerberTestData
+@inject TestModel testModel
+@inject IUnternehmen<TestModel> unternehmenService
+>>>>>>> FLR3
+
+
+@page "/"
+
+<PageTitle>Startseite</PageTitle>
+
+<div style="height: calc(100vh - 200px); overflow-y: auto;">
+    <h1>Herzlich willkommen</h1>
+
+    <p>
+        Bitte geben Sie den Einladungscode ein, den Sie vom Unternehmen erhalten haben.
+    </p>
+
+    <div class="mb-3" style="margin: 30px 40px 5px 40px;">
+        <label for="Einladungscode" class="form-label">Einladungscode</label>
+        <input @bind-value="@bewerberTestModel.TID" type="text" class="form-control" id="Einladungscode" placeholder="0" />
+    </div>
+</div>
+
+<div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
+    <div></div>
+    <div></div>
+    <button type="button" @onclick="start">Weiter</button>
+</div>
+
+@code {
+<<<<<<< HEAD
+    async void start()
+    {
+        int insertedID = await bewerberData.InsertVornameNachname(bewerberModel);
+        bewerberModel.BID = insertedID;
+        bewerberTestModel.BID = insertedID;
+
+        System.Diagnostics.Debug.WriteLine("Bewerber ID=" + bewerberModel.BID);
+
+        await bewerberTestData.InsertTIDandBID(bewerberTestModel);
+
+        // Nutzer zur "/test"-Seite weiterleiten und TID verwenden
+        navigationManager.NavigateTo($"/test/{bewerberTestModel.TID}");
+=======
+        async void start()
+        {
+            testModel.TID = bewerberTestModel.TID;
+            testModel.UID = await unternehmenService.GetUIDFromTID(testModel.TID ?? 0);
+            testModel.Name = await unternehmenService.GetName(testModel.UID);
+            Console.WriteLine(testModel.UID);
+            Console.WriteLine(testModel.Name);
+            navigationManager.NavigateTo($"/welcome/{bewerberTestModel.TID}");
+>>>>>>> FLR3
+    }
+}

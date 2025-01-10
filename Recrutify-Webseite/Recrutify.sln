@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recrutify", "Recrutify.csproj", "{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18B98154-0EAC-4117-A261-A81028A71FF5}
+	EndGlobalSection
+EndGlobal

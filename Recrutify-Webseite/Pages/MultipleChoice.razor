@@ -1,0 +1,87 @@
+﻿@page "/test"
+
+@using Recrutify.Models
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@inject BewerberModel bewerberModel
+@inject BewerberTestModel bewerberTestModel
+@inject IMultipleChoice<MultipleChoiceModel> multipleChoiceService
+@inject IBewerber<BewerberModel> bewerberData
+@inject NavigationManager navigationManager
+
+<h3>Einstellungstest [Hier Testname einfügen]</h3>
+
+@if (multipleChoiceQuestions == null)
+{
+    <p>Lade Fragen...</p>
+}
+else
+{
+    @foreach (var question in multipleChoiceQuestions)
+    {
+        <div>
+            <p>@question.Text</p>
+            <div>
+                <input class="form-check-input" type="radio" name="radioField_@question.FID" @onchange="() => SetAnswer(question, 1)" id="Answer1_@question.FID">
+                <label class="form-check-label" for="Answer1_@question.FID">@question.Antwort_1</label>
+            </div>
+            <div>
+                <input class="form-check-input" type="radio" name="radioField_@question.FID" @onchange="() => SetAnswer(question, 2)" id="Answer2_@question.FID">
+                <label class="form-check-label" for="Answer2_@question.FID">@question.Antwort_2</label>
+            </div>
+            <div>
+                <input class="form-check-input" type="radio" name="radioField_@question.FID" @onchange="() => SetAnswer(question, 3)" id="Answer3_@question.FID">
+                <label class="form-check-label" for="Answer3_@question.FID">@question.Antwort_3</label>
+            </div>
+            <div>
+                <input class="form-check-input" type="radio" name="radioField_@question.FID" @onchange="() => SetAnswer(question, 4)" id="Answer4_@question.FID">
+                <label class="form-check-label" for="Answer4_@question.FID">@question.Antwort_4</label>
+            </div>
+        </div>
+    }
+
+    <button @onclick="ergebnis" class="btn btn-primary">Test abgeben</button>
+}
+
+@code {
+    [Parameter]
+    public int tid { get; set; }
+
+    private IEnumerable<MultipleChoiceModel> multipleChoiceQuestions;
+    private int korrekteAntworten = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        multipleChoiceQuestions = await multipleChoiceService.GetMultipleChoice(tid);
+    }
+
+    private void SetAnswer(MultipleChoiceModel question, int selectedAnswer)
+    {
+        question.AusgewählteAntwort = selectedAnswer;
+    }
+
+    async void ergebnis()
+    {
+        korrekteAntworten = 0;
+
+        foreach (var question in multipleChoiceQuestions)
+        {
+            if ((question.AusgewählteAntwort == 1 && question.Richtig_1) ||
+                (question.AusgewählteAntwort == 2 && question.Richtig_2) ||
+                (question.AusgewählteAntwort == 3 && question.Richtig_3) ||
+                (question.AusgewählteAntwort == 4 && question.Richtig_4))
+            {
+                korrekteAntworten++;
+            }
+        }
+
+        bewerberModel.Ergebnis = korrekteAntworten;
+
+        //Debuggen (funktioniert, Punkte werden in der Konsole ausgegeben)
+        Console.WriteLine($"Der Bewerber hat {bewerberModel.Ergebnis} Punkte erzielt");
+
+        await bewerberData.InsertPunktzahl(bewerberModel);
+
+        navigationManager.NavigateTo("/ergebnis");
+    }
+}

@@ -1,0 +1,93 @@
+﻿@page "/admin"
+
+@using Recrutify.Models
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@using Recrutify.DataAccessLayer.SqlDataAccess
+@inject NavigationManager navigationManager
+@inject IAdmin<AdminModel> adminData
+@inject AdminModel adminModel
+@inject IBewerber<BewerberModel> bewerberData
+@inject BewerberModel bewerberModel
+@inject IBewerberTest<BewerberTestModel> bewerberTestData
+@inject BewerberTestModel bewerberTestModel
+
+<h3>AdminPage</h3>
+
+<!-- Testauswahl Dropdown -->
+<label for="number">Testauswahl</label>
+
+<select name="number" @bind="gesuchteTID">
+    <option value="">Wählen Sie einen Test aus</option>
+    @foreach (var test in testIDs)
+    {
+        <option value="@test.TID">@test.TID</option>
+    }
+</select>
+
+<!-- Button zum Suchen der Bewerber -->
+<button @onclick="suchen" class="btn btn-primary">Ergebnis anzeigen</button>
+
+<!-- Bewerberanzeige nach erfolgreicher Suche -->
+@if (alleBewerber != null && alleBewerber.Any())
+{
+    <h4>Bewerber für Test ID: @gesuchteTID</h4>
+    <table> 
+        <thead>
+            <tr>
+                <th>Bewerber ID</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>Punktzahl</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var bewerber in alleBewerber)
+            {
+                <tr>
+                    <td>@bewerber.BID</td>
+                    <td>@bewerber.Vorname</td>
+                    <td>@bewerber.Nachname</td>
+                    <td>@bewerber.Ergebnis</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (gesuchteTID.HasValue && !alleBewerber.Any())
+{
+    <p>Keine Bewerber für diesen Test gefunden.</p>
+}
+
+@code {
+    private List<AdminModel> testIDs = new List<AdminModel>(); // Liste aller Tests
+    private List<int> bewerberIDs = new List<int>(); // Liste der Bewerber-IDs
+    private List<BewerberModel> alleBewerber = new List<BewerberModel>(); // Liste der Bewerber
+    public int? gesuchteTID { get; set; } // Nullable int für die ausgewählte Test-ID
+
+    // Lädt die Test-IDs, wenn die Seite initialisiert wird
+    protected override async Task OnInitializedAsync()
+    {
+        testIDs = (await adminData.GetTID(adminModel.UID)).ToList();
+    }
+
+    // Methode, um die Bewerber für die ausgewählte Test-ID zu laden
+    async Task suchen()
+    {
+        if (gesuchteTID.HasValue)
+        {
+            // Lade die Bewerber-Testdaten für die ausgewählte Test-ID
+            var bewerberTestModels = await bewerberTestData.GetBIDs(gesuchteTID);
+
+            // Extrahiere die Bewerber-IDs (BID)
+            bewerberIDs = bewerberTestModels.Select(b => b.BID).ToList();
+
+            // Lade die Daten der Bewerber basierend auf den BID
+            alleBewerber = await bewerberData.GetEverything(bewerberIDs);
+        }
+        else
+        {
+            Console.WriteLine("Bitte wählen Sie einen Test aus.");
+        }
+    }
+}
