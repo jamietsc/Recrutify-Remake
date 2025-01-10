@@ -1,4 +1,3 @@
-//using Radzen;
 using Recrutify.DataAccessLayer.Data;
 using Recrutify.DataAccessLayer.Repositories;
 using Recrutify.DataAccessLayer.SqlDataAccess;
@@ -29,10 +28,8 @@ builder.Services.AddScoped<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddScoped<BewerberModel>();
 builder.Services.AddScoped<MultipleChoiceModel>();
 builder.Services.AddScoped<BewerberTestModel>();
-builder.Services.AddScoped<AdminModel>();
-builder.Services.AddScoped<BewerberTestModel>();
 builder.Services.AddScoped<TestModel>();
-
+builder.Services.AddScoped<AdminModel>();
 
 var app = builder.Build();
 

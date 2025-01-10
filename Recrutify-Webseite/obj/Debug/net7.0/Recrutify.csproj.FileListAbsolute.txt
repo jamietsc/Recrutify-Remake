@@ -30,6 +30,15 @@ C:\Users\Finn Luca\Source\Repos\Recrutify\obj\Debug\net7.0\refint\Recrutify.dll
 C:\Users\Finn Luca\Source\Repos\Recrutify\obj\Debug\net7.0\Recrutify.pdb
 C:\Users\Finn Luca\Source\Repos\Recrutify\obj\Debug\net7.0\Recrutify.genruntimeconfig.cache
 C:\Users\Finn Luca\Source\Repos\Recrutify\obj\Debug\net7.0\ref\Recrutify.dll
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.csproj.AssemblyReference.cache
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.GeneratedMSBuildEditorConfig.editorconfig
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.AssemblyInfoInputs.cache
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.AssemblyInfo.cs
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.csproj.CoreCompileInputs.cache
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.MvcApplicationPartsAssemblyInfo.cache
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.RazorAssemblyInfo.cache
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.RazorAssemblyInfo.cs
+Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.sourcelink.json
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\appsettings.Development.json
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\appsettings.json
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Recrutify.staticwebassets.runtime.json
@@ -41,14 +50,8 @@ Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recru
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Dapper.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\EntityFramework.SqlServer.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\EntityFramework.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Microsoft.AspNetCore.Authorization.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Microsoft.AspNetCore.Components.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Microsoft.AspNetCore.Metadata.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Microsoft.Data.Sqlite.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\Radzen.Blazor.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\SQLitePCLRaw.batteries_v2.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\SQLitePCLRaw.core.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\SQLitePCLRaw.provider.e_sqlite3.dll
@@ -58,7 +61,6 @@ Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recru
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\System.Data.SqlClient.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\System.Data.SQLite.EF6.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\System.Drawing.Common.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\System.Linq.Dynamic.Core.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\System.Security.Permissions.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\System.Windows.Extensions.dll
@@ -96,15 +98,6 @@ Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recru
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.csproj.AssemblyReference.cache
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.GeneratedMSBuildEditorConfig.editorconfig
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.AssemblyInfoInputs.cache
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.AssemblyInfo.cs
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.csproj.CoreCompileInputs.cache
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.MvcApplicationPartsAssemblyInfo.cache
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.RazorAssemblyInfo.cache
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.RazorAssemblyInfo.cs
-Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.sourcelink.json
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\staticwebassets.build.json
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\staticwebassets.development.json
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\staticwebassets\msbuild.Recrutify.Microsoft.AspNetCore.StaticWebAssets.props
@@ -117,16 +110,14 @@ Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recru
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\scopedcss\bundle\Recrutify.styles.css
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\scopedcss\projectbundle\Recrutify.bundle.scp.css
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.csproj.Up2Date
-<<<<<<< HEAD
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\refint\Recrutify.dll
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.pdb
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\Recrutify.genruntimeconfig.cache
 Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\obj\Debug\net7.0\ref\Recrutify.dll
-=======
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\bin\Debug\net7.0\appsettings.Development.json
-C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\bin\Debug\net7.0\Recrutify.staticwebassets.runtime.json
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\bin\Debug\net7.0\appsettings.json
+C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\bin\Debug\net7.0\Recrutify.staticwebassets.runtime.json
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\bin\Debug\net7.0\Recrutify.exe
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\bin\Debug\net7.0\Recrutify.deps.json
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\bin\Debug\net7.0\Recrutify.runtimeconfig.json
@@ -209,4 +200,3 @@ C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitH
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\obj\Debug\net7.0\Recrutify.pdb
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\obj\Debug\net7.0\Recrutify.genruntimeconfig.cache
 C:\Users\Finn Luca\OneDrive\HWR\Semester 3\Software Engineering 1\Recrutify\GitHub\Recrutify\obj\Debug\net7.0\ref\Recrutify.dll
->>>>>>> FLR3

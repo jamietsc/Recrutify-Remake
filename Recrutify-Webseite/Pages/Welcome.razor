@@ -7,6 +7,7 @@
 @inject NavigationManager navigationManager
 @inject IBewerberTest<BewerberTestModel> bewerberTestData
 @inject TestModel testModel
+@inject IUnternehmen<TestModel> unternehmenService
 
 
 @page "/welcome/{tid:int}"
@@ -16,12 +17,12 @@
 <div style="height: calc(100vh - 200px); overflow-y: auto;">
     <h1>Einstellungstest @testModel.Name</h1>
 
-    <img src="images/ber_logo.png" height="150px" style="margin: 30px auto 5px auto; display: block;" />
+    <img src="images/logo.png" height="200px" style="margin: 30px auto 5px auto; display: block;" />
 
     <p>
         Herzlich willkommen zum Einstellungstest @testModel.Name. Im Folgenden sollen Sie einige Fragen beantworten, damit wir Ihren Wissensstand prüfen können.
         <br />
-        Sie haben xx Minuten Zeit.
+        Sie haben <b>@testModel.Dauer Minuten</b> Zeit.
         <br />
         <br />
         Viel Erfolg!
@@ -33,16 +34,6 @@
         <label for="LastName" class="form-label" style="margin-top: 20px;">Nachname</label>
         <input @bind-value="@bewerberModel.Nachname" type="text" class="form-control" id="LastName" placeholder="Mustermann">
     </div>
-
-    <p>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-        Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-        Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-        Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer
-    </p>
 </div>
 
 <div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
@@ -55,6 +46,12 @@
     [Parameter]
     public int tid { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        testModel.Dauer = await unternehmenService.GetDauer(testModel.TID ?? 0);
+    }
+
+    //Test wird gestartet, Vor- und Nachname in die Datenbank abgespeichert und BID im Model gespeichert
     async void start()
     {
         int insertedID = await bewerberData.InsertVornameNachname(bewerberModel);

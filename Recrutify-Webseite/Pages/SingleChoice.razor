@@ -1,7 +1,10 @@
 ﻿@page "/test/{tid:int}"
+
 @using Recrutify.Models
 @using Recrutify.DataAccessLayer.Data
 @using Recrutify.DataAccessLayer.Repositories
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
 @inject BewerberModel bewerberModel
 @inject BewerberTestModel bewerberTestModel
 @inject IMultipleChoice<MultipleChoiceModel> multipleChoiceService
@@ -9,7 +12,7 @@
 @inject NavigationManager navigationManager
 @inject HelperModel helperModel
 @inject TestModel testModel
-
+@inject IUnternehmen<TestModel> unternehmenService
 
 
 <PageTitle>Einstellungstest</PageTitle>
@@ -61,7 +64,15 @@
 
 <div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
     <button type="button" disabled="@isPreviousButtonDisabled()" @onclick="previousPage">Zurück</button>
-    <div>Hier könnte Ihre Werbung stehen.</div>
+    <div style="display:flex; justify-content: center;">
+        @if (verbleibendeZeit.TotalSeconds <= 60)
+        {
+            <div style="display: flex; justify-content: center; align-items: center; font-size: 24px; background-color: lightcoral; width: 100px; height: 50px; border-radius: 5px;">@zeitAnzeigen</div>
+        } else
+        {
+            <div style="display: flex; justify-content: center; align-items: center; font-size: 24px; background-color: lightgreen; width: 100px; height: 50px; border-radius: 5px;">@zeitAnzeigen</div>
+        }
+    </div>
     @if (isLastQuestion()) {
         <button type="button" class="important" onclick="document.getElementById('modal').showModal()">Abgeben</button>
     } else
@@ -70,6 +81,16 @@
     }
 
 </div>
+
+<dialog id="modalEndOfTime" style="border: 1px solid firebrick; border-radius: 5px;">
+    <h2 style="margin: 10px;">Achtung!</h2>
+    <p style="margin: 10px;">Die Zeit ist abgelaufen. Sie müssen nun abgeben.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center;">
+        <div></div>
+        <div></div>
+        <button class="important" style="margin: 10px; justify-self: end;" @onclick="auswerten">Abgeben</button>
+    </div>
+</dialog>
 
 @code {
     [Parameter]
@@ -80,10 +101,18 @@
 
     private Dictionary<int, int> selectedAnswers = new Dictionary<int, int>();
 
+    private int startMinuten = 2; // Standardwert
+    private TimeSpan verbleibendeZeit;
+    private string zeitAnzeigen = "00:00";
+    private System.Timers.Timer timer;
+    private bool timerEnded = false;
+
     protected override async Task OnInitializedAsync()
     {
         multipleChoiceQuestions = (await multipleChoiceService.GetMultipleChoice(tid)).ToList();
         helperModel.questionNumber = 1; // Erste Frage starten
+        startMinuten = testModel.Dauer; //*****************************************************************************************Hier auskommentieren, wenn Timer-Ende zeigen******************************************
+        StartTimer();
     }
 
     private void SetAnswer(MultipleChoiceModel multipleChoiceModel, int selectedAnswer)
@@ -116,23 +145,6 @@
         if (helperModel.questionNumber < multipleChoiceQuestions.Count)
         {
             helperModel.questionNumber++;
-        }
-    }
-
-    private async void auswerten() //Funktion welche am Ende im Button benutzt werden soll, dient zum speichern der Punkte in die DB
-    {
-        foreach(var question in multipleChoiceQuestions)
-        {
-            if ((question.AusgewählteAntwort == 1 && question.Richtig_1) ||
-                (question.AusgewählteAntwort == 2 && question.Richtig_2) ||
-                (question.AusgewählteAntwort == 3 && question.Richtig_3) ||
-                (question.AusgewählteAntwort == 4 && question.Richtig_4))
-            {
-                korrekteAntworten++;
-            }
-
-            await bewerberData.InsertPunktzahl(bewerberModel);
-
             StateHasChanged();
         }
     }
@@ -150,10 +162,59 @@
                 korrekteAntworten++;
             }
 
-            await bewerberData.InsertPunktzahl(bewerberModel);
-        }
 
+        }
+        bewerberModel.Ergebnis = korrekteAntworten;
+        await bewerberData.InsertPunktzahl(bewerberModel);
         Console.WriteLine(korrekteAntworten);
         navigationManager.NavigateTo("/end");
+    }
+
+    private void StartTimer()
+    {
+        // Setze die verbleibende Zeit auf die gewünschte Startzeit
+        verbleibendeZeit = TimeSpan.FromMinutes(startMinuten);
+        UpdateAnzeige(); // Initiale Anzeige aktualisieren
+
+        // Initialisiere den Timer für sekündliche Updates
+        timer = new System.Timers.Timer(1000); // 1000ms = 1 Sekunde
+        timer.Elapsed += OnTimerElapsed;
+        timer.AutoReset = true;
+        timer.Enabled = true;
+    }
+
+    private void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+    {
+        // Reduziere die verbleibende Zeit um eine Sekunde
+        verbleibendeZeit = verbleibendeZeit.Subtract(TimeSpan.FromSeconds(1));
+
+        if (verbleibendeZeit.TotalSeconds <= 0)
+        {
+            // Countdown ist abgelaufen, Timer stoppen
+            timer.Stop();
+            verbleibendeZeit = TimeSpan.Zero;
+            OpenModal();
+        }
+
+        // Aktualisiere die Anzeige im UI
+        InvokeAsync(UpdateAnzeige);
+    }
+
+    private void UpdateAnzeige()
+    {
+        // Formatierte Zeit anzeigen: Minuten:Sekunden
+        zeitAnzeigen = verbleibendeZeit.ToString(@"mm\:ss");
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        // Ressourcen aufräumen, wenn die Komponente entfernt wird
+        timer?.Dispose();
+    }
+
+    private async void OpenModal()
+    {
+        await JSRuntime.InvokeVoidAsync("OpenModal"); // JavaScript-Funktion aufrufen
     }
 }

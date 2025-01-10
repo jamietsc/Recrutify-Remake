@@ -17,10 +17,16 @@
     <input @bind-value="@adminModel.Benutzername" type="text" class="form-control" id="Nutzername" placeholder="Benutzername" />
     <label for="Passwort" class="form-label">Passwort:</label>
     <input @bind-value="@adminModel.Passwort" type="password" class="form-control" id="Passwort" placeholder="********" />
+</div>
+
+<div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
+    <div></div>
+    <div></div>
     <button type="button" @onclick="checkLogin">Anmelden</button>
 </div>
 
 @code {
+    //Überprüfen der Anmelde Daten, bei Erfolg weiterleiten
     async Task checkLogin()
     {
         bool result = await adminData.CheckCredentials(adminModel);
@@ -31,7 +37,7 @@
         }
         else
         {
-            System.Console.WriteLine("anmeldedaten nicht vorhanden");
+            System.Console.WriteLine("Anmeldedaten nicht vorhanden");
         }
     }
 }

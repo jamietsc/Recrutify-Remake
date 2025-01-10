@@ -13,6 +13,8 @@ namespace Recrutify.DataAccessLayer.Data
             _db = db;
         }
 
+        //Vorname und Nachname in die Datenbank abspeichern,
+        //BID wird dabei zurückgegeben und im Model abgespeichert
         public async Task<int> InsertVornameNachname(BewerberModel model)
         {
             // Definierung der Parameter für die SQL-Abfrage
@@ -30,6 +32,7 @@ namespace Recrutify.DataAccessLayer.Data
             return insertedID;
         }
 
+        //zum model die gesamtpunktzahl abspeichern
         public async Task InsertPunktzahl(BewerberModel model)
         {
             var paramter = new { model.Ergebnis, model.BID };
@@ -37,6 +40,7 @@ namespace Recrutify.DataAccessLayer.Data
             await _db.SaveData(sqlQuery, paramter);
         }
 
+        //Alle Infos des Bewerbers aus der Datenbank laden
         public async Task<List<BewerberModel>> GetEverything(List<int> bewerberIDs)
         {
             var results = new List<BewerberModel>();

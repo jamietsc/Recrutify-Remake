@@ -12,6 +12,7 @@ namespace Recrutify.DataAccessLayer.Data
             _db = db;
         }
 
+        //TID und BID in der Datenbank abspeichern 
         public async Task InsertTIDandBID(BewerberTestModel model)
         {
             var paramters = new { model.TID, model.BID };
@@ -19,6 +20,7 @@ namespace Recrutify.DataAccessLayer.Data
             await _db.SaveData(sqlQuery, paramters);
         }
 
+        //Zur TID alle BIDs aus der Datenbank laden -> für Adminpage
         public async Task<IEnumerable<BewerberTestModel>> GetBIDs(int? TID)
         {
             string sqlQuery = "SELECT BID FROM Bewerber_Test WHERE TID = @TID";

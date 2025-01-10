@@ -54,13 +54,9 @@
               "target": "Package",
               "version": "[8.0.8, )"
             },
-            "Radzen.Blazor": {
-              "target": "Package",
-              "version": "[5.2.9, )"
-            },
             "System.Data.SQLite": {
               "target": "Package",
-              "version": "[1.0.119, )"
+              "version": "[1.0.118, )"
             }
           },
           "imports": [

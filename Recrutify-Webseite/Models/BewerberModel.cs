@@ -1,5 +1,6 @@
 ﻿namespace Recrutify.Models
 {
+    //Model zum Speichern der Bewerber Informationen
     public class BewerberModel
     {
         public int BID { get; set; }

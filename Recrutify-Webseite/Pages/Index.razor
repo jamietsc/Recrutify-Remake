@@ -1,26 +1,15 @@
-<<<<<<< HEAD
-﻿@using Recrutify.Models
-=======
-﻿﻿@using Recrutify.Models
->>>>>>> FLR3
+﻿@page "/"
+
+@using Recrutify.Models
 @using Recrutify.DataAccessLayer.Data
 @using Recrutify.DataAccessLayer.Repositories
 @inject IBewerber<BewerberModel> bewerberData
 @inject BewerberModel bewerberModel
-<<<<<<< HEAD
-@inject BewerberTestModel bewerberTestModel 
-@inject NavigationManager navigationManager
-@inject IBewerberTest<BewerberTestModel> bewerberTestData
-=======
 @inject BewerberTestModel bewerberTestModel
 @inject NavigationManager navigationManager
 @inject IBewerberTest<BewerberTestModel> bewerberTestData
 @inject TestModel testModel
 @inject IUnternehmen<TestModel> unternehmenService
->>>>>>> FLR3
-
-
-@page "/"
 
 <PageTitle>Startseite</PageTitle>
 
@@ -44,28 +33,15 @@
 </div>
 
 @code {
-<<<<<<< HEAD
+    //Einladungscode wird eingegeben und der Bewerber wird weitergeleitet
+    //TID und UNternehmensnamen werden im Model gespeichert
     async void start()
     {
-        int insertedID = await bewerberData.InsertVornameNachname(bewerberModel);
-        bewerberModel.BID = insertedID;
-        bewerberTestModel.BID = insertedID;
-
-        System.Diagnostics.Debug.WriteLine("Bewerber ID=" + bewerberModel.BID);
-
-        await bewerberTestData.InsertTIDandBID(bewerberTestModel);
-
-        // Nutzer zur "/test"-Seite weiterleiten und TID verwenden
-        navigationManager.NavigateTo($"/test/{bewerberTestModel.TID}");
-=======
-        async void start()
-        {
-            testModel.TID = bewerberTestModel.TID;
-            testModel.UID = await unternehmenService.GetUIDFromTID(testModel.TID ?? 0);
-            testModel.Name = await unternehmenService.GetName(testModel.UID);
-            Console.WriteLine(testModel.UID);
-            Console.WriteLine(testModel.Name);
-            navigationManager.NavigateTo($"/welcome/{bewerberTestModel.TID}");
->>>>>>> FLR3
+        testModel.TID = bewerberTestModel.TID;
+        testModel.UID = await unternehmenService.GetUIDFromTID(testModel.TID ?? 0);
+        testModel.Name = await unternehmenService.GetName(testModel.UID);
+        Console.WriteLine(testModel.UID);
+        Console.WriteLine(testModel.Name);
+        navigationManager.NavigateTo($"/welcome/{bewerberTestModel.TID}");
     }
 }

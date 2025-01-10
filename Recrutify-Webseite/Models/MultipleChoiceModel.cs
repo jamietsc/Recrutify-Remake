@@ -1,5 +1,6 @@
 ﻿namespace Recrutify.Models
 {
+    //Model zum Abspeichern der Multiple Choice Fragen
     public class MultipleChoiceModel
     {
         public int FID { get; set; }
