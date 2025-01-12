@@ -6,7 +6,6 @@ public class UserService {
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db"; // Pfad zur SQLite-Datenbank
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
                 String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ? AND Passwort = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
@@ -38,6 +37,19 @@ public class UserService {
             if (conn != null) {
                 System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
                 // insert into
+                String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname, is_admin) VALUES (?,?,?,?,?,?)";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, company);
+                    ps.setString(2, username);
+                    ps.setString(3, password);
+                    ps.setString(4, firstName);
+                    ps.setString(5, lastName);
+                    ps.setBoolean(6, isAdmin);
+
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                }
             }
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());

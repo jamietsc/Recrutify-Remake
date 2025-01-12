@@ -9,6 +9,8 @@ public class Main {
 
         System.out.println("1: Login | 2: Registrieren");
         decision = scanner.nextInt();
+        scanner.nextLine();
+
         switch (decision) {
             case 1:
                 while (user == null) {
@@ -39,6 +41,7 @@ public class Main {
                 System.out.print("Admin?");
                 Boolean admin = scanner.nextBoolean();
                 UserService.register(username, password, company, firstName, lastName, admin);
+                break;
         }
     }
 }
