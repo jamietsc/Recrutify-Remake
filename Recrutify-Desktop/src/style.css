@@ -1,0 +1,34 @@
+.gradient-pane {
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+}
+
+.login-button {
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
+    -fx-text-fill: white; /* Textfarbe */
+    -fx-text-weight: bold;
+    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-cursor: hand;
+}
+
+.login-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563); /* Hellerer Farbverlauf */
+}
+
+.username-label {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
+    -fx-text-fill: black; /* Textfarbe */
+    -fx-font-size: 14px; /* Schriftgröße */
+}
+
+.password-label {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
+    -fx-text-fill: black; /* Textfarbe */
+    -fx-font-size: 14px; /* Schriftgröße */
+}
+
