@@ -32,3 +32,21 @@
     -fx-font-size: 14px; /* Schriftgröße */
 }
 
+.checkbox {
+    -fx-background-color: white; /* Hintergrundfarbe der Checkbox */
+    -fx-border-width: 2px; /* Randbreite */
+    -fx-pref-width: 20px; /* Breite der Checkbox */
+    -fx-pref-height: 20px; /* Höhe der Checkbox */
+}
+
+.checkbox:selected {
+    -fx-background-color: #FF5733; /* Hintergrundfarbe, wenn die Checkbox ausgewählt ist */
+}
+
+.checkbox .text {
+    -fx-padding: 5px; /* Innenabstand für den Text */
+    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-font-weight: bold; /* Schriftgewicht */
+}
+
+

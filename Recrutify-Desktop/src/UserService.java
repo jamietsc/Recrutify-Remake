@@ -31,20 +31,19 @@ public class UserService {
         } return null;
     }
 
-    public static void register(String username, String password, String company, String firstName, String lastName, Boolean isAdmin) {
+    public static void register(String username, String password, String company, String firstName, String lastName) {
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
                 // insert into
-                String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname, is_admin) VALUES (?,?,?,?,?,?)";
+                String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, company);
                     ps.setString(2, username);
                     ps.setString(3, password);
                     ps.setString(4, firstName);
                     ps.setString(5, lastName);
-                    ps.setBoolean(6, isAdmin);
 
                     ps.executeUpdate();
                 } catch (SQLException e) {

@@ -30,6 +30,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "Username: " + username + "\n" + "Passwort: " + password + "\n" + "UID: " + UID + "\n" + admin;
+        return "Username: " + username + "\n" + "Passwort: " + password + "\n" + "UID: " + UID + "\n" + "Admin: " + admin;
     }
 }
