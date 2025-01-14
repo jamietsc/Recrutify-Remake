@@ -69,6 +69,7 @@ public class Main extends Application {
         Parent root = loader.load();
         Stage adminStage = new Stage();
         adminStage.initStyle(StageStyle.UNDECORATED);
+        adminStage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
         adminStage.setScene(new Scene(root));
         adminStage.setTitle("Recrutify | Registrierung");
         adminStage.show();

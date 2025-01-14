@@ -63,8 +63,7 @@
                </font>
             </Label>
             <PasswordField fx:id="passwordRegister" layoutX="50.0" layoutY="453.0" prefHeight="30.0" prefWidth="250.0" styleClass="password-label" stylesheets="@style.css" />
-            <Button fx:id="loginButton" layoutX="50.0" layoutY="271.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="30.0" prefWidth="250.0" styleClass="login-button" stylesheets="@style.css" text="Login" defaultButton="true">
-            <Button fx:id="registerButton" layoutX="50.0" layoutY="506.0" mnemonicParsing="false" onAction="#registerButtonAction" prefHeight="30.0" prefWidth="250.0" styleClass="login-button" stylesheets="@style.css" text="Registrieren">
+            <Button fx:id="registerButton" layoutX="50.0" layoutY="506.0" mnemonicParsing="false" onAction="#registerButtonAction" prefHeight="30.0" prefWidth="250.0" styleClass="login-button" stylesheets="@style.css" text="Registrieren" defaultButton="true">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
