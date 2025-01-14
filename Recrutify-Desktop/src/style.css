@@ -13,23 +13,23 @@
 }
 
 .login-button:hover {
-    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563); /* Hellerer Farbverlauf */
+    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
 }
 
 .username-label {
     -fx-background-color: #efefef;
     -fx-background-radius: 50px;
-    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
-    -fx-text-fill: black; /* Textfarbe */
-    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
 }
 
 .password-label {
     -fx-background-color: #efefef;
     -fx-background-radius: 50px;
-    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
-    -fx-text-fill: black; /* Textfarbe */
-    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
 }
 
 .button-close-and-minimize {
@@ -41,4 +41,40 @@
     -fx-cursor: hand;
 }
 
+.answer-text-field {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-pref-width: 550px ;
+}
 
+.question-text-field {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+}
+
+.hbox-top {
+    -fx-padding: 20px 0 10px 0;
+}
+
+.hbox {
+    -fx-padding: 10px 0 10px 0;
+}
+
+.hbox-bottom {
+    -fx-padding: 10px 0 50px 0;
+}
+
+.question-container {
+    -fx-padding: 100px;
+}
+
+.checkbox {
+    -fx-padding: 10px 0 10px 0;
+}
