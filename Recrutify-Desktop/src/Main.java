@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 
 public class Main extends Application {
     User user = null;
@@ -35,6 +36,12 @@ public class Main extends Application {
     @FXML
     private TextField passwordLogin;
 
+    @FXML
+    private Button closeButton;
+
+    @FXML
+    private Button minimizeButton;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -56,6 +63,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    @FXML
     public void openAdminStage() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/register.fxml"));
         Parent root = loader.load();
@@ -66,11 +74,24 @@ public class Main extends Application {
         adminStage.show();
     }
 
+    @FXML
     private void showErrorDialog(String message) {
         Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
         alert.setTitle("Fehler!");
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void closeButtonAction() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void minimizeButtonAction() {
+        Stage stage = (Stage) minimizeButton.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     @FXML
