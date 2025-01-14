@@ -44,6 +44,9 @@ public class Main extends Application {
     @FXML
     private VBox questionContainer;
 
+    @FXML
+    private Button testErstellenButton;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -219,5 +222,7 @@ public class Main extends Application {
     @FXML
     private void testErstellenButtonAction() throws Exception {
         openQuestionStage();
+        Stage stage = (Stage) testErstellenButton.getScene().getWindow();
+        stage.close();
     }
 }

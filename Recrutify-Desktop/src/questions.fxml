@@ -23,5 +23,11 @@
             <Image url="@Logo_Recrutify_full.png" />
          </image>
       </ImageView>
+      <Button fx:id="minimizeButton" layoutX="1117.0" layoutY="-9.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="closeButton" layoutX="1156.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
    </children>
 </AnchorPane>
