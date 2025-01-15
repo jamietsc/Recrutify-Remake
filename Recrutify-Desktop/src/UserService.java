@@ -1,9 +1,40 @@
+import java.io.File;
 import java.sql.*;
+import java.io.IOException;
 
 public class UserService {
+
+    /**
+     * with this function a local DB will created if not already exists
+     * the goal is that no one has to create a new db everytime
+     * @return dbpath which is the path of the database
+     */
+    private static String initializeDatabase() {
+        String projectPath = System.getProperty("user.dir"); //current project folder
+        String dbPath = projectPath + File.separator + "recrutify.db";
+
+        File dbFile = new File(dbPath);
+
+        if(!dbFile.exists()) {
+            System.out.println("Database does not exist. A new database will be created.");
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath)) {
+                if (connection != null) {
+                    System.out.println("New Database created: " + dbPath);
+
+                }
+            } catch (SQLException e) {
+                System.out.println("Fehler while creating the database: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Database already exists: " + dbPath);
+        }
+        return dbPath;
+    }
+
     // Methode zum Einloggen und gleichzeitigen Verbinden mit der Datenbank
     public static User login(String username, String password) throws Exception {
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db"; // Pfad zur SQLite-Datenbank
+        String url = "jdbc:sqlite:" + initializeDatabase(); //database will be initialized
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ? AND Passwort = ?";
@@ -32,7 +63,7 @@ public class UserService {
     }
 
     public static void register(String username, String password, String company, String firstName, String lastName) {
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
+        String url = "jdbc:sqlite:" + initializeDatabase(); //database will be initialized
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
