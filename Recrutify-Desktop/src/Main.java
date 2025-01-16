@@ -1,6 +1,9 @@
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,9 +13,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import java.util.*;
 
 public class Main extends Application {
-    User user = null;
+    User user = new User();
 
     @FXML
     private TextField companyRegister;
@@ -46,6 +50,14 @@ public class Main extends Application {
 
     @FXML
     private Button testErstellenButton;
+
+    @FXML
+    private Button auswertungÖffnenButton;
+
+    ObservableList<String> options = FXCollections.observableArrayList();
+
+    @FXML
+    private ComboBox<String> dropDownMenu;
 
     public static void main(String[] args) {
         launch(args);
@@ -103,6 +115,23 @@ public class Main extends Application {
         questionScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         questionStage.setTitle("Recrutify");
         questionStage.show();
+    }
+
+    @FXML
+    public void openAuswertungStage() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/adminPage.fxml"));
+
+        //Laden der FXML Datei
+        Parent root = loader.load();
+
+        Stage auswertungStage = new Stage();
+        auswertungStage.initStyle(StageStyle.UNDECORATED);
+        auswertungStage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        Scene auswertungScene = new Scene(root);
+        auswertungStage.setScene(auswertungScene);
+        auswertungScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        auswertungStage.setTitle("Recrutify");
+        auswertungStage.show();
     }
 
     @FXML
@@ -180,6 +209,7 @@ public class Main extends Application {
 
         try {
             user = UserService.login(enteredUsername, enteredPassword);
+            UserSession.setCurrentUser(user);
             if (user != null) {
                 Stage primaryStage = (Stage) usernameLogin.getScene().getWindow();
                 primaryStage.close();
@@ -225,4 +255,22 @@ public class Main extends Application {
         Stage stage = (Stage) testErstellenButton.getScene().getWindow();
         stage.close();
     }
+
+    @FXML
+    private void auswertungÖffnenButtonAction() throws Exception {
+        openAuswertungStage();
+        Stage stage = (Stage) auswertungÖffnenButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void onOpenDropDownMenu() throws Exception{
+        User regiseredUser = UserSession.getCurrentUser();
+        options = FXCollections.observableArrayList(
+                UserService.getTestsFromCompany(regiseredUser.getUserID())
+        );
+        dropDownMenu.setItems(options);
+    }
+
+
 }

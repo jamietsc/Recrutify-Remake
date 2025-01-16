@@ -37,7 +37,6 @@ CREATE TABLE MultipleChoiceFragen (
                                       Richtig_2 BOOLEAN,
                                       Richtig_3 BOOLEAN,
                                       Richtig_4 BOOLEAN,
-                                      AID INT,
                                       TID INT,
                                       FOREIGN KEY (TID) REFERENCES Test(TID)
 );
@@ -50,3 +49,12 @@ CREATE TABLE Bewerber_Test (
                                FOREIGN KEY (BID) REFERENCES Bewerber(BID),
                                FOREIGN KEY (TID) REFERENCES Test(TID)
 );
+
+INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname , is_admin)
+VALUES  ('FBB', 'JentschJ', 1234, 'Jamie', 'Jentsch', 1);
+
+DELETE FROM Test WHERE TID LIKE NULL;
+
+INSERT INTO Test (TID, Dauer, UID) VALUES (1, 1, 2);
+INSERT INTO Test (TID, Dauer, UID) VALUES (2, 1, 2);
+INSERT INTO Test (TID, Dauer, UID) VALUES (3, 1, 2);

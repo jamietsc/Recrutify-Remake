@@ -16,7 +16,8 @@
     -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
 }
 
-.username-label {
+.username-label,
+.testauswahl-label{
     -fx-background-color: #efefef;
     -fx-background-radius: 50px;
     -fx-padding: 10px 20px;
@@ -77,4 +78,12 @@
 
 .checkbox {
     -fx-padding: 10px 0 10px 0;
+}
+
+.title-adminPage {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
 }
