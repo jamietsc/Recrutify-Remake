@@ -47,6 +47,9 @@ public class Main extends Application {
     @FXML
     private Button testErstellenButton;
 
+    @FXML
+    private TextField passwordRegisterRepeat;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -204,9 +207,15 @@ public class Main extends Application {
         String enteredLastName = lastNameRegister.getText();
         String enteredUsername = usernameRegister.getText();
         String enteredPassword = passwordRegister.getText();
+        String enteredPasswordRepeat = passwordRegisterRepeat.getText();
 
-        if (enteredCompany.isEmpty() || enteredFirstName.isEmpty() || enteredLastName.isEmpty() || enteredUsername.isEmpty() || enteredPassword.isEmpty()) {
+        if (enteredCompany.isEmpty() || enteredFirstName.isEmpty() || enteredLastName.isEmpty() || enteredUsername.isEmpty() || enteredPassword.isEmpty() || enteredPasswordRepeat.isEmpty()) {
             showErrorDialog("Alle Felder müssen ausgefüllt werden.");
+            return;
+        }
+
+        if (!enteredPassword.equals(enteredPasswordRepeat)) {
+            showErrorDialog("Passwörter stimmen nicht überein.");
             return;
         }
 

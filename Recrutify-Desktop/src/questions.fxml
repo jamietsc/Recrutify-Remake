@@ -10,9 +10,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main">
    <children>
-      <VBox fx:id="questionContainer" layoutX="307.0" layoutY="26.0" prefHeight="744.0" prefWidth="586.0" />
-      <Button fx:id="multipleChoiceButton" layoutX="36.0" layoutY="360.0" mnemonicParsing="false" onAction="#multipleChoiceButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Multiple Choice" />
-      <Button layoutX="35.0" layoutY="417.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Freitext" />
+      <VBox fx:id="questionContainer" layoutX="307.0" layoutY="28.0" prefHeight="744.0" prefWidth="586.0" />
+      <Button fx:id="multipleChoiceButton" layoutX="36.0" layoutY="413.0" mnemonicParsing="false" onAction="#multipleChoiceButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Multiple Choice" />
+      <Button layoutX="36.0" layoutY="466.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Freitext" />
       <Label layoutX="36.0" layoutY="306.0" text="Fragen hinzufügen">
          <font>
             <Font size="28.0" />
@@ -29,5 +29,6 @@
          </font>
       </Button>
       <Button fx:id="closeButton" layoutX="1156.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
+      <Button layoutX="36.0" layoutY="360.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Single Choice" />
    </children>
 </AnchorPane>

@@ -9,24 +9,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main">
    <children>
-      <AnchorPane layoutX="350.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" styleClass="gradient-pane" stylesheets="@style.css">
+      <AnchorPane layoutX="402.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="402.0" styleClass="gradient-pane" stylesheets="@style.css">
          <children>
-            <ImageView fitHeight="106.0" fitWidth="310.0" layoutX="20.0" layoutY="247.0">
+            <ImageView fitHeight="106.0" fitWidth="310.0" layoutX="46.0" layoutY="302.0">
                <image>
                   <Image url="@Logo_Recrutify_full_png_white.png" />
                </image>
             </ImageView>
-            <Button fx:id="minimizeButton" layoutX="267.0" layoutY="-6.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
+            <Button fx:id="minimizeButton" layoutX="315.0" layoutY="-9.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="closeButton" layoutX="306.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
+            <Button fx:id="closeButton" layoutX="354.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
          </children>
       </AnchorPane>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" style="-fx-background-color: white;">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="402.0" style="-fx-background-color: white;">
          <children>
             <Label layoutX="50.0" layoutY="41.0" text="Registrierung">
                <font>
@@ -38,32 +38,38 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="companyRegister" layoutX="50.0" layoutY="129.0" prefHeight="30.0" prefWidth="250.0" styleClass="username-label" stylesheets="@style.css" />
+            <TextField fx:id="companyRegister" layoutX="50.0" layoutY="129.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
             <Label layoutX="51.0" layoutY="186.0" text="VORNAME">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="firstNameRegister" layoutX="50.0" layoutY="210.0" prefHeight="30.0" prefWidth="250.0" styleClass="username-label" stylesheets="@style.css" />
+            <TextField fx:id="firstNameRegister" layoutX="50.0" layoutY="210.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
             <Label layoutX="51.0" layoutY="267.0" text="NACHNAME">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="lastNameRegister" layoutX="50.0" layoutY="291.0" prefHeight="30.0" prefWidth="250.0" styleClass="username-label" stylesheets="@style.css" />
+            <TextField fx:id="lastNameRegister" layoutX="50.0" layoutY="291.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
             <Label layoutX="51.0" layoutY="348.0" text="BENUTZERNAME">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameRegister" layoutX="50.0" layoutY="372.0" prefHeight="30.0" prefWidth="250.0" styleClass="username-label" stylesheets="@style.css" />
+            <TextField fx:id="usernameRegister" layoutX="50.0" layoutY="372.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
             <Label layoutX="51.0" layoutY="430.0" text="PASSWORT">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordRegister" layoutX="50.0" layoutY="453.0" prefHeight="30.0" prefWidth="250.0" styleClass="password-label" stylesheets="@style.css" />
-            <Button fx:id="registerButton" layoutX="50.0" layoutY="506.0" mnemonicParsing="false" onAction="#registerButtonAction" prefHeight="30.0" prefWidth="250.0" styleClass="login-button" stylesheets="@style.css" text="Registrieren" defaultButton="true">
+            <PasswordField fx:id="passwordRegister" layoutX="50.0" layoutY="453.0" prefHeight="40.0" prefWidth="310.0" styleClass="password-label" stylesheets="@style.css" />
+            <Label layoutX="51.0" layoutY="507.0" text="PASSWORT WIEDERHOLEN">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordRegisterRepeat" layoutX="50.0" layoutY="530.0" prefHeight="40.0" prefWidth="310.0" styleClass="password-label" stylesheets="@style.css" />
+            <Button fx:id="registerButton" defaultButton="true" layoutX="50.0" layoutY="584.0" mnemonicParsing="false" onAction="#registerButtonAction" prefHeight="40.0" prefWidth="310.0" styleClass="login-button" stylesheets="@style.css" text="Registrieren">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
