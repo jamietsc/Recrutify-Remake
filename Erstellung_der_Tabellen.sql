@@ -25,10 +25,12 @@ CREATE TABLE Bewerber (
                           Ergebnis INT
 );
 
--- Tabelle Multiple-Choice-Fragen
-CREATE TABLE MultipleChoiceFragen (
-                                      FID INT PRIMARY KEY,
-                                      Text TEXT,
+-- Tabelle Fragen
+CREATE TABLE Fragen (
+                                      FID INT PRIMARY KEY AUTOINCREMENT,
+                                      Fragentyp INT,
+				      Fragentext TEXT,
+				      Antwort_Freitext TEXT,
                                       Antwort_1 TEXT,
                                       Antwort_2 TEXT,
                                       Antwort_3 TEXT,
@@ -37,7 +39,6 @@ CREATE TABLE MultipleChoiceFragen (
                                       Richtig_2 BOOLEAN,
                                       Richtig_3 BOOLEAN,
                                       Richtig_4 BOOLEAN,
-                                      AID INT,
                                       TID INT,
                                       FOREIGN KEY (TID) REFERENCES Test(TID)
 );
