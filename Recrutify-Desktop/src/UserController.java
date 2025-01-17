@@ -32,7 +32,9 @@ public class UserController {
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        stage.setScene(scene);
         stage.show();
     }
 

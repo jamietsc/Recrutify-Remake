@@ -1,20 +1,15 @@
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
+
+import java.sql.*;
 
 public class QuestionController {
-
-    private int questioncounter =1;
-    private int answerCounter = 1;
+    int questioncounter = 1;
+    int answerCounter = 1;
+    int testID = 1;
 
     @FXML
     private VBox questionContainer;
@@ -27,6 +22,7 @@ public class QuestionController {
 
     @FXML
     private void multipleChoiceButtonAction() {
+        getTestID();
         TextField textFieldQuestion = new TextField();
         textFieldQuestion.setPromptText("Frage");
         textFieldQuestion.setId("question" + questioncounter);
@@ -93,5 +89,31 @@ public class QuestionController {
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();
         stage.setIconified(true);
+    }
+
+    private void getTestID() {
+        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db"; // Pfad zur SQLite-Datenbank
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sqlTID = "SELECT MAX(TID) FROM Test";
+                // String sqlInsertFragen = "INSERT INTO Fragen () VALUES()";
+                try (PreparedStatement ps = conn.prepareStatement(sqlTID)) {
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.getInt(1) != 0) {
+                        testID = rs.getInt(1);
+                        testID++;
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Fehler beim abrufen der TID: " + e.getMessage());
+                }
+                System.out.println(testID);
+            }
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
+    }
+
+    private void saveQuestionsToDatabase() {
+
     }
 }
