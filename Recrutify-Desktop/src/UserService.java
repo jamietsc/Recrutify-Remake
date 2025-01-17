@@ -17,8 +17,8 @@ public class UserService {
                         int id = rs.getInt("UID");
                         boolean isAdmin = rs.getBoolean("is_admin");
 
-                        // Erstelle und gib das User-Objekt zurück
-                        return new User(username, password, id, isAdmin);
+                        User user = new User(username, password, id, isAdmin);
+                        return user;
                     } else {
                         throw new Exception("Benutzername oder Passwort falsch. Bitte versuchen Sie es erneut.");
                     }
@@ -53,5 +53,9 @@ public class UserService {
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
         }
+    }
+
+    public void saveQuestion() {
+
     }
 }
