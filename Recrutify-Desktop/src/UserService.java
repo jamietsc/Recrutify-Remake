@@ -3,10 +3,12 @@ import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserService {
-
+    public static String url = "jdbc:sqlite:" + initializeDatabase();
     /**
      * function to initizalize the database
      * @return the path where the db is located
@@ -18,10 +20,10 @@ public class UserService {
         File dbFile = new File(dbPath);
 
         if (!dbFile.exists()) {
-            System.out.println("Datenbank existiert nicht. Erstelle neue Datenbank...");
+            //System.out.println("Datenbank existiert nicht. Erstelle neue Datenbank...");
             try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath)) {
                 if (conn != null) {
-                    System.out.println("Neue Datenbank erstellt: " + dbPath);
+                    //System.out.println("Neue Datenbank erstellt: " + dbPath);
                     createTables(conn); // Tabellen erstellen
                 }
             } catch (SQLException e) {
@@ -30,7 +32,7 @@ public class UserService {
         } else {
             try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath)) {
                 if (conn != null) {
-                    System.out.println("Datenbank gefunden: " + dbPath);
+                    //System.out.println("Datenbank gefunden: " + dbPath);
                     createTables(conn); // Tabellen prüfen und ggf. erstellen
                 }
             } catch (SQLException e) {
@@ -105,7 +107,7 @@ public class UserService {
         for (String sql : tableCreationScripts) {
             try (Statement stmt = conn.createStatement()) {
                 stmt.executeUpdate(sql);
-                System.out.println("Table exists or will be created.");
+                //System.out.println("Table exists or will be created.");
             } catch (SQLException e) {
                 System.out.println("Error while Creating the table: " + e.getMessage());
             }
@@ -114,7 +116,6 @@ public class UserService {
 
     // Methode zum Einloggen und gleichzeitigen Verbinden mit der Datenbank
     public static User login(String username, String password) throws Exception {
-        String url = "jdbc:sqlite:" + initializeDatabase(); //database will be initialized
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ? AND Passwort = ?";
@@ -143,10 +144,9 @@ public class UserService {
     }
 
     public static void register(String username, String password, String company, String firstName, String lastName) {
-        String url = "jdbc:sqlite:" + initializeDatabase(); //database will be initialized
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
+                //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
                 // insert into
                 String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -166,13 +166,12 @@ public class UserService {
         }
     }
 
-    public static ObservableList<String> getTestsFromCompany(int UID){
-        String url = "jdbc:sqlite:" + initializeDatabase();
+    public static ObservableList<String> getTIDsFromCompany(int UID){
         ObservableList<String> results = FXCollections.observableArrayList();
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                System.out.println("Connected to the database.");
+                //System.out.println("Connected to the database.");
                 //Select from
                 String sql = "SELECT TID FROM TEST WHERE UID = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)){
@@ -193,4 +192,49 @@ public class UserService {
         }
         return null;
     }
+
+    public static ObservableList<Bewerber> loadAllTestResults(int TID){
+        //wichtig ist nur der Vorname, der Nachname und die Punktzahl
+        ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList();
+        List<String> allBIDs = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                //System.out.println("Connected to the database.");
+                String sql = "SELECT BID FROM BEWERBER_TEST WHERE TID = ? ";
+                try (PreparedStatement ps = conn.prepareStatement(sql)){
+                    ps.setInt(1, TID);
+                    try (ResultSet rs = ps.executeQuery()){
+                        while(rs.next()) {
+                            allBIDs.add(rs.getString("BID"));
+                        }
+                    }
+                }
+
+                //get all applicants
+                String sqlQuery = "SELECT BID, VORNAME, NACHNAME, ERGEBNIS FROM BEWERBER WHERE BID = ?";
+                try (PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery)) {
+                    for (String bid : allBIDs) {
+                        preparedStatement.setString(1, bid);
+                        try (ResultSet rs = preparedStatement.executeQuery()) {
+                            while (rs.next()) {
+                                Bewerber applicant = new Bewerber(
+                                        rs.getString("BID"),
+                                        rs.getString("VORNAME"),
+                                        rs.getString("NACHNAME"),
+                                        rs.getInt("ERGEBNIS")
+                                );
+                                System.out.println("Neuer Bewerber: " + applicant.toString());
+                                allApplicants.add(applicant);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while connecting to the database.");
+        }
+        return allApplicants;
+    }
+
 }
