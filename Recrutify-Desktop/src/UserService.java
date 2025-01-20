@@ -88,7 +88,6 @@ public class UserService {
                 Richtig_2 BOOLEAN,
                 Richtig_3 BOOLEAN,
                 Richtig_4 BOOLEAN,
-                AID INT,
                 TID INT,
                 FOREIGN KEY (TID) REFERENCES Test(TID)
             );
@@ -248,7 +247,7 @@ public class UserService {
                                         rs.getString("NACHNAME"),
                                         rs.getInt("ERGEBNIS")
                                 );
-                                System.out.println("Neuer Bewerber: " + applicant.toString());
+                                //System.out.println("Neuer Bewerber: " + applicant.toString());
                                 allApplicants.add(applicant);
                             }
                         }
