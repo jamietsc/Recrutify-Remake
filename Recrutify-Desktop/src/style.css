@@ -57,6 +57,9 @@
     -fx-text-fill: black;
     -fx-font-size: 14px;
     -fx-alignment: center;
+    -fx-pref-width: 600px;
+    -fx-max-width: 600px;
+    -fx-min-width: 600px;
 }
 
 .hbox-top {
@@ -77,4 +80,22 @@
 
 .checkbox {
     -fx-padding: 10px 0 10px 0;
+}
+
+.radio-button {
+    -fx-padding: 10px 0 10px 0;
+}
+
+.scroll-pane {
+    -fx-background-color: white;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
 }
