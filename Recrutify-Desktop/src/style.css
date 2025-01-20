@@ -71,7 +71,7 @@
 }
 
 .hbox-bottom {
-    -fx-padding: 10px 0 50px 0;
+    -fx-padding: 0px 0 50px 0;
 }
 
 .question-container {

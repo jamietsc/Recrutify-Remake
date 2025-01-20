@@ -14,6 +14,7 @@ public class QuestionController {
     private List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
     private List<TextField> questionFieldsSingleChoice = new ArrayList<>();
     private List<HBox> answerBoxesSingleChoice = new ArrayList<>();
+    private List<TextField> questionFieldsFreitext = new ArrayList<>();
 
     int testID = 1;
     int time = 0;
@@ -68,11 +69,12 @@ public class QuestionController {
         answerBoxesMultipleChoice.add(hBox3);
         answerBoxesMultipleChoice.add(hBox4);
 
-        hBox1.getStyleClass().add("hbox-top");
-        hBox2.getStyleClass().add("hbox");
-        hBox3.getStyleClass().add("hbox");
+        //hBox1.getStyleClass().add("hbox-top");
+        //hBox2.getStyleClass().add("hbox");
+        //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
+        questionContainer.setSpacing(20);
         questionContainer.getChildren().addAll(textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
@@ -124,12 +126,25 @@ public class QuestionController {
         answerBoxesSingleChoice.add(hBox3);
         answerBoxesSingleChoice.add(hBox4);
 
-        hBox1.getStyleClass().add("hbox-top");
-        hBox2.getStyleClass().add("hbox");
-        hBox3.getStyleClass().add("hbox");
+        //hBox1.getStyleClass().add("hbox-top");
+        //hBox2.getStyleClass().add("hbox");
+        //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
+        questionContainer.setSpacing(20);
         questionContainer.getChildren().addAll(textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+    }
+
+    @FXML
+    private void freitextButtonAction() {
+        TextField textFieldQuestion = new TextField();
+        textFieldQuestion.setPromptText("Frage");
+        questionFieldsFreitext.add(textFieldQuestion);
+
+        textFieldQuestion.getStyleClass().add("question-text-field");
+
+        questionContainer.setSpacing(10);
+        questionContainer.getChildren().addAll(textFieldQuestion);
     }
 
     @FXML
@@ -188,7 +203,7 @@ public class QuestionController {
         getTestID();
         saveMultipleChoiceQuestions();
         saveSingleChoiceQuestions();
-        // saveFreitextQuestion();
+        saveFreitextQuestion();
         setTime();
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
@@ -288,6 +303,29 @@ public class QuestionController {
                         ps.setBoolean(9, correct3);
                         ps.setBoolean(10, correct4);
                         ps.setInt(11, testID);
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
+    }
+
+    public void saveFreitextQuestion() {
+        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                for (TextField textFieldQuestion : questionFieldsFreitext ) {
+                    String question = textFieldQuestion.getText();
+
+                    String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, TID) VALUES (?,?,?)";
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                        ps.setInt(1,0 );
+                        ps.setString(2, question);
+                        ps.setInt(3, testID);
                         ps.executeUpdate();
                     } catch (SQLException e) {
                         System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
