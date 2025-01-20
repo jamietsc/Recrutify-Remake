@@ -3,7 +3,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,7 +13,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
-import java.util.*;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
@@ -285,6 +283,10 @@ public class Main extends Application {
         stage.close();
     }
 
+    /**
+     * method which will open the view for the results
+     * @throws Exception
+     */
     @FXML
     private void auswertungÖffnenButtonAction() throws Exception {
         openAuswertungStage();
@@ -292,6 +294,10 @@ public class Main extends Application {
         stage.close();
     }
 
+    /**
+     * method for the dropdown menu where all the test ids of the company will be load and displayed in the dropdownmenu
+     * @throws Exception
+     */
     @FXML
     private void onOpenDropDownMenu() throws Exception{
         User regiseredUser = UserSession.getCurrentUser();
@@ -302,6 +308,10 @@ public class Main extends Application {
         dropDownMenu.setItems(options);
     }
 
+    /**
+     * method for the button where the test results for a company will be load and displayed in the table view
+     * @throws Exception
+     */
     @FXML
     private void searchResultsButtonAction() throws Exception{
         ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList(
@@ -320,6 +330,11 @@ public class Main extends Application {
         System.out.println("Die Dropdown Value beträgt: " + dropDownMenu.getValue());
     }
 
+    /**
+     * Method for the button which will go back to the main menu
+     * can be user in the whole program
+     * @throws Exception
+     */
     @FXML
     private void goBackToMainMenuButtonAction() throws Exception{
         openUserStage();

@@ -114,7 +114,13 @@ public class UserService {
         }
     }
 
-    // Methode zum Einloggen und gleichzeitigen Verbinden mit der Datenbank
+    /**
+     * method to login as a company user
+     * @param username username of the company account
+     * @param password password of the company account
+     * @return the logged in user
+     * @throws Exception if the sql query is not possible
+     */
     public static User login(String username, String password) throws Exception {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -143,6 +149,14 @@ public class UserService {
         } return null;
     }
 
+    /**
+     * method to register a new company account
+     * @param username username of the company account
+     * @param password password of the company account
+     * @param company name of the company
+     * @param firstName first name of the user
+     * @param lastName last name of the user
+     */
     public static void register(String username, String password, String company, String firstName, String lastName) {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -166,6 +180,11 @@ public class UserService {
         }
     }
 
+    /**
+     * method to load all test ids from a company to display them in the combo box
+     * @param UID ID of the company
+     * @return a list with all test ids from the company
+     */
     public static ObservableList<String> getTIDsFromCompany(int UID){
         ObservableList<String> results = FXCollections.observableArrayList();
 
@@ -193,6 +212,11 @@ public class UserService {
         return null;
     }
 
+    /**
+     * method to load all test results into a list
+     * @param TID Test ID of the test the user want to see
+     * @return list of alle results
+     */
     public static ObservableList<Bewerber> loadAllTestResults(int TID){
         //wichtig ist nur der Vorname, der Nachname und die Punktzahl
         ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList();
