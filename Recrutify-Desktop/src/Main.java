@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -14,6 +15,8 @@ import javafx.stage.StageStyle;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import java.util.*;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 
 public class Main extends Application {
     User user = new User();
@@ -59,6 +62,27 @@ public class Main extends Application {
     @FXML
     private ComboBox<String> dropDownMenu;
 
+    @FXML
+    private Button searchTIDResults;
+
+    @FXML
+    private Label noEntriesToThisTestLabel;
+
+    @FXML
+    private TableView<Bewerber> resultTable;
+
+    @FXML
+    private TableColumn<Bewerber, String> nameColumn;
+
+    @FXML
+    private TableColumn<Bewerber, String> lastNameColumn;
+
+    @FXML
+    private TableColumn<Bewerber, Integer> scoreColumn;
+
+    @FXML
+    private Button goBackToMainMenuButton;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -101,6 +125,11 @@ public class Main extends Application {
         userStage.setScene(new Scene(root));
         userStage.setTitle("Recrutify");
         userStage.show();
+    }
+
+    @FXML
+    public void openMainMenuStage() throws Exception {
+
     }
 
     @FXML
@@ -267,9 +296,35 @@ public class Main extends Application {
     private void onOpenDropDownMenu() throws Exception{
         User regiseredUser = UserSession.getCurrentUser();
         options = FXCollections.observableArrayList(
-                UserService.getTestsFromCompany(regiseredUser.getUserID())
+                UserService.getTIDsFromCompany(regiseredUser.getUserID())
         );
+
         dropDownMenu.setItems(options);
+    }
+
+    @FXML
+    private void searchResultsButtonAction() throws Exception{
+        ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList(
+                UserService.loadAllTestResults(Integer.parseInt(dropDownMenu.getValue()))
+        );
+        if(!allApplicants.isEmpty()){
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("vorname"));
+            lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("nachname"));
+            scoreColumn.setCellValueFactory(new PropertyValueFactory<>("ergebnis"));
+            resultTable.setItems(allApplicants);
+            resultTable.setVisible(true);
+            noEntriesToThisTestLabel.setVisible(false);
+        } else {
+            noEntriesToThisTestLabel.setVisible(true);
+        }
+        System.out.println("Die Dropdown Value beträgt: " + dropDownMenu.getValue());
+    }
+
+    @FXML
+    private void goBackToMainMenuButtonAction() throws Exception{
+        openUserStage();
+        Stage stage = (Stage) goBackToMainMenuButton.getScene().getWindow();
+        stage.close();
     }
 
 

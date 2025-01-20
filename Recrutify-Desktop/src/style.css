@@ -16,15 +16,29 @@
     -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
 }
 
-.username-label,
+.secondary-button {
+    -fx-background-color: linear-gradient(to bottom right, #a2a2a1, #9a969a);
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
+    -fx-text-fill: white; /* Textfarbe */
+    -fx-text-weight: bold;
+    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #797877, #3d3c3d);
+}
+
 .testauswahl-label{
-    -fx-background-color: #efefef;
+    -fx-background-color: #a2a2a1;
     -fx-background-radius: 50px;
     -fx-padding: 10px 20px;
     -fx-text-fill: black;
     -fx-font-size: 14px;
 }
 
+.username-label,
 .password-label {
     -fx-background-color: #efefef;
     -fx-background-radius: 50px;
@@ -81,9 +95,139 @@
 }
 
 .title-adminPage {
-    -fx-background-color: #efefef;
+    -fx-background-color: #a2a2a1;
     -fx-background-radius: 50px;
     -fx-padding: 10px 20px;
     -fx-text-fill: black;
     -fx-font-size: 18px;
 }
+
+.combo-box .list-cell
+{
+    -fx-background: darkgrey;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+}
+
+.combo-box-popup .list-view
+{
+    -fx-background-color: white, white;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+}
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-padding: 4 0 4 5;
+
+    /* No alternate highlighting */
+    -fx-background-color: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-inner-color;
+}
+
+.combo-box-base
+{
+    -fx-background-color: lightgrey, grey,grey,lightgrey;
+    -fx-background-radius: 5, 5, 4, 3;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 0;
+}
+
+.combo-box-base:hover
+{
+    -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing
+{
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-radius: 6.4, 4, 5, 3;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+/* Tabelle zentrieren */
+/* Allgemeine Einstellungen für die TableView */
+.tabellen-ansicht {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
+
+/* Header der TableView */
+.tabellen-ansicht .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #4caf50, #388e3c);
+    -fx-border-color: #2e7d32;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.tabellen-ansicht .column-header {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* Zellen der TableView */
+.tabellen-ansicht .cell {
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+/* Abwechselnde Zeilenfarbe */
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+/* Hover-Effekt für Zeilen */
+.table-row-cell:hover {
+    -fx-background-color: #e8f5e9;
+}
+
+/* Ausgewählte Zeile */
+.table-row-cell:selected {
+    -fx-background-color: #81c784;
+    -fx-text-fill: #ffffff;
+}
+
+/* Scrollbar Styling */
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #4caf50;
+    -fx-background-insets: 2;
+    -fx-background-radius: 5px;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #4caf50;
+    -fx-background-insets: 2;
+    -fx-background-radius: 5px;
+}
+
+
