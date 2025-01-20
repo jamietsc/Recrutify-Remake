@@ -18,6 +18,7 @@ public class UserService {
                         boolean isAdmin = rs.getBoolean("is_admin");
 
                         User user = new User(username, password, id, isAdmin);
+                        UserSession.setCurrentUser(user);
                         return user;
                     } else {
                         throw new Exception("Benutzername oder Passwort falsch. Bitte versuchen Sie es erneut.");

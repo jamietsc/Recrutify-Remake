@@ -5,11 +5,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class QuestionController {
-    int questioncounter = 1;
-    int answerCounter = 1;
+    private List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
+    private List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
+
     int testID = 1;
+    int time = 0;
 
     @FXML
     private VBox questionContainer;
@@ -25,36 +30,23 @@ public class QuestionController {
         getTestID();
         TextField textFieldQuestion = new TextField();
         textFieldQuestion.setPromptText("Frage");
-        textFieldQuestion.setId("question" + questioncounter);
-        questioncounter++;
+        questionFieldsMultipleChoice.add(textFieldQuestion);
 
         CheckBox checkBox1 = new CheckBox();
-        checkBox1.setId("checkbox" + answerCounter);
         TextField textFieldAnswer1 = new TextField();
         textFieldAnswer1.setPromptText("Antwort 1");
-        textFieldAnswer1.setId("answer" + answerCounter);
-        answerCounter++;
 
         CheckBox checkBox2 = new CheckBox();
-        checkBox2.setId("checkbox" + answerCounter);
         TextField textFieldAnswer2 = new TextField();
         textFieldAnswer2.setPromptText("Antwort 2");
-        textFieldAnswer2.setId("answer" + answerCounter);
-        answerCounter++;
 
         CheckBox checkBox3 = new CheckBox();
-        checkBox3.setId("checkbox" + answerCounter);
         TextField textFieldAnswer3 = new TextField();
         textFieldAnswer3.setPromptText("Antwort 3");
-        textFieldAnswer3.setId("answer" + answerCounter);
-        answerCounter++;
 
         CheckBox checkBox4 = new CheckBox();
-        checkBox4.setId("checkbox" + answerCounter);
         TextField textFieldAnswer4 = new TextField();
         textFieldAnswer4.setPromptText("Antwort 4");
-        textFieldAnswer4.setId("answer" + answerCounter);
-        answerCounter++;
 
         textFieldQuestion.getStyleClass().add("question-text-field");
         textFieldAnswer1.getStyleClass().add("answer-text-field");
@@ -70,6 +62,10 @@ public class QuestionController {
         HBox hBox2 = new HBox(10, checkBox2, textFieldAnswer2);
         HBox hBox3 = new HBox(10, checkBox3, textFieldAnswer3);
         HBox hBox4 = new HBox(10, checkBox4, textFieldAnswer4);
+        answerBoxesMultipleChoice.add(hBox1);
+        answerBoxesMultipleChoice.add(hBox2);
+        answerBoxesMultipleChoice.add(hBox3);
+        answerBoxesMultipleChoice.add(hBox4);
 
         hBox1.getStyleClass().add("hbox-top");
         hBox2.getStyleClass().add("hbox");
@@ -83,6 +79,23 @@ public class QuestionController {
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+    }
+
+    private void setTime () {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Zeit einstellen");
+        dialog.setHeaderText("Hier können sie eine Zeitbegrenzung für den Test festlegen");
+        dialog.setContentText("Zeit (in Minuten):");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String timeString = result.get();
+            try {
+                time = Integer.parseInt(timeString);
+            } catch (NumberFormatException e) {
+                System.out.println("Bitte eine gültige Zahl eingeben");
+            }
+        }
     }
 
     @FXML
@@ -113,7 +126,72 @@ public class QuestionController {
         }
     }
 
-    private void saveQuestionsToDatabase() {
+    @FXML
+    private void saveQuestionsButtonAction() {
+        saveMultipleChoiceQuestions();
+        // saveSingleChoiceQuestions();
+        // saveFreitextQuestion();
+        setTime();
+        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            String sql = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, testID);
+                ps.setInt(2, time);
+                ps.setInt(3, UserSession.getCurrentUser().getUserID());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+            System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
+            }
 
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
+    }
+
+        private void saveMultipleChoiceQuestions() {
+        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                for (int i = 0; i < questionFieldsMultipleChoice.size(); i++) {
+                    String question = questionFieldsMultipleChoice.get(i).getText();
+
+                    HBox hBox1 = answerBoxesMultipleChoice.get(i * 4);
+                    HBox hBox2 = answerBoxesMultipleChoice.get(i * 4 + 1);
+                    HBox hBox3 = answerBoxesMultipleChoice.get(i * 4 + 2);
+                    HBox hBox4 = answerBoxesMultipleChoice.get(i * 4 + 3);
+
+                    String answer1 = ((TextField)hBox1.getChildren().get(1)).getText();
+                    String answer2 = ((TextField)hBox2.getChildren().get(1)).getText();
+                    String answer3 = ((TextField)hBox3.getChildren().get(1)).getText();
+                    String answer4 = ((TextField)hBox4.getChildren().get(1)).getText();
+
+                    Boolean correct1 = ((CheckBox)hBox1.getChildren().get(0)).isSelected();
+                    Boolean correct2 = ((CheckBox)hBox2.getChildren().get(0)).isSelected();
+                    Boolean correct3 = ((CheckBox)hBox3.getChildren().get(0)).isSelected();
+                    Boolean correct4 = ((CheckBox)hBox4.getChildren().get(0)).isSelected();
+
+                    String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, Richtig_1, Richtig_2, Richtig_3, Richtig_4, TID) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                        ps.setInt(1,1 );
+                        ps.setString(2, question);
+                        ps.setString(3, answer1);
+                        ps.setString(4, answer2);
+                        ps.setString(5, answer3);
+                        ps.setString(6, answer4);
+                        ps.setBoolean(7, correct1);
+                        ps.setBoolean(8, correct2);
+                        ps.setBoolean(9, correct3);
+                        ps.setBoolean(10, correct4);
+                        ps.setInt(11, testID);
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
     }
 }

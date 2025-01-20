@@ -30,5 +30,6 @@
       </Button>
       <Button fx:id="closeButton" layoutX="1156.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
       <Button layoutX="36.0" layoutY="360.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Single Choice" />
+      <Button fx:id="saveQuestionsButton" layoutX="36.0" layoutY="721.0" mnemonicParsing="false" onAction="#saveQuestionsButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Fragen Speichern" />
    </children>
 </AnchorPane>
