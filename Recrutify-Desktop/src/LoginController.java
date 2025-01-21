@@ -39,7 +39,7 @@ public class LoginController {
 
                 // Öffnet das entsprechende Fenster basierend auf der Rolle des Benutzers
                 if (user.isAdmin()) {
-                    openStage("/admin.fxml");
+                    openStage("/register.fxml");
                 } else {
                     openStage("/user.fxml");
                 }
