@@ -5,9 +5,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 
 
 public class Main extends Application {
+
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -24,6 +28,16 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
         // Setzt die Scene auf die Bühne (Stage)
+        primaryStage.setResizable(false);
+        root.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged((MouseEvent event) -> {
+            primaryStage.setX(event.getScreenX() - xOffset);
+            primaryStage.setY(event.getScreenY() - yOffset);
+        });
         primaryStage.setScene(scene);
         primaryStage.setTitle("Recrutify | Login");
         primaryStage.show();
