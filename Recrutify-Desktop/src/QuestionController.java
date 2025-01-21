@@ -159,15 +159,24 @@ public class QuestionController {
         dialog.setHeaderText("Hier können sie eine Zeitbegrenzung für den Test festlegen");
         dialog.setContentText("Zeit (in Minuten):");
 
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            String timeString = result.get();
-            try {
-                time = Integer.parseInt(timeString);
-            } catch (NumberFormatException e) {
-                System.out.println("Bitte eine gültige Zahl eingeben");
+        boolean validInput = false;
+        while (!validInput) {
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                String timeString = result.get();
+                try {
+                    time = Integer.parseInt(timeString);
+                    if (time > 0) {
+                        validInput = true;
+                    }
+                } catch (NumberFormatException e) {
+                    dialog.setHeaderText("Ungültige Eingabe! Bitte eine gültige Zahl eingeben.");
+                }
+            } else {
+                break;
             }
         }
+
     }
 
     @FXML
@@ -199,12 +208,12 @@ public class QuestionController {
     }
 
     @FXML
-    private void saveQuestionsButtonAction() {
+    private boolean saveQuestionsButtonAction() {
         getTestID();
+        setTime();
         saveMultipleChoiceQuestions();
         saveSingleChoiceQuestions();
         saveFreitextQuestion();
-        setTime();
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             String sql = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
@@ -213,13 +222,14 @@ public class QuestionController {
                 ps.setInt(2, time);
                 ps.setInt(3, UserSession.getCurrentUser().getUserID());
                 ps.executeUpdate();
+                showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
             } catch (SQLException e) {
             System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
             }
-
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
         }
+        return true;
     }
 
         private void saveMultipleChoiceQuestions() {
@@ -335,5 +345,21 @@ public class QuestionController {
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void showSuccessDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle("Recrutify");
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void showErrorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setTitle("Fehler!");
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }
