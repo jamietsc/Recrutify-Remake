@@ -1,6 +1,5 @@
 ﻿using Recrutify.DataAccessLayer.Repositories;
 using Recrutify.DataAccessLayer.SqlDataAccess;
-using Recrutify.Data;
 using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Data
@@ -16,8 +15,8 @@ namespace Recrutify.DataAccessLayer.Data
         //sämtliche Fragen zu einem Test aus der Datenbank laden
         public async Task<IEnumerable<MultipleChoiceModel>> GetMultipleChoice(int TID)
         {
-            string sqlQuery = "SELECT FID, Text, Antwort_1, Antwort_2, Antwort_3, Antwort_4," +
-                "Richtig_1, Richtig_2, Richtig_3, Richtig_4 FROM MultipleChoiceFragen WHERE TID = @TID;";
+            string sqlQuery = "SELECT FID, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4," +
+                "Richtig_1, Richtig_2, Richtig_3, Richtig_4 FROM Fragen WHERE TID = @TID;";
 
             return await _db.LoadData<MultipleChoiceModel, dynamic>(sqlQuery, new { TID });
         }

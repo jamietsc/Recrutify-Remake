@@ -1,4 +1,5 @@
-﻿@page "/test2/{tid:int}"
+﻿@*Ungenutzt/Veraltet*@
+@page "/test2/{tid:int}"
 
 @using Recrutify.Models
 @using Recrutify.DataAccessLayer.Data
@@ -19,7 +20,7 @@ else
     @foreach (var question in multipleChoiceQuestions)
     {
         <div>
-            <p>@question.Text</p>
+            <p>@question.Fragentext</p>
             <div>
                 <input class="form-check-input" type="radio" name="radioField_@question.FID" @onchange="() => SetAnswer(question, 1)" id="Answer1_@question.FID">
                 <label class="form-check-label" for="Answer1_@question.FID">@question.Antwort_1</label>

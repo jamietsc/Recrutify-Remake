@@ -9,75 +9,79 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Recrutify
 build_property.RootNamespace = Recrutify
-build_property.ProjectDir = Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify\
+build_property.ProjectDir = C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = Z:\BachelorOfScience-Informatik\3. Semester\Software_Engeneering\Recrutify\Recrutify
+build_property.MSBuildProjectDirectory = C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite
 build_property._RazorSourceGeneratorDebug = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/App.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/Admin.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/Admin.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/AdminPageLogin.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/AdminPageLogin.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5QYWdlTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/Counter.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/End.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/End.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW5kLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/FetchData.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/Index.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/MultipleChoice.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXVsdGlwbGVDaG9pY2UucmF6b3I=
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/QuestionTypes/MultipleChoice.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb25UeXBlc1xNdWx0aXBsZUNob2ljZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/SingleChoice.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2luZ2xlQ2hvaWNlLnJhem9y
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/QuestionTypes/SingleChoice.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb25UeXBlc1xTaW5nbGVDaG9pY2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/Welcome.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/Test.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/Welcome.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VsY29tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Shared/SurveyPrompt.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/_Imports.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Shared/MainLayout.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-w1uomqic4y
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Shared/NavMenu.razor]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-230ucagdz5
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/Error.cshtml]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/BachelorOfScience-Informatik/3. Semester/Software_Engeneering/Recrutify/Recrutify/Pages/_Host.cshtml]
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

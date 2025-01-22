@@ -20,6 +20,8 @@ builder.Services.AddScoped<IMultipleChoice<MultipleChoiceModel>, MultipleChoiceD
 builder.Services.AddScoped<IAdmin<AdminModel>, AdminData>();
 builder.Services.AddScoped<IBewerberTest<BewerberTestModel>, BewerberTestData>();
 builder.Services.AddScoped<IUnternehmen<TestModel>, UnternehmenData>();
+builder.Services.AddScoped<IQuestionType<QuestionTypeModel>, QuestionTypeData>();
+builder.Services.AddScoped<ISingleChoice<SingleChoiceModel>, SingleChoiceData>();
 
 //SqlAccess
 builder.Services.AddScoped<ISqlDataAccess, SqlDataAccess>();
@@ -30,6 +32,8 @@ builder.Services.AddScoped<MultipleChoiceModel>();
 builder.Services.AddScoped<BewerberTestModel>();
 builder.Services.AddScoped<TestModel>();
 builder.Services.AddScoped<AdminModel>();
+builder.Services.AddScoped<QuestionTypeModel>();
+builder.Services.AddScoped<SingleChoiceModel>();
 
 var app = builder.Build();
 

@@ -1,0 +1,269 @@
+﻿@page "/test/{tid:int}"
+
+@using Recrutify.Models
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@inject BewerberModel bewerberModel
+@inject BewerberTestModel bewerberTestModel
+@inject IMultipleChoice<MultipleChoiceModel> multipleChoiceService
+@inject IBewerber<BewerberModel> bewerberData
+@inject NavigationManager navigationManager
+@inject HelperModel helperModel
+@inject TestModel testModel
+@inject IUnternehmen<TestModel> unternehmenService
+@inject IQuestionType<QuestionTypeModel> questionTypeService
+@inject ISingleChoice<SingleChoiceModel> singleChoiceService
+
+
+<PageTitle>Einstellungstest</PageTitle>
+
+@* Container für anzuzeigende Fragen *@
+<div style="height: calc(100vh - 200px); overflow-y: auto;">
+    <h1>Einstellungstest @testModel.Name</h1>
+    @switch (currentQuestionType)
+    {
+        case 0:
+            <Recrutify.Pages.QuestionTypes.SingleChoice currentQuestion="currentSingleChoiceQuestion"/>
+            break;
+
+        /*case 1:
+            <Recrutify.Pages.QuestionTypes.MultipleChoice />
+            break; */
+
+        case 999: //Tritt auf, wenn loadCurrentQuestionType() den Fragentyp nicht ermitteln konnte
+            <p>Beim Laden der Frage ist ein Fehler aufgetreten. Bitte klicken Sie auf Weiter.</p>
+            break;
+
+        default: //Tritt auf, wenn ein Fragentyp übergeben wurde, der nicht implementiert ist
+            <p>Beim Laden der Frage ist ein Fehler aufgetreten. Bitte klicken Sie auf Weiter.</p>
+            break;
+    }
+</div>
+
+@* Container für untere Navigationsleiste *@
+<div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
+    <button type="button" disabled="@isPreviousButtonDisabled()" @onclick="previousPage">Zurück</button>
+    <div style="display:flex; justify-content: center;">
+        @if (verbleibendeZeit.TotalSeconds <= 60)
+        {
+            <div style="display: flex; justify-content: center; align-items: center; font-size: 24px; background-color: lightcoral; width: 100px; height: 50px; border-radius: 5px;">@zeitAnzeigen</div>
+        }
+        else
+        {
+            <div style="display: flex; justify-content: center; align-items: center; font-size: 24px; background-color: lightgreen; width: 100px; height: 50px; border-radius: 5px;">@zeitAnzeigen</div>
+        }
+    </div>
+    @if (isLastQuestion())
+    {
+        <button type="button" class="important" onclick="document.getElementById('modal').showModal()">Abgeben</button>
+    }
+    else
+    {
+        <button type="button" @onclick="nextPage">Weiter</button>
+    }
+</div>
+
+@* Container für Abgabe-Fenster *@
+<dialog id="modal" style="border: 1px solid firebrick; border-radius: 5px;">
+    <h2 style="margin: 10px;">Achtung!</h2>
+    <p style="margin: 10px;">Sind Sie sicher, dass Sie abgeben wollen? Es sind keine Änderungen mehr möglich.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center;">
+        <button style="margin: 10px; justify-self: start;" onclick="document.getElementById('modal').close()">Abbrechen</button>
+        <div></div>
+        <button class="important" style="margin: 10px; justify-self: end;" @onclick="auswerten">Abgeben</button>
+    </div>
+</dialog>
+
+@* Container für Abgabe-Fenster nach Ablauf des Timers *@
+<dialog id="modalEndOfTime" style="border: 1px solid firebrick; border-radius: 5px;">
+    <h2 style="margin: 10px;">Achtung!</h2>
+    <p style="margin: 10px;">Die Zeit ist abgelaufen. Sie müssen nun abgeben.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center;">
+        <div></div>
+        <div></div>
+        <button class="important" style="margin: 10px; justify-self: end;" @onclick="auswerten">Abgeben</button>
+    </div>
+</dialog>
+
+@code {
+    [Parameter]
+    public int tid { get; set; }
+
+    //Variablen für Unterscheidung der Fragentypen und Darstellung der aktuellen Frage
+    public List<QuestionTypeModel> questionTypes = new List<QuestionTypeModel>();           //in dieser Liste alle Fragen in Form von FID und Fragentyp gespeichert
+    public int currentFID = 1;
+    public int currentQuestionType = 0;
+    public QuestionTypeModel currentQuestion;
+
+    //Variablen für Single-Choice-Fragen
+    public List<SingleChoiceModel> singleChoiceQuestions = new List<SingleChoiceModel>();   //in dieser Liste alle Single-Choice-Fragen vollständig gespeichert
+    public SingleChoiceModel currentSingleChoiceQuestion;                                   //aktuelle Single-Choice-Frage
+
+    //Variablen für Multiple-Choice-Fragen
+    //private List<MultipleChoiceModel> multipleChoiceQuestions;
+
+    //Variablen für Auswertung
+    private int korrekteAntworten = 0;
+
+    //Variablen für Timer
+    private int startMinuten = 2; // Standardwert
+    private TimeSpan verbleibendeZeit;
+    private string zeitAnzeigen = "00:00";
+    private System.Timers.Timer timer;
+    private bool timerEnded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        questionTypes = (await questionTypeService.GetQuestionTypes(tid)).ToList();
+
+        //Lädt alle Fragen in separate Listen abhängig vom Fragentyp
+        foreach (var questionType in questionTypes)
+        {
+            if (questionType != null && questionType.Fragentyp == 0) {
+                var singleChoiceQuestion = await singleChoiceService.GetSingleChoiceQuestion(tid, questionType.FID);
+                singleChoiceQuestions.Add(singleChoiceQuestion);
+            }
+        }
+
+        /*foreach (var singleChoiceQuestion in singleChoiceQuestions)
+            {
+            Console.WriteLine(singleChoiceQuestion.Fragentext);
+        } */
+
+        startMinuten = testModel.Dauer;
+        StartTimer();
+
+        helperModel.currentFID = 1; // Erste Frage starten
+        currentQuestionType = loadCurrentQuestionType(1);
+        loadCurrentQuestion(1, currentQuestionType);
+    }
+
+    //Lädt Fragentyp der aktuellen Frage
+    private int loadCurrentQuestionType(int FID)
+    {
+        currentQuestion = questionTypes.FirstOrDefault(q => q.FID == FID);
+        if (currentQuestion != null)
+        {
+            return currentQuestion.Fragentyp;
+        } else
+        {
+            return 999;
+        }
+    }
+
+    //Setzt aktuelle Frage in bestimmte Variable abhängig vom Fragentyp
+    private void loadCurrentQuestion(int FID, int questionType)
+    {
+        SingleChoiceModel singleChoiceQuestion;
+        switch(questionType)
+        {
+            case 0:
+                currentSingleChoiceQuestion = singleChoiceQuestions.FirstOrDefault(q => q.FID == FID);
+                break;
+
+            case 999:
+                break;
+        }
+    }
+
+    //Wertet die gesetzten Antworten nach Abgabe aus
+    private async void auswerten()
+    {
+        foreach (var singleChoiceQuestion in singleChoiceQuestions)
+        {
+            if ((singleChoiceQuestion.Gewaehlte_Antwort == 1 && singleChoiceQuestion.Richtig_1) ||
+                (singleChoiceQuestion.Gewaehlte_Antwort == 2 && singleChoiceQuestion.Richtig_2) ||
+                (singleChoiceQuestion.Gewaehlte_Antwort == 3 && singleChoiceQuestion.Richtig_3) ||
+                (singleChoiceQuestion.Gewaehlte_Antwort == 4 && singleChoiceQuestion.Richtig_4))
+            {
+                korrekteAntworten++;
+            }
+        }
+        bewerberModel.Ergebnis = korrekteAntworten;
+        await bewerberData.InsertPunktzahl(bewerberModel);
+        Console.WriteLine(korrekteAntworten);
+        navigationManager.NavigateTo("/end");
+    }
+
+    private bool isPreviousButtonDisabled()
+    {
+        return helperModel.currentFID == 1;
+    }
+
+    private bool isLastQuestion()
+    {
+        return helperModel.currentFID == questionTypes.Count;
+    }
+
+    private void previousPage()
+    {
+        if (helperModel.currentFID > 1)
+        {
+            helperModel.currentFID--;
+            currentQuestionType = loadCurrentQuestionType(helperModel.currentFID);
+            loadCurrentQuestion(helperModel.currentFID, currentQuestionType);
+            StateHasChanged();
+        }
+    }
+
+    private void nextPage()
+    {
+        if (isLastQuestion() == false)
+        {
+            helperModel.currentFID++;
+            currentQuestionType = loadCurrentQuestionType(helperModel.currentFID);
+            loadCurrentQuestion(helperModel.currentFID, currentQuestionType);
+            StateHasChanged();
+        }
+    }
+
+    private void StartTimer()
+    {
+        // Setze die verbleibende Zeit auf die gewünschte Startzeit
+        verbleibendeZeit = TimeSpan.FromMinutes(startMinuten);
+        UpdateAnzeige(); // Initiale Anzeige aktualisieren
+
+        // Initialisiere den Timer für sekündliche Updates
+        timer = new System.Timers.Timer(1000); // 1000ms = 1 Sekunde
+        timer.Elapsed += OnTimerElapsed;
+        timer.AutoReset = true;
+        timer.Enabled = true;
+    }
+
+    private void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+    {
+        // Reduziere die verbleibende Zeit um eine Sekunde
+        verbleibendeZeit = verbleibendeZeit.Subtract(TimeSpan.FromSeconds(1));
+
+        if (verbleibendeZeit.TotalSeconds <= 0)
+        {
+            // Countdown ist abgelaufen, Timer stoppen
+            timer.Stop();
+            verbleibendeZeit = TimeSpan.Zero;
+            OpenModal();
+        }
+
+        // Aktualisiere die Anzeige im UI
+        InvokeAsync(UpdateAnzeige);
+    }
+
+    private void UpdateAnzeige()
+    {
+        // Formatierte Zeit anzeigen: Minuten:Sekunden
+        zeitAnzeigen = verbleibendeZeit.ToString(@"mm\:ss");
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        // Ressourcen aufräumen, wenn die Komponente entfernt wird
+        timer?.Dispose();
+    }
+
+    private async void OpenModal()
+    {
+        await JSRuntime.InvokeVoidAsync("OpenModal"); // JavaScript-Funktion aufrufen
+    }
+}

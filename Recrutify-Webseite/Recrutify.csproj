@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\Ergebnis.razor" />
+    <Content Remove="Pages\Timer.razor" />
   </ItemGroup>
 
   <ItemGroup>

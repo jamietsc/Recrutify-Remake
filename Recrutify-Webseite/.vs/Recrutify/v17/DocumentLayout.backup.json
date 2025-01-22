@@ -1,18 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 3\\Software Engineering 1\\Recrutify\\GitHub\\Recrutify\\",
+  "WorkspaceRootPath": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 3\\software engineering 1\\recrutify\\github\\recrutify\\pages\\singlechoice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:pages\\singlechoice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 4\\software engineering 2\\github\\recrutify-remake\\recrutify-webseite\\pages\\test.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:pages\\test.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 3\\software engineering 1\\recrutify\\github\\recrutify\\pages\\welcome.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:pages\\welcome.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 4\\software engineering 2\\github\\recrutify-remake\\recrutify-webseite\\pages\\questiontypes\\singlechoice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:pages\\questiontypes\\singlechoice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 3\\software engineering 1\\recrutify\\github\\recrutify\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 4\\software engineering 2\\github\\recrutify-remake\\recrutify-webseite\\pages\\questiontypes\\multiplechoice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:pages\\questiontypes\\multiplechoice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 4\\software engineering 2\\github\\recrutify-remake\\recrutify-webseite\\models\\questiontypemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:models\\questiontypemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 4\\software engineering 2\\github\\recrutify-remake\\recrutify-webseite\\dataaccesslayer\\data\\questiontypedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:dataaccesslayer\\data\\questiontypedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|c:\\users\\finn luca\\onedrive\\hwr\\semester 4\\software engineering 2\\github\\recrutify-remake\\recrutify-webseite\\dataaccesslayer\\repositories\\iquestiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86F665F6-F2EE-47E0-A22F-B41D7D57CBBA}|Recrutify.csproj|solutionrelative:dataaccesslayer\\repositories\\iquestiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,46 +34,95 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "site.css",
-              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 3\\Software Engineering 1\\Recrutify\\GitHub\\Recrutify\\wwwroot\\css\\site.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
-              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 3\\Software Engineering 1\\Recrutify\\GitHub\\Recrutify\\wwwroot\\css\\site.css",
-              "RelativeToolTip": "wwwroot\\css\\site.css",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-10-14T19:14:16.764Z",
+              "DocumentIndex": 5,
+              "Title": "IQuestionType.cs",
+              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\DataAccessLayer\\Repositories\\IQuestionType.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\IQuestionType.cs",
+              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\DataAccessLayer\\Repositories\\IQuestionType.cs",
+              "RelativeToolTip": "DataAccessLayer\\Repositories\\IQuestionType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T19:29:09.022Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "QuestionTypeModel.cs",
+              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Models\\QuestionTypeModel.cs",
+              "RelativeDocumentMoniker": "Models\\QuestionTypeModel.cs",
+              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Models\\QuestionTypeModel.cs",
+              "RelativeToolTip": "Models\\QuestionTypeModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T19:14:43.667Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Welcome.razor",
-              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 3\\Software Engineering 1\\Recrutify\\GitHub\\Recrutify\\Pages\\Welcome.razor",
-              "RelativeDocumentMoniker": "Pages\\Welcome.razor",
-              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 3\\Software Engineering 1\\Recrutify\\GitHub\\Recrutify\\Pages\\Welcome.razor",
-              "RelativeToolTip": "Pages\\Welcome.razor",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAABMAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-14T20:09:14.158Z",
+              "DocumentIndex": 4,
+              "Title": "QuestionTypeData.cs",
+              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\DataAccessLayer\\Data\\QuestionTypeData.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Data\\QuestionTypeData.cs",
+              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\DataAccessLayer\\Data\\QuestionTypeData.cs",
+              "RelativeToolTip": "DataAccessLayer\\Data\\QuestionTypeData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T19:15:49.75Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SingleChoice.razor",
-              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 3\\Software Engineering 1\\Recrutify\\GitHub\\Recrutify\\Pages\\SingleChoice.razor",
-              "RelativeDocumentMoniker": "Pages\\SingleChoice.razor",
-              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 3\\Software Engineering 1\\Recrutify\\GitHub\\Recrutify\\Pages\\SingleChoice.razor",
-              "RelativeToolTip": "Pages\\SingleChoice.razor",
-              "ViewState": "AgIAAEkAAAAAAAAAAAASwHEAAADZAAAAAAAAAA==",
+              "Title": "Test.razor",
+              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Pages\\Test.razor",
+              "RelativeDocumentMoniker": "Pages\\Test.razor",
+              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Pages\\Test.razor",
+              "RelativeToolTip": "Pages\\Test.razor",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAEEAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-11T12:38:54.436Z",
+              "WhenOpened": "2025-01-15T23:14:54.765Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MultipleChoice.razor",
+              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Pages\\QuestionTypes\\MultipleChoice.razor",
+              "RelativeDocumentMoniker": "Pages\\QuestionTypes\\MultipleChoice.razor",
+              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Pages\\QuestionTypes\\MultipleChoice.razor",
+              "RelativeToolTip": "Pages\\QuestionTypes\\MultipleChoice.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-22T01:54:52.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SingleChoice.razor",
+              "DocumentMoniker": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Pages\\QuestionTypes\\SingleChoice.razor",
+              "RelativeDocumentMoniker": "Pages\\QuestionTypes\\SingleChoice.razor",
+              "ToolTip": "C:\\Users\\Finn Luca\\OneDrive\\HWR\\Semester 4\\Software Engineering 2\\GitHub\\Recrutify-Remake\\Recrutify-Webseite\\Pages\\QuestionTypes\\SingleChoice.razor",
+              "RelativeToolTip": "Pages\\QuestionTypes\\SingleChoice.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-10T11:30:05.887Z",
               "EditorCaption": ""
             }
           ]
