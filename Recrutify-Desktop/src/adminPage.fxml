@@ -5,29 +5,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminPageController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminPageController">
    <children>
       <Label fx:id="noEntriesToThisTestLabel" layoutX="52.0" layoutY="199.0" styleClass="testauswahl-label" stylesheets="@style.css" text="Keine Ergebnisse zu dem Test." visible="false" />
-      <Line endX="1053.0" layoutX="127.0" layoutY="172.0" startX="-100.0" />
-      <AnchorPane prefHeight="172.0" prefWidth="1200.0" styleClass="gradient-pane" stylesheets="@style.css">
-         <children>
-            <Button fx:id="minimizeButton" layoutX="1123.0" layoutY="-6.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="closeButton" layoutX="1156.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
-            <Label layoutX="44.0" layoutY="18.0" styleClass="title-adminPage" stylesheets="@style.css" text="Auswertung der Tests:" />
-            <Label layoutX="44.0" layoutY="77.0" styleClass="testauswahl-label" stylesheets="@style.css" text="Bitte wählen Sie einen erstellten Test aus: " />
-            <ComboBox fx:id="dropDownMenu" layoutX="372.0" layoutY="86.0" onMouseClicked="#onOpenDropDownMenu" prefWidth="150.0" stylesheets="@style.css" />
-            <Button fx:id="searchTIDResults" layoutX="548.0" layoutY="77.0" onAction="#searchResultsButtonAction" styleClass="secondary-button" stylesheets="@style.css" text="Suchen" />
-            <Button fx:id="goBackToMainMenuButton" layoutX="1040.0" layoutY="77.0" mnemonicParsing="false" onAction="#goBackToMainMenuButtonAction" styleClass="secondary-button" stylesheets="@style.css" text="Zurück" />
-         </children>
-      </AnchorPane>
       <TableView fx:id="resultTable" layoutX="300.0" layoutY="250.0" prefHeight="400.0" prefWidth="600.0" styleClass="tabellen-ansicht" stylesheets="@style.css" visible="false">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="185.0" text="Vorname" />
@@ -35,5 +20,33 @@
             <TableColumn fx:id="scoreColumn" prefWidth="185.0" text="Punktzahl" />
         </columns>
       </TableView>
+      <Button fx:id="minimizeButton" layoutX="1134.0" layoutY="-6.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="closeButton" layoutX="1156.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
+      <Label layoutX="55.0" layoutY="186.0" stylesheets="@style.css" text="Auswertung der Tests:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="97.0" stylesheets="@style.css" text="Bitte wählen Sie einen erstellten Test aus: ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="dropDownMenu" layoutX="423.0" layoutY="100.0" onMouseClicked="#onOpenDropDownMenu" prefWidth="150.0" style="-fx-background-color: transparent; -fx-border-color: lightgrey;" stylesheets="@style.css" />
+      <Button fx:id="searchTIDResults" layoutX="581.0" layoutY="92.0" onAction="#searchResultsButtonAction" styleClass="login-button" stylesheets="@style.css" text="Suchen" />
+      <Button fx:id="goBackToMainMenuButton" layoutX="52.0" layoutY="722.0" mnemonicParsing="false" onAction="#goBackToMainMenuButtonAction" styleClass="login-button" stylesheets="@style.css" text="&lt;" textFill="#f2f2f2">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="79.0" fitWidth="231.0">
+         <image>
+            <Image url="@Logo_Recrutify_full.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

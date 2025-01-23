@@ -201,8 +201,8 @@
 
 /* Header der TableView */
 .tabellen-ansicht .column-header-background {
-    -fx-background-color: linear-gradient(to bottom, #4caf50, #388e3c);
-    -fx-border-color: #2e7d32;
+    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
+    -fx-border-color: transparent;
     -fx-border-width: 0 0 2px 0;
 }
 
@@ -230,12 +230,12 @@
 
 /* Hover-Effekt für Zeilen */
 .table-row-cell:hover {
-    -fx-background-color: #e8f5e9;
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
 }
 
 /* Ausgewählte Zeile */
 .table-row-cell:selected {
-    -fx-background-color: #81c784;
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
     -fx-text-fill: #ffffff;
 }
 

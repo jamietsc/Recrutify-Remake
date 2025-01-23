@@ -121,7 +121,7 @@ public class UserService {
      * @throws Exception if the sql query is not possible
      */
     public static User login(String username, String password) throws Exception {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db")) {
+        try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ? AND Passwort = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -188,7 +188,7 @@ public class UserService {
     public static ObservableList<String> getTIDsFromCompany(int UID){
         ObservableList<String> results = FXCollections.observableArrayList();
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db")) {
+        try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 //System.out.println("Connected to the database.");
                 //Select from
@@ -222,7 +222,7 @@ public class UserService {
         ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList();
         List<String> allBIDs = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db")) {
+        try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 //System.out.println("Connected to the database.");
                 String sql = "SELECT BID FROM BEWERBER_TEST WHERE TID = ? ";
