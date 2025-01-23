@@ -14,6 +14,9 @@ public class UserController {
     private double yOffset = 0;
 
     @FXML
+    private Button auswertungÖffnenButton;
+
+    @FXML
     private Button testErstellenButton;
 
     @FXML
@@ -26,6 +29,17 @@ public class UserController {
     private void testErstellenButtonAction() throws Exception {
         openStage("/questions.fxml");
         Stage stage = (Stage) testErstellenButton.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * method which will open the view for the results
+     * @throws Exception
+     */
+    @FXML
+    private void auswertungÖffnenButtonAction() throws Exception {
+        openStage("/adminPage.fxml");
+        Stage stage = (Stage) auswertungÖffnenButton.getScene().getWindow();
         stage.close();
     }
 

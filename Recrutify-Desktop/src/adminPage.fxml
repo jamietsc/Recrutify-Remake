@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminPageController">
    <children>
       <Label fx:id="noEntriesToThisTestLabel" layoutX="52.0" layoutY="199.0" styleClass="testauswahl-label" stylesheets="@style.css" text="Keine Ergebnisse zu dem Test." visible="false" />
       <Line endX="1053.0" layoutX="127.0" layoutY="172.0" startX="-100.0" />
