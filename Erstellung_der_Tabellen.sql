@@ -51,3 +51,12 @@ CREATE TABLE Bewerber_Test (
                                FOREIGN KEY (BID) REFERENCES Bewerber(BID),
                                FOREIGN KEY (TID) REFERENCES Test(TID)
 );
+
+INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname , is_admin)
+VALUES  ('FBB', 'JentschJ', 1234, 'Jamie', 'Jentsch', 1);
+
+DELETE FROM Test WHERE TID LIKE NULL;
+
+INSERT INTO Test (TID, Dauer, UID) VALUES (1, 1, 2);
+INSERT INTO Test (TID, Dauer, UID) VALUES (2, 1, 2);
+INSERT INTO Test (TID, Dauer, UID) VALUES (3, 1, 2);

@@ -12,6 +12,10 @@ public class User {
         this.admin = admin;
     }
 
+    public User() {
+
+    }
+
     public String getusername() {
         return username;
     }
