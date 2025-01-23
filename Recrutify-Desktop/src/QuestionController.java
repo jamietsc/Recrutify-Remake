@@ -3,23 +3,22 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class QuestionController {
-    private List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
-    private List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
+    private final List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
+    private final List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
 
-    private List<TextField> questionFieldsSingleChoice = new ArrayList<>();
-    private List<HBox> answerBoxesSingleChoice = new ArrayList<>();
+    private final List<TextField> questionFieldsSingleChoice = new ArrayList<>();
+    private final List<HBox> answerBoxesSingleChoice = new ArrayList<>();
 
-    private List<TextField> questionFieldsFreitext = new ArrayList<>();
+    private final List<TextField> questionFieldsFreitext = new ArrayList<>();
 
-    private List<TextField> questionFieldsWahrFalsch = new ArrayList<>();
-    private List<RadioButton> answerBoxesWahrFalsch = new ArrayList<>();
+    private final List<TextField> questionFieldsWahrFalsch = new ArrayList<>();
+    private final List<RadioButton> answerBoxesWahrFalsch = new ArrayList<>();
 
     int testID = 1;
     int time = 0;
@@ -79,8 +78,19 @@ public class QuestionController {
         //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+            questionFieldsMultipleChoice.remove(textFieldQuestion);
+            answerBoxesMultipleChoice.remove(hBox1);
+            answerBoxesMultipleChoice.remove(hBox2);
+            answerBoxesMultipleChoice.remove(hBox3);
+            answerBoxesMultipleChoice.remove(hBox4);
+        });
+
         questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
     @FXML
@@ -136,8 +146,19 @@ public class QuestionController {
         //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+            questionFieldsSingleChoice.remove(textFieldQuestion);
+            answerBoxesSingleChoice.remove(hBox1);
+            answerBoxesSingleChoice.remove(hBox2);
+            answerBoxesSingleChoice.remove(hBox3);
+            answerBoxesSingleChoice.remove(hBox4);
+        });
+
         questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
     @FXML
@@ -148,8 +169,15 @@ public class QuestionController {
 
         textFieldQuestion.getStyleClass().add("question-text-field");
 
-        questionContainer.setSpacing(10);
-        questionContainer.getChildren().addAll(textFieldQuestion);
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion);
+            questionFieldsFreitext.remove(textFieldQuestion);
+        });
+
+        questionContainer.setSpacing(20);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
     }
 
     @FXML
@@ -170,8 +198,17 @@ public class QuestionController {
         radioButton1.getStyleClass().add("radio-button");
         radioButton2.getStyleClass().add("radio-button");
 
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion, radioButton1, radioButton2);
+            questionFieldsWahrFalsch.remove(textFieldQuestion);
+            answerBoxesWahrFalsch.remove(radioButton1);
+            answerBoxesWahrFalsch.remove(radioButton2);
+        });
+
         questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(textFieldQuestion, radioButton1, radioButton2);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, radioButton1, radioButton2);
     }
 
     @FXML
