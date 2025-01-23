@@ -7,7 +7,6 @@
 @inject IJSRuntime JSRuntime
 @inject BewerberModel bewerberModel
 @inject BewerberTestModel bewerberTestModel
-@inject IMultipleChoice<MultipleChoiceModel> multipleChoiceService
 @inject IBewerber<BewerberModel> bewerberData
 @inject NavigationManager navigationManager
 @inject HelperModel helperModel
@@ -15,7 +14,7 @@
 @inject IUnternehmen<TestModel> unternehmenService
 @inject IQuestionType<QuestionTypeModel> questionTypeService
 @inject ISingleChoice<SingleChoiceModel> singleChoiceService
-
+@inject IMultipleChoice<MultipleChoiceModel> multipleChoiceService
 
 <PageTitle>Einstellungstest</PageTitle>
 
@@ -28,9 +27,9 @@
             <Recrutify.Pages.QuestionTypes.SingleChoice currentQuestion="currentSingleChoiceQuestion"/>
             break;
 
-        /*case 1:
-            <Recrutify.Pages.QuestionTypes.MultipleChoice />
-            break; */
+        case 1:
+            <Recrutify.Pages.QuestionTypes.MultipleChoice currentQuestion="currentMultipleChoiceQuestion"/>
+            break;
 
         case 999: //Tritt auf, wenn loadCurrentQuestionType() den Fragentyp nicht ermitteln konnte
             <p>Beim Laden der Frage ist ein Fehler aufgetreten. Bitte klicken Sie auf Weiter.</p>
@@ -102,7 +101,8 @@
     public SingleChoiceModel currentSingleChoiceQuestion;                                   //aktuelle Single-Choice-Frage
 
     //Variablen für Multiple-Choice-Fragen
-    //private List<MultipleChoiceModel> multipleChoiceQuestions;
+    public List<MultipleChoiceModel> multipleChoiceQuestions = new List<MultipleChoiceModel>();
+    public MultipleChoiceModel currentMultipleChoiceQuestion;
 
     //Variablen für Auswertung
     private int korrekteAntworten = 0;
@@ -124,6 +124,12 @@
             if (questionType != null && questionType.Fragentyp == 0) {
                 var singleChoiceQuestion = await singleChoiceService.GetSingleChoiceQuestion(tid, questionType.FID);
                 singleChoiceQuestions.Add(singleChoiceQuestion);
+            }
+
+            if (questionType != null & questionType.Fragentyp == 1)
+            {
+                var multipleChoiceQuestion = await multipleChoiceService.GetMultipleChoiceQuestion(tid, questionType.FID);
+                multipleChoiceQuestions.Add(multipleChoiceQuestion);
             }
         }
 
@@ -163,6 +169,10 @@
                 currentSingleChoiceQuestion = singleChoiceQuestions.FirstOrDefault(q => q.FID == FID);
                 break;
 
+            case 1:
+                currentMultipleChoiceQuestion = multipleChoiceQuestions.FirstOrDefault(q => q.FID == FID);
+                break;
+
             case 999:
                 break;
         }
@@ -181,6 +191,18 @@
                 korrekteAntworten++;
             }
         }
+
+        foreach (var multipleChoiceQuestion in multipleChoiceQuestions)
+        {
+            if ((multipleChoiceQuestion.Gewaehlte_Antwort_1 == multipleChoiceQuestion.Richtig_1) && 
+                (multipleChoiceQuestion.Gewaehlte_Antwort_2 == multipleChoiceQuestion.Richtig_2) &&
+                (multipleChoiceQuestion.Gewaehlte_Antwort_3 == multipleChoiceQuestion.Richtig_3) &&
+                (multipleChoiceQuestion.Gewaehlte_Antwort_4 == multipleChoiceQuestion.Richtig_4))
+            {
+                korrekteAntworten++;
+            }
+        }
+
         bewerberModel.Ergebnis = korrekteAntworten;
         await bewerberData.InsertPunktzahl(bewerberModel);
         Console.WriteLine(korrekteAntworten);
