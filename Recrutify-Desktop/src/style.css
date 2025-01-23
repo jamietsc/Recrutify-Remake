@@ -241,13 +241,13 @@
 
 /* Scrollbar Styling */
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #4caf50;
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
     -fx-background-insets: 2;
     -fx-background-radius: 5px;
 }
 
 .scroll-bar:horizontal .thumb {
-    -fx-background-color: #4caf50;
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
     -fx-background-insets: 2;
     -fx-background-radius: 5px;
 }

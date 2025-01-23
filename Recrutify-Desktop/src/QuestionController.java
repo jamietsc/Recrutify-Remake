@@ -12,9 +12,14 @@ import java.util.Optional;
 public class QuestionController {
     private List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
     private List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
+
     private List<TextField> questionFieldsSingleChoice = new ArrayList<>();
     private List<HBox> answerBoxesSingleChoice = new ArrayList<>();
+
     private List<TextField> questionFieldsFreitext = new ArrayList<>();
+
+    private List<TextField> questionFieldsWahrFalsch = new ArrayList<>();
+    private List<RadioButton> answerBoxesWahrFalsch = new ArrayList<>();
 
     int testID = 1;
     int time = 0;
@@ -148,6 +153,28 @@ public class QuestionController {
     }
 
     @FXML
+    private void wahrFalschButtonAction() {
+        TextField textFieldQuestion = new TextField();
+        textFieldQuestion.setPromptText("Frage");
+        questionFieldsWahrFalsch.add(textFieldQuestion);
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+
+        RadioButton radioButton1 = new RadioButton("Wahr");
+        radioButton1.setToggleGroup(toggleGroup);
+        answerBoxesWahrFalsch.add(radioButton1);
+        RadioButton radioButton2 = new RadioButton("Falsch");
+        radioButton2.setToggleGroup(toggleGroup);
+
+        textFieldQuestion.getStyleClass().add("question-text-field");
+        radioButton1.getStyleClass().add("radio-button");
+        radioButton2.getStyleClass().add("radio-button");
+
+        questionContainer.setSpacing(20);
+        questionContainer.getChildren().addAll(textFieldQuestion, radioButton1, radioButton2);
+    }
+
+    @FXML
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
@@ -168,6 +195,8 @@ public class QuestionController {
                     time = Integer.parseInt(timeString);
                     if (time > 0) {
                         validInput = true;
+                    } else {
+                        dialog.setHeaderText("Ungültige Eingabe! Bitte eine gültige Zahl eingeben.");
                     }
                 } catch (NumberFormatException e) {
                     dialog.setHeaderText("Ungültige Eingabe! Bitte eine gültige Zahl eingeben.");
@@ -213,7 +242,8 @@ public class QuestionController {
         setTime();
         saveMultipleChoiceQuestions();
         saveSingleChoiceQuestions();
-        saveFreitextQuestion();
+        saveFreitextQuestions();
+        saveWahrFalschQuestions();
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             String sql = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
@@ -324,7 +354,7 @@ public class QuestionController {
         }
     }
 
-    public void saveFreitextQuestion() {
+    public void saveFreitextQuestions() {
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -346,6 +376,36 @@ public class QuestionController {
             System.out.println("Verbindungsfehler: " + e.getMessage());
         }
     }
+
+    public void saveWahrFalschQuestions() {
+        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                for (int i = 0; i < questionFieldsWahrFalsch.size(); i++) {
+                    String question = questionFieldsWahrFalsch.get(i).getText();
+
+                    RadioButton radioButton1 = answerBoxesWahrFalsch.get(i);
+
+                    Boolean AntwortJaNein = radioButton1.isSelected();
+
+                    String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_JaNein, TID) VALUES (?,?,?,?)";
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                        ps.setInt(1,3);
+                        ps.setString(2, question);
+                        ps.setBoolean(3, AntwortJaNein);
+                        ps.setInt(4, testID);
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
+    }
+
+
 
     @FXML
     private void showSuccessDialog(String message) {

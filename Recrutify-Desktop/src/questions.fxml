@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuestionController">
    <children>
       <ScrollPane hbarPolicy="NEVER" layoutX="314.0" layoutY="22.0" prefHeight="750.0" prefWidth="625.0" stylesheets="@style.css">
@@ -23,8 +22,8 @@
             <String fx:value="track" />
          </styleClass>
       </ScrollPane>
-      <Button fx:id="multipleChoiceButton" layoutX="36.0" layoutY="413.0" mnemonicParsing="false" onAction="#multipleChoiceButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Multiple Choice" />
-      <Button fx:id="freitextButton" layoutX="36.0" layoutY="466.0" mnemonicParsing="false" onAction="#freitextButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Freitext" />
+      <Button fx:id="multipleChoiceButton" layoutX="36.0" layoutY="410.0" mnemonicParsing="false" onAction="#multipleChoiceButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Multiple Choice" />
+      <Button fx:id="freitextButton" layoutX="36.0" layoutY="460.0" mnemonicParsing="false" onAction="#freitextButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Freitext" />
       <Label layoutX="36.0" layoutY="306.0" text="Fragen hinzufügen">
          <font>
             <Font size="28.0" />
@@ -42,6 +41,7 @@
       </Button>
       <Button fx:id="closeButton" layoutX="1156.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
       <Button fx:id="singleChoiceButton" layoutX="36.0" layoutY="360.0" mnemonicParsing="false" onAction="#singleChoiceButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Single Choice" />
-      <Button fx:id="saveQuestionsButton" layoutX="36.0" layoutY="721.0" mnemonicParsing="false" onAction="#saveQuestionsButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Fragen Speichern" />
+      <Button fx:id="saveQuestionsButton" layoutX="36.0" layoutY="721.0" mnemonicParsing="false" onAction="#saveQuestionsButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Fragen speichern" />
+      <Button fx:id="wahrFalschButton" layoutX="36.0" layoutY="510.0" mnemonicParsing="false" onAction="#wahrFalschButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Wahr / Falsch" />
    </children>
 </AnchorPane>
