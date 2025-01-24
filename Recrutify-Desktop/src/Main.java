@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import passwordSecurity.BCrypt;
 
 public class Main extends Application {
 
@@ -33,6 +34,9 @@ public class Main extends Application {
             yOffset = event.getSceneY();
         });
 
+        //auskommentieren um ersten Benutzer zu erstellen
+        //UserService.register("Jentsch", hashPassword("1234"), "FBB", "Jamie", "Jentsch");
+
         root.setOnMouseDragged((MouseEvent event) -> {
             primaryStage.setX(event.getScreenX() - xOffset);
             primaryStage.setY(event.getScreenY() - yOffset);
@@ -40,5 +44,9 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Recrutify | Login");
         primaryStage.show();
+    }
+
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 }

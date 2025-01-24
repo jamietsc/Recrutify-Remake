@@ -1,5 +1,6 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import passwordSecurity.BCrypt;
 
 import java.io.File;
 import java.sql.*;
@@ -116,37 +117,40 @@ public class UserService {
     /**
      * method to login as a company user
      * @param username username of the company account
-     * @param password password of the company account
+     * @param plainTextPassword password in plain text which was entered by the user of the company account
      * @return the logged in user
      * @throws Exception if the sql query is not possible
      */
-    public static User login(String username, String password) throws Exception {
+    public static User login(String username, String plainTextPassword) throws Exception {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ? AND Passwort = ?";
+                String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
-                    ps.setString(2, password);
-
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
-                        // Extrahiere Benutzerdaten aus dem ResultSet
-                        int id = rs.getInt("UID");
-                        boolean isAdmin = rs.getBoolean("is_admin");
+                        String storedHashedPassword = rs.getString("Passwort");
+                        if (verifyPassword(plainTextPassword, storedHashedPassword)) {
+                            int id = rs.getInt("UID");
+                            boolean isAdmin = rs.getBoolean("is_admin");
 
-                        User user = new User(username, password, id, isAdmin);
-                        UserSession.setCurrentUser(user);
-                        return user;
+                            User user = new User(username, storedHashedPassword, id, isAdmin);
+                            UserSession.setCurrentUser(user);
+                            return user;
+                        } else {
+                            throw new Exception("Benutzername oder Passwort falsch. Bitte versuchen Sie es erneut.");
+                        }
                     } else {
                         throw new Exception("Benutzername oder Passwort falsch. Bitte versuchen Sie es erneut.");
                     }
                 } catch (SQLException e) {
-                    System.out.println("hä?");
+                    System.out.println("Datenbankfehler: " + e.getMessage());
                 }
             }
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
-        } return null;
+        }
+        return null;
     }
 
     /**
@@ -162,6 +166,7 @@ public class UserService {
             if (conn != null) {
                 //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
                 // insert into
+
                 String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, company);
@@ -260,5 +265,11 @@ public class UserService {
         }
         return allApplicants;
     }
+
+    public static boolean verifyPassword(String plainTextPassword, String storedHashedPassword) {
+        return BCrypt.checkpw(plainTextPassword, storedHashedPassword);
+    }
+
+
 
 }

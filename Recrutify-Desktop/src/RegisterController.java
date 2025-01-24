@@ -2,6 +2,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import passwordSecurity.BCrypt;
 
 public class RegisterController {
 
@@ -49,7 +50,8 @@ public class RegisterController {
         }
 
         try {
-            UserService.register(enteredUsername, enteredPassword, enteredCompany, enteredFirstName, enteredLastName);
+            String hashedPassword = hashPassword(enteredPassword);
+            UserService.register(enteredUsername, hashedPassword, enteredCompany, enteredFirstName, enteredLastName);
             showSuccessDialog("Unternehmen erfolgreich erstellt!");
         } catch (Exception e) {
             showErrorDialog("Bitte wenden sie sich an den Administrator.");
@@ -83,5 +85,9 @@ public class RegisterController {
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();
         stage.setIconified(true);
+    }
+
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 }
