@@ -31,7 +31,7 @@
       </Label>
       <ImageView fitHeight="79.0" fitWidth="231.0">
          <image>
-            <Image url="@Logo_Recrutify_full.png" />
+            <Image url="@img/Logo_Recrutify_full.png" />
          </image>
       </ImageView>
       <Button fx:id="minimizeButton" layoutX="1117.0" layoutY="-9.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">

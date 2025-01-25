@@ -26,7 +26,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         // Setzt die Stage auf "undecorated", um die Titelleiste zu entfernen
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/Logo_Recrutify_small.png")));
         // Setzt die Scene auf die Bühne (Stage)
         primaryStage.setResizable(false);
         root.setOnMousePressed((MouseEvent event) -> {

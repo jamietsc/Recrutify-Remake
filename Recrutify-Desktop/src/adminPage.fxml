@@ -45,7 +45,7 @@
       </Button>
       <ImageView fitHeight="79.0" fitWidth="231.0">
          <image>
-            <Image url="@Logo_Recrutify_full.png" />
+            <Image url="@img/Logo_Recrutify_full.png" />
          </image>
       </ImageView>
    </children>

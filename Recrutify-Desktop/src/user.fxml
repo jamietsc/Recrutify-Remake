@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserController">
 
    <children>
       <ImageView fitHeight="60.0" fitWidth="180.0" layoutX="14.0" layoutY="9.0">
          <image>
-            <Image url="@Logo_Recrutify_full.png" />
+            <Image url="@img/Logo_Recrutify_full.png" />
          </image>
       </ImageView>
       <Label layoutX="137.0" layoutY="184.0" text="Einstellungstests, die überzeugen.">
@@ -28,5 +28,6 @@
       </Button>
       <Button fx:id="closeButton" layoutX="556.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
       <Button fx:id="auswertungÖffnenButton" layoutX="217.0" layoutY="315.0" mnemonicParsing="false" onAction="#auswertungÖffnenButtonAction" prefHeight="40.0" prefWidth="167.0" styleClass="login-button" stylesheets="@style.css" text="Auswertung" />
+      <Button fx:id="accountButton" layoutX="534.0" layoutY="49.0" mnemonicParsing="false" onAction="#accountButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="account-button" stylesheets="@style.css" />
    </children>
 </AnchorPane>

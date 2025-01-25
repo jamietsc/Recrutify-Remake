@@ -15,7 +15,7 @@
          <children>
             <ImageView fitHeight="106.0" fitWidth="310.0" layoutX="20.0" layoutY="147.0">
                <image>
-                  <Image url="@Logo_Recrutify_full_png_white.png" />
+                  <Image url="@img/Logo_Recrutify_full_png_white.png" />
                </image>
             </ImageView>
             <Button fx:id="minimizeButton" layoutX="263.0" layoutY="-3.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">

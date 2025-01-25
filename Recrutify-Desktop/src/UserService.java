@@ -2,6 +2,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import passwordSecurity.BCrypt;
 
+import javax.xml.transform.Result;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -266,8 +267,63 @@ public class UserService {
         return allApplicants;
     }
 
+    public static User loadCurrentAccountInformation(Integer UID) {
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sql = "SELECT NAME, VORNAME, NACHNAME, BENUTZERNAME FROM UNTERNEHMEN WHERE UID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setInt(1, UID);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            String name = rs.getString("NAME");
+                            String vorname = rs.getString("VORNAME");
+                            String nachname = rs.getString("NACHNAME");
+                            String benutzername = rs.getString("BENUTZERNAME");
+
+                            // Erstelle ein neues User-Objekt (Passwort wird nicht zurückgegeben)
+                            return new User(name, vorname, nachname, benutzername, null, UID); // Null, da Passwort nicht übergeben wird
+                        } else {
+                            System.out.println("Kein Benutzer mit diesem Benutzernamen gefunden.");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Datenbankfehler: " + e.getMessage());
+        }
+        return null; // Rückgabe null, wenn Benutzer nicht gefunden oder Fehler aufgetreten
+    }
+
+    public static boolean accountInformationUpdate(String enteredSurname, String enteredLastname, String enteredUsername, String enteredPassword, Integer UID) {
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sql = "UPDATE UNTERNEHMEN SET VORNAME = ?, NACHNAME = ?, BENUTZERNAME = ?, PASSWORT = ? WHERE UID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, enteredSurname);
+                    ps.setString(2, enteredLastname);
+                    ps.setString(3, enteredUsername);
+                    ps.setString(4, enteredPassword);
+                    ps.setInt(5, UID);
+
+                    ps.executeUpdate();
+                    System.out.println("Account succesfully updated.");
+                    return true;
+                } catch (SQLException e) {
+                    System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
+        return false;
+    }
+
     public static boolean verifyPassword(String plainTextPassword, String storedHashedPassword) {
         return BCrypt.checkpw(plainTextPassword, storedHashedPassword);
+    }
+
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 
 

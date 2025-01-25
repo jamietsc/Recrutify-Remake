@@ -50,7 +50,7 @@ public class RegisterController {
         }
 
         try {
-            String hashedPassword = hashPassword(enteredPassword);
+            String hashedPassword = UserService.hashPassword(enteredPassword);
             UserService.register(enteredUsername, hashedPassword, enteredCompany, enteredFirstName, enteredLastName);
             showSuccessDialog("Unternehmen erfolgreich erstellt!");
         } catch (Exception e) {
@@ -85,9 +85,5 @@ public class RegisterController {
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();
         stage.setIconified(true);
-    }
-
-    public static String hashPassword(String plainTextPassword) {
-        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 }

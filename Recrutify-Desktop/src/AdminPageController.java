@@ -69,7 +69,7 @@ public class AdminPageController {
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/Logo_Recrutify_small.png")));
         stage.setResizable(false);
         root.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX();

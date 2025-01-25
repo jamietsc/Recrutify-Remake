@@ -26,6 +26,9 @@ public class UserController {
     private Button minimizeButton;
 
     @FXML
+    private Button accountButton;
+
+    @FXML
     private void testErstellenButtonAction() throws Exception {
         openStage("/questions.fxml");
         Stage stage = (Stage) testErstellenButton.getScene().getWindow();
@@ -44,12 +47,19 @@ public class UserController {
     }
 
     @FXML
+    private void accountButtonAction() throws Exception {
+        openStage("/accountSetting.fxml");
+        Stage stage = (Stage) accountButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
     private void openStage(String fxmlFile) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/Logo_Recrutify_small.png")));
         stage.setResizable(false);
         root.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX();
