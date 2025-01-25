@@ -22,9 +22,6 @@ public class AdminPageController {
     private ComboBox<String> dropDownMenu;
 
     @FXML
-    private Button searchTIDResults;
-
-    @FXML
     private Label noEntriesToThisTestLabel;
 
     @FXML
@@ -54,7 +51,6 @@ public class AdminPageController {
     /**
      * Method for the button which will go back to the main menu
      * can be user in the whole program
-     * @throws Exception
      */
     @FXML
     private void goBackToMainMenuButtonAction() throws Exception{

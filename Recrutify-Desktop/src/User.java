@@ -1,5 +1,3 @@
-import java.rmi.server.UID;
-
 public class User {
     private String username;
     private String password;

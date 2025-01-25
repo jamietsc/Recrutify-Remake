@@ -46,7 +46,6 @@ public class LoginController {
             } else {
                 showErrorDialog("Benutzername oder Passwort falsch. Bitte erneut versuchen.");
             }
-            System.out.println("Eingeloggter User: \n" + user.toString());
         } catch (Exception e) {
             showErrorDialog("Ein Fehler ist aufgetreten: " + e.getMessage());
         }
