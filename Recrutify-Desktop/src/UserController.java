@@ -29,6 +29,9 @@ public class UserController {
     private Button accountButton;
 
     @FXML
+    private Button logoutButton;
+
+    @FXML
     private void testErstellenButtonAction() throws Exception {
         openStage("/questions.fxml");
         Stage stage = (Stage) testErstellenButton.getScene().getWindow();
@@ -74,6 +77,13 @@ public class UserController {
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void logoutButtonAction() throws Exception {
+        openStage("/login.fxml");
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

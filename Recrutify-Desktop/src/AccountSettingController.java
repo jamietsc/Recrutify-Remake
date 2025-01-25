@@ -189,13 +189,17 @@ public class AccountSettingController {
         }
         enteredNewPassword = UserService.hashPassword(enteredNewPassword);
 
-        boolean accountGotUpdated = UserService.accountInformationUpdate(enteredSurname, enteredLastName, enteredUsername, enteredNewPassword, currentUserInformation.getUserID());
+        if (!UserService.usernameExists(enteredUsername)) {
+            boolean accountGotUpdated = UserService.accountInformationUpdate(enteredSurname, enteredLastName, enteredUsername, enteredNewPassword, currentUserInformation.getUserID());
 
-        if (accountGotUpdated) {
-            showSuccessDialog("Ihr Account wurde erfolgreich bearbeitet.");
-            openStage("/user.fxml");
-            Stage stage = (Stage) saveAccountButton.getScene().getWindow();
-            stage.close();
+            if (accountGotUpdated) {
+                showSuccessDialog("Ihr Account wurde erfolgreich bearbeitet.");
+                openStage("/user.fxml");
+                Stage stage = (Stage) saveAccountButton.getScene().getWindow();
+                stage.close();
+            }
+        } else {
+            showErrorDialog("Der eingegeben Nutzername existiert bereits");
         }
     }
 

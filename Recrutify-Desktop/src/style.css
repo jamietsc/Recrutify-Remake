@@ -2,7 +2,9 @@
     -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
 }
 
-.login-button {
+.login-button,
+.account-button,
+.logout-button{
     -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
     -fx-background-radius: 50px;
     -fx-padding: 10px 20px; /* Innenabstand des Buttons */
@@ -12,19 +14,13 @@
     -fx-cursor: hand;
 }
 
-.login-button:hover {
+.login-button:hover,
+.account-button:hover,
+.logout-button:hover{
     -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
 }
 
 .account-button {
-    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
-    -fx-background-radius: 50px;
-    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
-    -fx-text-fill: white; /* Textfarbe */
-    -fx-text-weight: bold;
-    -fx-font-size: 14px; /* Schriftgröße */
-    -fx-cursor: hand;
-
     /* Hintergrundbild */
     -fx-background-image: url("img/user.png");
     -fx-background-size: 20px 20px; /* Das Bild skalieren */
@@ -32,9 +28,14 @@
     -fx-background-repeat: no-repeat; /* Wiederholung verhindern */
 }
 
-.account-button:hover {
-    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
+.logout-button {
+    -fx-background-image: url("img/logout.png");
+    -fx-background-size: 20px 20px; /* Das Bild skalieren */
+    -fx-background-position: center; /* Das Bild zentrieren */
+    -fx-background-repeat: no-repeat; /* Wiederholung verhindern */
 }
+
+
 
 .testauswahl-label{
     -fx-background-color: #a2a2a1;

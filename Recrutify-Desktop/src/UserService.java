@@ -163,27 +163,26 @@ public class UserService {
      * @param lastName last name of the user
      */
     public static void register(String username, String password, String company, String firstName, String lastName) {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
-                // insert into
+            try (Connection conn = DriverManager.getConnection(url)) {
+                if (conn != null) {
+                    //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
+                    // insert into
+                    String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                        ps.setString(1, company);
+                        ps.setString(2, username);
+                        ps.setString(3, password);
+                        ps.setString(4, firstName);
+                        ps.setString(5, lastName);
 
-                String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, company);
-                    ps.setString(2, username);
-                    ps.setString(3, password);
-                    ps.setString(4, firstName);
-                    ps.setString(5, lastName);
-
-                    ps.executeUpdate();
-                } catch (SQLException e) {
-                    System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                    }
                 }
+            } catch (SQLException e) {
+                System.out.println("Verbindungsfehler: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
-        }
     }
 
     /**
@@ -316,6 +315,28 @@ public class UserService {
             System.out.println("Verbindungsfehler: " + e.getMessage());
         }
         return false;
+    }
+
+    public static boolean usernameExists(String username){
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sql = "SELECT * FROM UNTERNEHMEN WHERE BENUTZERNAME = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, username);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            return true;
+                        } else {
+                            System.out.println("Kein Benutzer mit diesem Benutzernamen gefunden.");
+                            return false;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Datenbankfehler: " + e.getMessage());
+        }
+        return true;
     }
 
     public static boolean verifyPassword(String plainTextPassword, String storedHashedPassword) {

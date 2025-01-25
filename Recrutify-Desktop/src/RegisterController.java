@@ -50,9 +50,14 @@ public class RegisterController {
         }
 
         try {
-            String hashedPassword = UserService.hashPassword(enteredPassword);
-            UserService.register(enteredUsername, hashedPassword, enteredCompany, enteredFirstName, enteredLastName);
-            showSuccessDialog("Unternehmen erfolgreich erstellt!");
+            if(!UserService.usernameExists(enteredUsername)){
+                String hashedPassword = UserService.hashPassword(enteredPassword);
+                UserService.register(enteredUsername, hashedPassword, enteredCompany, enteredFirstName, enteredLastName);
+                showSuccessDialog("Unternehmen erfolgreich erstellt!");
+            } else {
+                showErrorDialog("Der eingegebene Nutzername existiert bereits.");
+            }
+
         } catch (Exception e) {
             showErrorDialog("Bitte wenden sie sich an den Administrator.");
         }

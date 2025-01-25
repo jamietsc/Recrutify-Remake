@@ -28,6 +28,7 @@
       </Button>
       <Button fx:id="closeButton" layoutX="556.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
       <Button fx:id="auswertungÖffnenButton" layoutX="217.0" layoutY="315.0" mnemonicParsing="false" onAction="#auswertungÖffnenButtonAction" prefHeight="40.0" prefWidth="167.0" styleClass="login-button" stylesheets="@style.css" text="Auswertung" />
-      <Button fx:id="accountButton" layoutX="534.0" layoutY="49.0" mnemonicParsing="false" onAction="#accountButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="account-button" stylesheets="@style.css" />
+      <Button fx:id="logoutButton" layoutX="490.0" layoutY="49.0" mnemonicParsing="false" onAction="#logoutButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="logout-button" stylesheets="@style.css" />
+      <Button fx:id="accountButton" layoutX="539.0" layoutY="49.0" mnemonicParsing="false" onAction="#accountButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="account-button" stylesheets="@style.css" textFill="WHITE" />
    </children>
 </AnchorPane>

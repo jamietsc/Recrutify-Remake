@@ -32,6 +32,7 @@ public class LoginController {
 
         try {
             User user = UserService.login(enteredUsername, enteredPassword);
+            user.toString();
             if (user != null) {
                 // Schließt das aktuelle Fenster
                 Stage currentStage = (Stage) usernameLogin.getScene().getWindow();
