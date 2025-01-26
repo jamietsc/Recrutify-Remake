@@ -1,8 +1,15 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +29,8 @@ public class QuestionController {
 
     int testID = getTestID();
     int time = 0;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @FXML
     private VBox questionContainer;
@@ -31,6 +40,9 @@ public class QuestionController {
 
     @FXML
     private Button minimizeButton;
+
+    @FXML
+    private Button backButton;
 
     @FXML
     private void multipleChoiceButtonAction() {
@@ -217,6 +229,19 @@ public class QuestionController {
         stage.close();
     }
 
+    @FXML
+    private void minimizeButtonAction() {
+        Stage stage = (Stage) minimizeButton.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    private void backButtonAction() throws Exception {
+        openStage("/user.fxml");
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
+    }
+
     private void setTime () {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Zeit einstellen");
@@ -243,12 +268,6 @@ public class QuestionController {
             }
         }
 
-    }
-
-    @FXML
-    private void minimizeButtonAction() {
-        Stage stage = (Stage) minimizeButton.getScene().getWindow();
-        stage.setIconified(true);
     }
 
     private int getTestID() {
@@ -484,10 +503,23 @@ public class QuestionController {
     }
 
     @FXML
-    private void showErrorDialog(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.setTitle("Fehler!");
-        alert.setHeaderText(null);
-        alert.showAndWait();
+    private void openStage(String fxmlFile) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        stage.setResizable(false);
+        root.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged((MouseEvent event) -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
