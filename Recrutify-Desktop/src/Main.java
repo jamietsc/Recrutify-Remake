@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import passwordSecurity.BCrypt;
 
 public class Main extends Application {
 
@@ -25,13 +26,16 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         // Setzt die Stage auf "undecorated", um die Titelleiste zu entfernen
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/Logo_Recrutify_small.png")));
         // Setzt die Scene auf die Bühne (Stage)
         primaryStage.setResizable(false);
         root.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
+
+        //auskommentieren um ersten Benutzer zu erstellen
+        //UserService.register("Jentsch", hashPassword("1234"), "FBB", "Jamie", "Jentsch");
 
         root.setOnMouseDragged((MouseEvent event) -> {
             primaryStage.setX(event.getScreenX() - xOffset);
@@ -40,5 +44,9 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Recrutify | Login");
         primaryStage.show();
+    }
+
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 }

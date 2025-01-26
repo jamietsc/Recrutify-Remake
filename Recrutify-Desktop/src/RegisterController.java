@@ -2,6 +2,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import passwordSecurity.BCrypt;
 
 public class RegisterController {
 
@@ -49,8 +50,14 @@ public class RegisterController {
         }
 
         try {
-            UserService.register(enteredUsername, enteredPassword, enteredCompany, enteredFirstName, enteredLastName);
-            showSuccessDialog("Unternehmen erfolgreich erstellt!");
+            if(!UserService.usernameExists(enteredUsername)){
+                String hashedPassword = UserService.hashPassword(enteredPassword);
+                UserService.register(enteredUsername, hashedPassword, enteredCompany, enteredFirstName, enteredLastName);
+                showSuccessDialog("Unternehmen erfolgreich erstellt!");
+            } else {
+                showErrorDialog("Der eingegebene Nutzername existiert bereits.");
+            }
+
         } catch (Exception e) {
             showErrorDialog("Bitte wenden sie sich an den Administrator.");
         }

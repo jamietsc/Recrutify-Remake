@@ -2,7 +2,9 @@
     -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
 }
 
-.login-button {
+.login-button,
+.account-button,
+.logout-button{
     -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
     -fx-background-radius: 50px;
     -fx-padding: 10px 20px; /* Innenabstand des Buttons */
@@ -12,9 +14,12 @@
     -fx-cursor: hand;
 }
 
-.login-button:hover {
+.login-button:hover,
+.account-button:hover,
+.logout-button:hover{
     -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
 }
+
 
 .delete-button {
     -fx-background-color: #efefef;
@@ -37,11 +42,24 @@
     -fx-text-weight: bold;
     -fx-font-size: 14px; /* Schriftgröße */
     -fx-cursor: hand;
+
+.account-button {
+    /* Hintergrundbild */
+    -fx-background-image: url("img/user.png");
+    -fx-background-size: 20px 20px; /* Das Bild skalieren */
+    -fx-background-position: center; /* Das Bild zentrieren */
+    -fx-background-repeat: no-repeat; /* Wiederholung verhindern */
+
 }
 
-.secondary-button:hover {
-    -fx-background-color: linear-gradient(to bottom right, #797877, #3d3c3d);
+.logout-button {
+    -fx-background-image: url("img/logout.png");
+    -fx-background-size: 20px 20px; /* Das Bild skalieren */
+    -fx-background-position: center; /* Das Bild zentrieren */
+    -fx-background-repeat: no-repeat; /* Wiederholung verhindern */
 }
+
+
 
 .testauswahl-label{
     -fx-background-color: #a2a2a1;
@@ -214,8 +232,8 @@
 
 /* Header der TableView */
 .tabellen-ansicht .column-header-background {
-    -fx-background-color: linear-gradient(to bottom, #4caf50, #388e3c);
-    -fx-border-color: #2e7d32;
+    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
+    -fx-border-color: transparent;
     -fx-border-width: 0 0 2px 0;
 }
 
@@ -243,12 +261,12 @@
 
 /* Hover-Effekt für Zeilen */
 .table-row-cell:hover {
-    -fx-background-color: #e8f5e9;
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
 }
 
 /* Ausgewählte Zeile */
 .table-row-cell:selected {
-    -fx-background-color: #81c784;
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
     -fx-text-fill: #ffffff;
 }
 

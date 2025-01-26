@@ -32,6 +32,7 @@ public class LoginController {
 
         try {
             User user = UserService.login(enteredUsername, enteredPassword);
+            user.toString();
             if (user != null) {
                 // Schließt das aktuelle Fenster
                 Stage currentStage = (Stage) usernameLogin.getScene().getWindow();
@@ -46,7 +47,6 @@ public class LoginController {
             } else {
                 showErrorDialog("Benutzername oder Passwort falsch. Bitte erneut versuchen.");
             }
-            System.out.println("Eingeloggter User: \n" + user.toString());
         } catch (Exception e) {
             showErrorDialog("Ein Fehler ist aufgetreten: " + e.getMessage());
         }
@@ -58,7 +58,7 @@ public class LoginController {
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/Logo_Recrutify_small.png")));
         stage.setResizable(false);
         root.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX();

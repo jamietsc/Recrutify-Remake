@@ -1,6 +1,8 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import passwordSecurity.BCrypt;
 
+import javax.xml.transform.Result;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,37 +118,40 @@ public class UserService {
     /**
      * method to login as a company user
      * @param username username of the company account
-     * @param password password of the company account
+     * @param plainTextPassword password in plain text which was entered by the user of the company account
      * @return the logged in user
      * @throws Exception if the sql query is not possible
      */
-    public static User login(String username, String password) throws Exception {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db")) {
+    public static User login(String username, String plainTextPassword) throws Exception {
+        try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ? AND Passwort = ?";
+                String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
-                    ps.setString(2, password);
-
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
-                        // Extrahiere Benutzerdaten aus dem ResultSet
-                        int id = rs.getInt("UID");
-                        boolean isAdmin = rs.getBoolean("is_admin");
+                        String storedHashedPassword = rs.getString("Passwort");
+                        if (verifyPassword(plainTextPassword, storedHashedPassword)) {
+                            int id = rs.getInt("UID");
+                            boolean isAdmin = rs.getBoolean("is_admin");
 
-                        User user = new User(username, password, id, isAdmin);
-                        UserSession.setCurrentUser(user);
-                        return user;
+                            User user = new User(username, storedHashedPassword, id, isAdmin);
+                            UserSession.setCurrentUser(user);
+                            return user;
+                        } else {
+                            throw new Exception("Benutzername oder Passwort falsch. Bitte versuchen Sie es erneut.");
+                        }
                     } else {
                         throw new Exception("Benutzername oder Passwort falsch. Bitte versuchen Sie es erneut.");
                     }
                 } catch (SQLException e) {
-                    System.out.println("hä?");
+                    System.out.println("Datenbankfehler: " + e.getMessage());
                 }
             }
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
-        } return null;
+        }
+        return null;
     }
 
     /**
@@ -158,26 +163,26 @@ public class UserService {
      * @param lastName last name of the user
      */
     public static void register(String username, String password, String company, String firstName, String lastName) {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
-                // insert into
-                String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, company);
-                    ps.setString(2, username);
-                    ps.setString(3, password);
-                    ps.setString(4, firstName);
-                    ps.setString(5, lastName);
+            try (Connection conn = DriverManager.getConnection(url)) {
+                if (conn != null) {
+                    //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
+                    // insert into
+                    String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                        ps.setString(1, company);
+                        ps.setString(2, username);
+                        ps.setString(3, password);
+                        ps.setString(4, firstName);
+                        ps.setString(5, lastName);
 
-                    ps.executeUpdate();
-                } catch (SQLException e) {
-                    System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                    }
                 }
+            } catch (SQLException e) {
+                System.out.println("Verbindungsfehler: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
-        }
     }
 
     /**
@@ -188,7 +193,7 @@ public class UserService {
     public static ObservableList<String> getTIDsFromCompany(int UID){
         ObservableList<String> results = FXCollections.observableArrayList();
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db")) {
+        try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 //System.out.println("Connected to the database.");
                 //Select from
@@ -222,7 +227,7 @@ public class UserService {
         ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList();
         List<String> allBIDs = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db")) {
+        try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 //System.out.println("Connected to the database.");
                 String sql = "SELECT BID FROM BEWERBER_TEST WHERE TID = ? ";
@@ -260,5 +265,88 @@ public class UserService {
         }
         return allApplicants;
     }
+
+    public static User loadCurrentAccountInformation(Integer UID) {
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sql = "SELECT NAME, VORNAME, NACHNAME, BENUTZERNAME FROM UNTERNEHMEN WHERE UID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setInt(1, UID);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            String name = rs.getString("NAME");
+                            String vorname = rs.getString("VORNAME");
+                            String nachname = rs.getString("NACHNAME");
+                            String benutzername = rs.getString("BENUTZERNAME");
+
+                            // Erstelle ein neues User-Objekt (Passwort wird nicht zurückgegeben)
+                            return new User(name, vorname, nachname, benutzername, null, UID); // Null, da Passwort nicht übergeben wird
+                        } else {
+                            System.out.println("Kein Benutzer mit diesem Benutzernamen gefunden.");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Datenbankfehler: " + e.getMessage());
+        }
+        return null; // Rückgabe null, wenn Benutzer nicht gefunden oder Fehler aufgetreten
+    }
+
+    public static boolean accountInformationUpdate(String enteredSurname, String enteredLastname, String enteredUsername, String enteredPassword, Integer UID) {
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sql = "UPDATE UNTERNEHMEN SET VORNAME = ?, NACHNAME = ?, BENUTZERNAME = ?, PASSWORT = ? WHERE UID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, enteredSurname);
+                    ps.setString(2, enteredLastname);
+                    ps.setString(3, enteredUsername);
+                    ps.setString(4, enteredPassword);
+                    ps.setInt(5, UID);
+
+                    ps.executeUpdate();
+                    System.out.println("Account succesfully updated.");
+                    return true;
+                } catch (SQLException e) {
+                    System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean usernameExists(String username){
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sql = "SELECT * FROM UNTERNEHMEN WHERE BENUTZERNAME = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, username);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            return true;
+                        } else {
+                            System.out.println("Kein Benutzer mit diesem Benutzernamen gefunden.");
+                            return false;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Datenbankfehler: " + e.getMessage());
+        }
+        return true;
+    }
+
+    public static boolean verifyPassword(String plainTextPassword, String storedHashedPassword) {
+        return BCrypt.checkpw(plainTextPassword, storedHashedPassword);
+    }
+
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+    }
+
+
 
 }

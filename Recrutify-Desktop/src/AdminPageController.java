@@ -13,15 +13,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
+
 public class AdminPageController {
 
     ObservableList<String> options = FXCollections.observableArrayList();
 
     @FXML
     private ComboBox<String> dropDownMenu;
-
-    @FXML
-    private Button searchTIDResults;
 
     @FXML
     private Label noEntriesToThisTestLabel;
@@ -53,7 +51,6 @@ public class AdminPageController {
     /**
      * Method for the button which will go back to the main menu
      * can be user in the whole program
-     * @throws Exception
      */
     @FXML
     private void goBackToMainMenuButtonAction() throws Exception{
@@ -68,7 +65,7 @@ public class AdminPageController {
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/Logo_Recrutify_small.png")));
         stage.setResizable(false);
         root.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX();
