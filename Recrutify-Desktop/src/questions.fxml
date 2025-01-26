@@ -41,7 +41,8 @@
       </Button>
       <Button fx:id="closeButton" layoutX="1156.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
       <Button fx:id="singleChoiceButton" layoutX="36.0" layoutY="360.0" mnemonicParsing="false" onAction="#singleChoiceButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Single Choice" />
-      <Button fx:id="saveQuestionsButton" layoutX="36.0" layoutY="721.0" mnemonicParsing="false" onAction="#saveQuestionsButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Fragen speichern" />
+      <Button fx:id="saveQuestionsButton" layoutX="36.0" layoutY="720.0" mnemonicParsing="false" onAction="#saveQuestionsButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Fragen speichern" />
       <Button fx:id="wahrFalschButton" layoutX="36.0" layoutY="510.0" mnemonicParsing="false" onAction="#wahrFalschButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Wahr / Falsch" />
+      <Button fx:id="zeitButton" layoutX="36.0" layoutY="670.0" mnemonicParsing="false" onAction="#zeitButtonAction" prefHeight="40.0" prefWidth="231.0" styleClass="login-button" stylesheets="@style.css" text="Zeitbegrenzung hinzufügen" />
    </children>
 </AnchorPane>

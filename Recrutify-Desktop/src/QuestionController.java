@@ -20,7 +20,7 @@ public class QuestionController {
     private final List<TextField> questionFieldsWahrFalsch = new ArrayList<>();
     private final List<RadioButton> answerBoxesWahrFalsch = new ArrayList<>();
 
-    int testID = 1;
+    int testID = getTestID();
     int time = 0;
 
     @FXML
@@ -251,7 +251,7 @@ public class QuestionController {
         stage.setIconified(true);
     }
 
-    private void getTestID() {
+    private int getTestID() {
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db"; // Pfad zur SQLite-Datenbank
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -271,32 +271,63 @@ public class QuestionController {
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
         }
+        return testID;
+    }
+
+    @FXML
+    private void zeitButtonAction() {
+        setTime();
     }
 
     @FXML
     private boolean saveQuestionsButtonAction() {
-        getTestID();
-        setTime();
-        saveMultipleChoiceQuestions();
-        saveSingleChoiceQuestions();
-        saveFreitextQuestions();
-        saveWahrFalschQuestions();
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
-        try (Connection conn = DriverManager.getConnection(url)) {
-            String sql = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, testID);
-                ps.setInt(2, time);
-                ps.setInt(3, UserSession.getCurrentUser().getUserID());
-                ps.executeUpdate();
-                showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
-            } catch (SQLException e) {
-            System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
-            }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
-        }
-        return true;
+        if (time == 0) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Warnung");
+            alert.setHeaderText(null);
+            alert.setContentText("Sie haben keine Zeit eingestellt, sind sie sicher?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
+                try (Connection conn = DriverManager.getConnection(url)) {
+                    String sqlDeleteQuestions = "DELETE FROM Fragen WHERE TID = ?";
+                    String sqlDeleteTest = "DELETE FROM Test WHERE TID = ?";
+                    String sqlInsertTest = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
+
+                    try (PreparedStatement ps = conn.prepareStatement(sqlDeleteQuestions)) {
+                        ps.setInt(1, testID);
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim löschen aus der Tabelle Fragen: " + e.getMessage());
+                    }
+
+                    try (PreparedStatement ps = conn.prepareStatement(sqlDeleteTest)) {
+                        ps.setInt(1, testID);
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim löschen aus der Tabelle Test: " + e.getMessage());
+                    }
+
+                    try (PreparedStatement ps = conn.prepareStatement(sqlInsertTest)) {
+                        ps.setInt(1, testID);
+                        ps.setInt(2, time);
+                        ps.setInt(3, UserSession.getCurrentUser().getUserID());
+                        ps.executeUpdate();
+                        showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
+                    }
+
+                } catch (SQLException e) {
+                    System.out.println("Verbindungsfehler: " + e.getMessage());
+                }
+                saveMultipleChoiceQuestions();
+                saveSingleChoiceQuestions();
+                saveFreitextQuestions();
+                saveWahrFalschQuestions();
+            } else return false;
+        } return true;
     }
 
         private void saveMultipleChoiceQuestions() {
