@@ -42,9 +42,11 @@
     -fx-text-weight: bold;
     -fx-font-size: 14px; /* Schriftgröße */
     -fx-cursor: hand;
+}
 
 .account-button {
     /* Hintergrundbild */
+    -fx-background-color: transparent;
     -fx-background-image: url("img/user.png");
     -fx-background-size: 20px 20px; /* Das Bild skalieren */
     -fx-background-position: center; /* Das Bild zentrieren */
@@ -53,6 +55,7 @@
 }
 
 .logout-button {
+    -fx-background-color: transparent;
     -fx-background-image: url("img/logout.png");
     -fx-background-size: 20px 20px; /* Das Bild skalieren */
     -fx-background-position: center; /* Das Bild zentrieren */

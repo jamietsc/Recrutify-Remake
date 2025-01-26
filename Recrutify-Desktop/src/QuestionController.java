@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class QuestionController {
+    public static String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/Recrutify-Desktop/recrutify.db";
+
     private final List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
     private final List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
 
@@ -254,7 +256,7 @@ public class QuestionController {
                 String timeString = result.get();
                 try {
                     time = Integer.parseInt(timeString);
-                    if (time > 0) {
+                    if (time >= 0) {
                         validInput = true;
                     } else {
                         dialog.setHeaderText("Ungültige Eingabe! Bitte eine gültige Zahl eingeben.");
@@ -270,21 +272,22 @@ public class QuestionController {
     }
 
     private int getTestID() {
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db"; // Pfad zur SQLite-Datenbank
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 String sqlTID = "SELECT MAX(TID) FROM Test";
-                // String sqlInsertFragen = "INSERT INTO Fragen () VALUES()";
                 try (PreparedStatement ps = conn.prepareStatement(sqlTID)) {
                     ResultSet rs = ps.executeQuery();
                     if (rs.getInt(1) != 0) {
                         testID = rs.getInt(1);
                         testID++;
+                    } else {
+                        return 1;
+
                     }
                 } catch (SQLException e) {
                     System.out.println("Fehler beim abrufen der TID: " + e.getMessage());
                 }
-                System.out.println(testID);
+                System.out.println("TestID: " + testID);
             }
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
@@ -299,6 +302,7 @@ public class QuestionController {
 
     @FXML
     private boolean saveQuestionsButtonAction() {
+        System.out.println("TestID: " + testID);
         if (time == 0) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Warnung");
@@ -306,50 +310,51 @@ public class QuestionController {
             alert.setContentText("Sie haben keine Zeit eingestellt, sind sie sicher?");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
-                try (Connection conn = DriverManager.getConnection(url)) {
-                    String sqlDeleteQuestions = "DELETE FROM Fragen WHERE TID = ?";
-                    String sqlDeleteTest = "DELETE FROM Test WHERE TID = ?";
-                    String sqlInsertTest = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
+            if (result.get() != ButtonType.OK) {
+                return false;
+            }
+        }
+        try (Connection conn = DriverManager.getConnection(url)) {
+            String sqlDeleteQuestions = "DELETE FROM Fragen WHERE TID = ?";
+            String sqlDeleteTest = "DELETE FROM Test WHERE TID = ?";
+            String sqlInsertTest = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
 
-                    try (PreparedStatement ps = conn.prepareStatement(sqlDeleteQuestions)) {
-                        ps.setInt(1, testID);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        System.out.println("Fehler beim löschen aus der Tabelle Fragen: " + e.getMessage());
-                    }
+            try (PreparedStatement ps = conn.prepareStatement(sqlDeleteQuestions)) {
+                ps.setInt(1, testID);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Fehler beim löschen aus der Tabelle Fragen: " + e.getMessage());
+            }
 
-                    try (PreparedStatement ps = conn.prepareStatement(sqlDeleteTest)) {
-                        ps.setInt(1, testID);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        System.out.println("Fehler beim löschen aus der Tabelle Test: " + e.getMessage());
-                    }
+            try (PreparedStatement ps = conn.prepareStatement(sqlDeleteTest)) {
+                ps.setInt(1, testID);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Fehler beim löschen aus der Tabelle Test: " + e.getMessage());
+            }
 
-                    try (PreparedStatement ps = conn.prepareStatement(sqlInsertTest)) {
-                        ps.setInt(1, testID);
-                        ps.setInt(2, time);
-                        ps.setInt(3, UserSession.getCurrentUser().getUserID());
-                        ps.executeUpdate();
-                        showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
-                    } catch (SQLException e) {
-                        System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
-                    }
+            saveMultipleChoiceQuestions();
+            saveSingleChoiceQuestions();
+            saveFreitextQuestions();
+            saveWahrFalschQuestions();
 
-                } catch (SQLException e) {
-                    System.out.println("Verbindungsfehler: " + e.getMessage());
-                }
-                saveMultipleChoiceQuestions();
-                saveSingleChoiceQuestions();
-                saveFreitextQuestions();
-                saveWahrFalschQuestions();
-            } else return false;
-        } return true;
+            try (PreparedStatement ps = conn.prepareStatement(sqlInsertTest)) {
+                ps.setInt(1, testID);
+                ps.setInt(2, time);
+                ps.setInt(3, UserSession.getCurrentUser().getUserID());
+                ps.executeUpdate();
+                showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
+            } catch (SQLException e) {
+                System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Verbindungsfehler: " + e.getMessage());
+        }
+        return true;
     }
 
         private void saveMultipleChoiceQuestions() {
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 for (int i = 0; i < questionFieldsMultipleChoice.size(); i++) {
@@ -395,7 +400,6 @@ public class QuestionController {
     }
 
     private void saveSingleChoiceQuestions() {
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 for (int i = 0; i < questionFieldsSingleChoice.size(); i++) {
@@ -441,7 +445,6 @@ public class QuestionController {
     }
 
     public void saveFreitextQuestions() {
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 for (TextField textFieldQuestion : questionFieldsFreitext ) {
@@ -464,7 +467,6 @@ public class QuestionController {
     }
 
     public void saveWahrFalschQuestions() {
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 for (int i = 0; i < questionFieldsWahrFalsch.size(); i++) {

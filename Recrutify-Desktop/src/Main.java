@@ -35,7 +35,7 @@ public class Main extends Application {
         });
 
         //auskommentieren um ersten Benutzer zu erstellen
-        //UserService.register("Jentsch", hashPassword("1234"), "FBB", "Jamie", "Jentsch");
+        //UserService.register("JentschJ", hashPassword("1234"), "FBB", "Jamie", "Jentsch", true);
 
         root.setOnMouseDragged((MouseEvent event) -> {
             primaryStage.setX(event.getScreenX() - xOffset);

@@ -10,12 +10,12 @@ import java.util.List;
 
 
 public class UserService {
-    public static String url = "jdbc:sqlite:" + initializeDatabase();
+    public static String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/Recrutify-Desktop/recrutify.db";
     /**
      * function to initizalize the database
      * @return the path where the db is located
      */
-    private static String initializeDatabase() {
+    static String initializeDatabase() {
         String projectPath = System.getProperty("user.dir");
         String dbPath = projectPath + File.separator + "recrutify.db";
 
@@ -162,18 +162,19 @@ public class UserService {
      * @param firstName first name of the user
      * @param lastName last name of the user
      */
-    public static void register(String username, String password, String company, String firstName, String lastName) {
+    public static void register(String username, String password, String company, String firstName, String lastName, Boolean is_admin) throws Exception {
             try (Connection conn = DriverManager.getConnection(url)) {
                 if (conn != null) {
                     //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
                     // insert into
-                    String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname) VALUES (?,?,?,?,?)";
+                    String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname, is_admin) VALUES (?,?,?,?,?,?)";
                     try (PreparedStatement ps = conn.prepareStatement(sql)) {
                         ps.setString(1, company);
                         ps.setString(2, username);
                         ps.setString(3, password);
                         ps.setString(4, firstName);
                         ps.setString(5, lastName);
+                        ps.setBoolean(6, is_admin);
 
                         ps.executeUpdate();
                     } catch (SQLException e) {
