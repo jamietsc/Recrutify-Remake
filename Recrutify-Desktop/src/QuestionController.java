@@ -1,28 +1,35 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class QuestionController {
-    private List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
-    private List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
+    private final List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
+    private final List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
 
-    private List<TextField> questionFieldsSingleChoice = new ArrayList<>();
-    private List<HBox> answerBoxesSingleChoice = new ArrayList<>();
+    private final List<TextField> questionFieldsSingleChoice = new ArrayList<>();
+    private final List<HBox> answerBoxesSingleChoice = new ArrayList<>();
 
-    private List<TextField> questionFieldsFreitext = new ArrayList<>();
+    private final List<TextField> questionFieldsFreitext = new ArrayList<>();
 
-    private List<TextField> questionFieldsWahrFalsch = new ArrayList<>();
-    private List<RadioButton> answerBoxesWahrFalsch = new ArrayList<>();
+    private final List<TextField> questionFieldsWahrFalsch = new ArrayList<>();
+    private final List<RadioButton> answerBoxesWahrFalsch = new ArrayList<>();
 
-    int testID = 1;
+    int testID = getTestID();
     int time = 0;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @FXML
     private VBox questionContainer;
@@ -32,6 +39,9 @@ public class QuestionController {
 
     @FXML
     private Button minimizeButton;
+
+    @FXML
+    private Button backButton;
 
     @FXML
     private void multipleChoiceButtonAction() {
@@ -79,8 +89,19 @@ public class QuestionController {
         //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+            questionFieldsMultipleChoice.remove(textFieldQuestion);
+            answerBoxesMultipleChoice.remove(hBox1);
+            answerBoxesMultipleChoice.remove(hBox2);
+            answerBoxesMultipleChoice.remove(hBox3);
+            answerBoxesMultipleChoice.remove(hBox4);
+        });
+
         questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
     @FXML
@@ -136,8 +157,19 @@ public class QuestionController {
         //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+            questionFieldsSingleChoice.remove(textFieldQuestion);
+            answerBoxesSingleChoice.remove(hBox1);
+            answerBoxesSingleChoice.remove(hBox2);
+            answerBoxesSingleChoice.remove(hBox3);
+            answerBoxesSingleChoice.remove(hBox4);
+        });
+
         questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
     @FXML
@@ -148,8 +180,15 @@ public class QuestionController {
 
         textFieldQuestion.getStyleClass().add("question-text-field");
 
-        questionContainer.setSpacing(10);
-        questionContainer.getChildren().addAll(textFieldQuestion);
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion);
+            questionFieldsFreitext.remove(textFieldQuestion);
+        });
+
+        questionContainer.setSpacing(20);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
     }
 
     @FXML
@@ -170,13 +209,35 @@ public class QuestionController {
         radioButton1.getStyleClass().add("radio-button");
         radioButton2.getStyleClass().add("radio-button");
 
+        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+        buttonDeleteQuestion.getStyleClass().add("delete-button");
+        buttonDeleteQuestion.setOnAction(e -> {
+            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion, radioButton1, radioButton2);
+            questionFieldsWahrFalsch.remove(textFieldQuestion);
+            answerBoxesWahrFalsch.remove(radioButton1);
+            answerBoxesWahrFalsch.remove(radioButton2);
+        });
+
         questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(textFieldQuestion, radioButton1, radioButton2);
+        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, radioButton1, radioButton2);
     }
 
     @FXML
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void minimizeButtonAction() {
+        Stage stage = (Stage) minimizeButton.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    private void backButtonAction() throws Exception {
+        openStage("/user.fxml");
+        Stage stage = (Stage) backButton.getScene().getWindow();
         stage.close();
     }
 
@@ -208,13 +269,7 @@ public class QuestionController {
 
     }
 
-    @FXML
-    private void minimizeButtonAction() {
-        Stage stage = (Stage) minimizeButton.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    private void getTestID() {
+    private int getTestID() {
         String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db"; // Pfad zur SQLite-Datenbank
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -234,32 +289,63 @@ public class QuestionController {
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
         }
+        return testID;
+    }
+
+    @FXML
+    private void zeitButtonAction() {
+        setTime();
     }
 
     @FXML
     private boolean saveQuestionsButtonAction() {
-        getTestID();
-        setTime();
-        saveMultipleChoiceQuestions();
-        saveSingleChoiceQuestions();
-        saveFreitextQuestions();
-        saveWahrFalschQuestions();
-        String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
-        try (Connection conn = DriverManager.getConnection(url)) {
-            String sql = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, testID);
-                ps.setInt(2, time);
-                ps.setInt(3, UserSession.getCurrentUser().getUserID());
-                ps.executeUpdate();
-                showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
-            } catch (SQLException e) {
-            System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
-            }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
-        }
-        return true;
+        if (time == 0) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Warnung");
+            alert.setHeaderText(null);
+            alert.setContentText("Sie haben keine Zeit eingestellt, sind sie sicher?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/recrutify.db";
+                try (Connection conn = DriverManager.getConnection(url)) {
+                    String sqlDeleteQuestions = "DELETE FROM Fragen WHERE TID = ?";
+                    String sqlDeleteTest = "DELETE FROM Test WHERE TID = ?";
+                    String sqlInsertTest = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
+
+                    try (PreparedStatement ps = conn.prepareStatement(sqlDeleteQuestions)) {
+                        ps.setInt(1, testID);
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim löschen aus der Tabelle Fragen: " + e.getMessage());
+                    }
+
+                    try (PreparedStatement ps = conn.prepareStatement(sqlDeleteTest)) {
+                        ps.setInt(1, testID);
+                        ps.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim löschen aus der Tabelle Test: " + e.getMessage());
+                    }
+
+                    try (PreparedStatement ps = conn.prepareStatement(sqlInsertTest)) {
+                        ps.setInt(1, testID);
+                        ps.setInt(2, time);
+                        ps.setInt(3, UserSession.getCurrentUser().getUserID());
+                        ps.executeUpdate();
+                        showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
+                    }
+
+                } catch (SQLException e) {
+                    System.out.println("Verbindungsfehler: " + e.getMessage());
+                }
+                saveMultipleChoiceQuestions();
+                saveSingleChoiceQuestions();
+                saveFreitextQuestions();
+                saveWahrFalschQuestions();
+            } else return false;
+        } return true;
     }
 
         private void saveMultipleChoiceQuestions() {
@@ -416,10 +502,23 @@ public class QuestionController {
     }
 
     @FXML
-    private void showErrorDialog(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.setTitle("Fehler!");
-        alert.setHeaderText(null);
-        alert.showAndWait();
+    private void openStage(String fxmlFile) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo_Recrutify_small.png")));
+        stage.setResizable(false);
+        root.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged((MouseEvent event) -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

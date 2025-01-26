@@ -20,12 +20,36 @@
     -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
 }
 
+
+.delete-button {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+}
+
+.delete-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.secondary-button {
+    -fx-background-color: linear-gradient(to bottom right, #a2a2a1, #9a969a);
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
+    -fx-text-fill: white; /* Textfarbe */
+    -fx-text-weight: bold;
+    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-cursor: hand;
+
 .account-button {
     /* Hintergrundbild */
     -fx-background-image: url("img/user.png");
     -fx-background-size: 20px 20px; /* Das Bild skalieren */
     -fx-background-position: center; /* Das Bild zentrieren */
     -fx-background-repeat: no-repeat; /* Wiederholung verhindern */
+
 }
 
 .logout-button {
@@ -106,7 +130,7 @@
 
 
 .radio-button {
-    -fx-padding: 10px 0 10px 0;
+    -fx-font-size: 14px;
 }
 
 .scroll-pane {
