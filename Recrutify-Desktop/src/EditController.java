@@ -11,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +36,7 @@ public class EditController {
     int time = 0;
     private double xOffset = 0;
     private double yOffset = 0;
+    private String selectedTestID = null;
 
     @FXML
     private VBox questionContainer;
@@ -72,27 +72,30 @@ public class EditController {
      * @throws Exception
      */
     @FXML
-    private void onOpenDropDownMenu() throws Exception{
-        User regiseredUser = UserSession.getCurrentUser();
-        options = FXCollections.observableArrayList(
-                UserService.getTIDsFromCompany(regiseredUser.getUserID())
-        );
-
-        dropDownMenu.setItems(options);
-
+    private void initialize() {
         dropDownMenu.setOnAction(event -> {
             String selectedOption = dropDownMenu.getValue();
-            if (selectedOption != null) {
+            if (selectedOption != null && !selectedOption.equals(selectedTestID)) {
+                selectedTestID = selectedOption;
                 setTestID(selectedOption);
-                System.out.println("Test: " + getTestID());
+                System.out.println("Test: " + testID);
 
-                FragenID = UserService.getFIDsFromTest(getTestID());
+                FragenID = UserService.getFIDsFromTest(testID);
                 setQuestions();
             }
         });
     }
 
+    @FXML
+    private void onOpenDropDownMenu() throws Exception {
+        User registeredUser = UserSession.getCurrentUser();
+        options = FXCollections.observableArrayList(UserService.getTIDsFromCompany(registeredUser.getUserID()));
+
+        dropDownMenu.setItems(options);
+    }
+
     private void setQuestions() {
+        questionContainer.getChildren().clear();
         for (int i = 0; i < FragenID.size(); i++) {
             try (Connection conn = DriverManager.getConnection(url)) {
                 if (conn != null) {
@@ -378,10 +381,6 @@ public class EditController {
 
     private void setTestID(String choosenTest) {
         testID = Integer.parseInt(choosenTest);
-    }
-
-    private int getTestID() {
-        return testID;
     }
 
     @FXML
