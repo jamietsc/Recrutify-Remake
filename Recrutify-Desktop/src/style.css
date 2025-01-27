@@ -14,9 +14,7 @@
     -fx-cursor: hand;
 }
 
-.login-button:hover,
-.account-button:hover,
-.logout-button:hover{
+.login-button:hover {
     -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
 }
 
@@ -30,6 +28,8 @@
     -fx-alignment: center;
 }
 
+.logout-button,
+.account-button,
 .delete-button:hover {
     -fx-background-color: #e0e0e0;
 }

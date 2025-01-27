@@ -15,12 +15,12 @@
             <Image url="@img/Logo_Recrutify_full.png" />
          </image>
       </ImageView>
-      <Label layoutX="137.0" layoutY="184.0" text="Einstellungstests, die überzeugen.">
+      <Label layoutX="137.0" layoutY="140.0" text="Einstellungstests, die überzeugen.">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Button fx:id="testErstellenButton" layoutX="217.0" layoutY="246.0" mnemonicParsing="false" onAction="#testErstellenButtonAction" prefHeight="40.0" prefWidth="167.0" styleClass="login-button" stylesheets="@style.css" text="Test erstellen" />
+      <Button fx:id="testErstellenButton" layoutX="217.0" layoutY="210.0" mnemonicParsing="false" onAction="#testErstellenButtonAction" prefHeight="40.0" prefWidth="167.0" styleClass="login-button" stylesheets="@style.css" text="Test erstellen" />
       <Button fx:id="minimizeButton" layoutX="517.0" layoutY="-9.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
          <font>
             <Font size="18.0" />
@@ -28,8 +28,8 @@
       </Button>
       <Button fx:id="closeButton" layoutX="556.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
       <Button fx:id="auswertungÖffnenButton" layoutX="217.0" layoutY="340.0" mnemonicParsing="false" onAction="#auswertungÖffnenButtonAction" prefHeight="40.0" prefWidth="167.0" styleClass="login-button" stylesheets="@style.css" text="Auswertung" />
-      <Button fx:id="logoutButton" layoutX="490.0" layoutY="49.0" mnemonicParsing="false" onAction="#logoutButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="logout-button" stylesheets="@style.css" />
-      <Button fx:id="accountButton" layoutX="539.0" layoutY="49.0" mnemonicParsing="false" onAction="#accountButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="account-button" stylesheets="@style.css" textFill="WHITE" />
-      <Button fx:id="testBearbeitenButton" layoutX="217.0" layoutY="293.0" mnemonicParsing="false" onAction="#testBearbeitenButtonAction" prefHeight="40.0" prefWidth="167.0" styleClass="login-button" stylesheets="@style.css" text="Test bearbeiten" />
+      <Button fx:id="logoutButton" layoutX="495.0" layoutY="346.0" mnemonicParsing="false" onAction="#logoutButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="logout-button" stylesheets="@style.css" />
+      <Button fx:id="accountButton" layoutX="542.0" layoutY="346.0" mnemonicParsing="false" onAction="#accountButtonAction" prefHeight="40.0" prefWidth="44.0" styleClass="account-button" stylesheets="@style.css" textFill="WHITE" />
+      <Button fx:id="testBearbeitenButton" layoutX="217.0" layoutY="260.0" mnemonicParsing="false" onAction="#testBearbeitenButtonAction" prefHeight="40.0" prefWidth="167.0" styleClass="login-button" stylesheets="@style.css" text="Test bearbeiten" />
    </children>
 </AnchorPane>

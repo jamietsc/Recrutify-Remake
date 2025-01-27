@@ -38,38 +38,38 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="companyRegister" layoutX="50.0" layoutY="129.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
-            <Label layoutX="51.0" layoutY="186.0" text="VORNAME">
+            <TextField fx:id="companyRegister" layoutX="50.0" layoutY="130.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
+            <Label layoutX="50.0" layoutY="185.0" text="VORNAME">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
             <TextField fx:id="firstNameRegister" layoutX="50.0" layoutY="210.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
-            <Label layoutX="51.0" layoutY="267.0" text="NACHNAME">
+            <Label layoutX="50.0" layoutY="265.0" text="NACHNAME">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="lastNameRegister" layoutX="50.0" layoutY="291.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
-            <Label layoutX="51.0" layoutY="348.0" text="BENUTZERNAME">
+            <TextField fx:id="lastNameRegister" layoutX="50.0" layoutY="290.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
+            <Label layoutX="50.0" layoutY="345.0" text="BENUTZERNAME">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameRegister" layoutX="50.0" layoutY="372.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
-            <Label layoutX="51.0" layoutY="430.0" text="PASSWORT">
+            <TextField fx:id="usernameRegister" layoutX="50.0" layoutY="370.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
+            <Label layoutX="50.0" layoutY="425.0" text="PASSWORT">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordRegister" layoutX="50.0" layoutY="453.0" prefHeight="40.0" prefWidth="310.0" styleClass="password-label" stylesheets="@style.css" />
-            <Label layoutX="51.0" layoutY="507.0" text="PASSWORT WIEDERHOLEN">
+            <PasswordField fx:id="passwordRegister" layoutX="50.0" layoutY="450.0" prefHeight="40.0" prefWidth="310.0" styleClass="password-label" stylesheets="@style.css" />
+            <Label layoutX="50.0" layoutY="505.0" text="PASSWORT WIEDERHOLEN">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
             <PasswordField fx:id="passwordRegisterRepeat" layoutX="50.0" layoutY="530.0" prefHeight="40.0" prefWidth="310.0" styleClass="password-label" stylesheets="@style.css" />
-            <Button fx:id="registerButton" defaultButton="true" layoutX="50.0" layoutY="584.0" mnemonicParsing="false" onAction="#registerButtonAction" prefHeight="40.0" prefWidth="310.0" styleClass="login-button" stylesheets="@style.css" text="Registrieren">
+            <Button fx:id="registerButton" defaultButton="true" layoutX="50.0" layoutY="580.0" mnemonicParsing="false" onAction="#registerButtonAction" prefHeight="40.0" prefWidth="310.0" styleClass="login-button" stylesheets="@style.css" text="Registrieren">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

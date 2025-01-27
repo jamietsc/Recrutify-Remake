@@ -38,7 +38,7 @@
       <Button fx:id="wahrFalschButton" layoutX="35.0" layoutY="510.0" mnemonicParsing="false" onAction="#wahrFalschButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Wahr / Falsch" />
       <Button fx:id="zeitButton" layoutX="35.0" layoutY="670.0" mnemonicParsing="false" onAction="#zeitButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Zeitbegrenzung hinzufügen" />
       <Button fx:id="saveQuestionsButton" layoutX="35.0" layoutY="720.0" mnemonicParsing="false" onAction="#saveQuestionsButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Fragen speichern" />
-      <Button fx:id="backButton" layoutX="985.0" layoutY="720.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Zurück" />
+      <Button fx:id="backButton" layoutX="985.0" layoutY="720.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="delete-button" stylesheets="@style.css" text="Zurück" />
       <Button fx:id="minimizeButton" layoutX="1167.0" layoutY="-9.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
          <font>
             <Font size="18.0" />
