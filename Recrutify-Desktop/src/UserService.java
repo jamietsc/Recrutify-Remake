@@ -218,6 +218,29 @@ public class UserService {
         return null;
     }
 
+    public static ArrayList<Integer> getFIDsFromTest(int TestID) {
+        ArrayList<Integer> questionIDs = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                String sql = "SELECT FID FROM Fragen WHERE TID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)){
+                    ps.setInt(1, TestID);
+                    try (ResultSet rs = ps.executeQuery()){
+                        while(rs.next()) {
+                            questionIDs.add(rs.getInt("FID"));
+                            System.out.println(questionIDs);
+                        }
+                    }
+                } catch (SQLException e){
+                    System.out.println("Error While Loading the Data" + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while connecting to the database.");
+        } return questionIDs;
+    }
+
     /**
      * method to load all test results into a list
      * @param TID Test ID of the test the user want to see
