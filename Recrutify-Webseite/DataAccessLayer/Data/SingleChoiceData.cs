@@ -20,7 +20,5 @@ namespace Recrutify.DataAccessLayer.Data
             var result = await _db.LoadData<SingleChoiceModel, dynamic>(sqlQuery, new { TID , FID });
             return result.FirstOrDefault();
         }
-
-
     }
 }

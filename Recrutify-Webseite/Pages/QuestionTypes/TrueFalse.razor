@@ -1,0 +1,46 @@
+﻿@using Recrutify.Models
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@inject HelperModel helperModel
+
+<PageTitle>Einstellungstest</PageTitle>
+
+<div>
+    @if (currentQuestion != null)
+    {
+        <!-- Stellt aktuelle Frage des Typs SingleChoice dar -->
+
+        <h2>Frage @helperModel.currentFID: @currentQuestion.Fragentext</h2>
+
+        <div @key="currentQuestion.FID">
+            <div class="answer">
+                <input class="form-check-input" type="radio" name="radioField_@currentQuestion.FID" id="Answer1_@currentQuestion.FID" value="1" checked="@(currentQuestion.Gewaehlte_Antwort == 1)" @onchange="() => SetAnswer(currentQuestion, 1)">
+                <label class="form-check-label" for="Answer1_@currentQuestion.FID">Wahr</label>
+            </div>
+            <div class="answer">
+                <input class="form-check-input" type="radio" name="radioField_@currentQuestion.FID" id="Answer2_@currentQuestion.FID" value="2" checked="@(currentQuestion.Gewaehlte_Antwort == 0)" @onchange="() => SetAnswer(currentQuestion, 0)">
+                <label class="form-check-label" for="Answer2_@currentQuestion.FID">Falsch</label>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Lade Fragen...</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public TrueFalseModel currentQuestion { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Console.WriteLine("TrueFalse");
+    }
+
+    private void SetAnswer(TrueFalseModel trueFalseModel, int selectedAnswer)
+    {
+        trueFalseModel.Gewaehlte_Antwort = selectedAnswer;
+        StateHasChanged();
+    }
+}

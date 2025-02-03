@@ -46,12 +46,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/QuestionTypes/FreeText.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb25UeXBlc1xGcmVlVGV4dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/QuestionTypes/MultipleChoice.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb25UeXBlc1xNdWx0aXBsZUNob2ljZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/QuestionTypes/SingleChoice.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb25UeXBlc1xTaW5nbGVDaG9pY2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/QuestionTypes/TrueFalse.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb25UeXBlc1xUcnVlRmFsc2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Finn Luca/OneDrive/HWR/Semester 4/Software Engineering 2/GitHub/Recrutify-Remake/Recrutify-Webseite/Pages/Test.razor]

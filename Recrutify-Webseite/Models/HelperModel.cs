@@ -4,5 +4,7 @@
     public class HelperModel
     {
         public int currentFID { get; set; } = 1;
+        public int currentFreeTextAnswer { get; set; } = 0;
+        public bool useTimer { get; set; } = true;
     }
 }

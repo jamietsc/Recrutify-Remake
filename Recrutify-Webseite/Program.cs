@@ -22,6 +22,8 @@ builder.Services.AddScoped<IUnternehmen<TestModel>, UnternehmenData>();
 builder.Services.AddScoped<IQuestionType<QuestionTypeModel>, QuestionTypeData>();
 builder.Services.AddScoped<ISingleChoice<SingleChoiceModel>, SingleChoiceData>();
 builder.Services.AddScoped<IMultipleChoice<MultipleChoiceModel>, MultipleChoiceData>();
+builder.Services.AddScoped<IFreeText<FreeTextModel>, FreeTextData>();
+builder.Services.AddScoped<ITrueFalse<TrueFalseModel>, TrueFalseData>();
 
 //SqlAccess
 builder.Services.AddScoped<ISqlDataAccess, SqlDataAccess>();
@@ -34,6 +36,8 @@ builder.Services.AddScoped<AdminModel>();
 builder.Services.AddScoped<QuestionTypeModel>();
 builder.Services.AddScoped<SingleChoiceModel>();
 builder.Services.AddScoped<MultipleChoiceModel>();
+builder.Services.AddScoped<FreeTextModel>();
+builder.Services.AddScoped<TrueFalseModel>();
 
 var app = builder.Build();
 
