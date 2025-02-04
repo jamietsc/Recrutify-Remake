@@ -1,0 +1,66 @@
+﻿@*Ungenutzt/Veraltet*@
+@page "/testOld/{tid:int}"  
+
+@using Recrutify.Models
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@inject HelperModel helperModel
+
+<PageTitle>Einstellungstest</PageTitle>
+
+<div>
+    @if (currentQuestion != null)
+    {
+        <!-- Stellt aktuelle Frage des Typs SingleChoice dar -->
+
+        <h2>Frage @helperModel.currentFID: @currentQuestion.Fragentext</h2>
+
+        <div @key="currentQuestion.FID">
+            <div class="answer">
+                <input class="form-check-input" type="radio" name="radioField_@currentQuestion.FID" id="Answer1_@currentQuestion.FID" value="1" checked="@(currentQuestion.Gewaehlte_Antwort == 1)" @onchange="() => SetAnswer(currentQuestion, 1)">
+                <label class="form-check-label" for="Answer1_@currentQuestion.FID">@currentQuestion.Antwort_1</label>
+            </div>
+            @if (currentQuestion.Antwort_2 != "")
+            {
+                <div class="answer">
+                    <input class="form-check-input" type="radio" name="radioField_@currentQuestion.FID" id="Answer2_@currentQuestion.FID" value="2" checked="@(currentQuestion.Gewaehlte_Antwort == 2)" @onchange="() => SetAnswer(currentQuestion, 2)">
+                    <label class="form-check-label" for="Answer2_@currentQuestion.FID">@currentQuestion.Antwort_2</label>
+                </div>
+            }
+            @if (currentQuestion.Antwort_3 != "")
+            {
+                <div class="answer">
+                    <input class="form-check-input" type="radio" name="radioField_@currentQuestion.FID" id="Answer3_@currentQuestion.FID" value="3" checked="@(currentQuestion.Gewaehlte_Antwort == 3)" @onchange="() => SetAnswer(currentQuestion, 3)">
+                    <label class="form-check-label" for="Answer3_@currentQuestion.FID">@currentQuestion.Antwort_3</label>
+                </div>
+            }
+            @if (currentQuestion.Antwort_4 != "")
+            {
+                <div class="answer">
+                    <input class="form-check-input" type="radio" name="radioField_@currentQuestion.FID" id="Answer4_@currentQuestion.FID" value="4" checked="@(currentQuestion.Gewaehlte_Antwort == 4)" @onchange="() => SetAnswer(currentQuestion, 4)">
+                    <label class="form-check-label" for="Answer4_@currentQuestion.FID">@currentQuestion.Antwort_4</label>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Lade Fragen...</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public SingleChoiceModel currentQuestion { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Console.WriteLine("SingleChoice");
+    }
+
+    private void SetAnswer(SingleChoiceModel singleChoiceModel, int selectedAnswer)
+    {
+        singleChoiceModel.Gewaehlte_Antwort = selectedAnswer;
+        StateHasChanged();
+    }
+}

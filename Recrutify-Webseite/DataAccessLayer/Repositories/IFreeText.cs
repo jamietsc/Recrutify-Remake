@@ -4,9 +4,11 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Repositories
 {
-    public interface IMultipleChoice<T> where T : class
+    public interface IFreeText<T> where T : class
     {
         //Alle MultipleChoice Fragen aus der Datenbank laden
-        Task<MultipleChoiceModel> GetMultipleChoiceQuestion(int TID, int FID);
+        Task<FreeTextModel> GetFreeTextQuestion(int TID, int FID);
+
+        Task InsertFreeTextAnswer(T model, int BID, int currentFreeTextAnswer);
     }
 }

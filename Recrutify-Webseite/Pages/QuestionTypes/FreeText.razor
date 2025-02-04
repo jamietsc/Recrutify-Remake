@@ -1,0 +1,43 @@
+﻿@using Recrutify.Models
+@using Recrutify.DataAccessLayer.Data
+@using Recrutify.DataAccessLayer.Repositories
+@inject HelperModel helperModel
+
+<PageTitle>Einstellungstest</PageTitle>
+
+@if (currentQuestion != null)
+{
+    <!-- Stellt aktuelle Frage des Typs MultipleChoice dar -->
+
+    <h2>Frage @helperModel.currentFID: @currentQuestion.Fragentext</h2>
+
+    <div @key="currentQuestion.FID">
+        <div class="answer">
+            @if (helperModel.currentFreeTextAnswer == 1)
+            {
+                <textarea class="form-control" id="Answer_Freetext_@currentQuestion.FID" rows="20" placeholder="Ihre Antwort" @bind="@currentQuestion.Antwort_Freitext_1"></textarea>
+            } else if (helperModel.currentFreeTextAnswer == 2)
+            {
+                <textarea class="form-control" id="Answer_Freetext_@currentQuestion.FID" rows="20" placeholder="Ihre Antwort" @bind="@currentQuestion.Antwort_Freitext_2"></textarea>
+            } else if (helperModel.currentFreeTextAnswer == 3)
+            {
+                <textarea class="form-control" id="Answer_Freetext_@currentQuestion.FID" rows="20" placeholder="Ihre Antwort" @bind="@currentQuestion.Antwort_Freitext_3"></textarea>
+            }
+        </div>
+    </div>
+}
+else
+{
+    //<button @onclick="ergebnis" class="btn btn-primary">Test abgeben</button>
+    <p>Lade Fragen...</p>
+}
+
+@code {
+    [Parameter]
+    public FreeTextModel currentQuestion { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Console.WriteLine("Freitext");
+    }
+}
