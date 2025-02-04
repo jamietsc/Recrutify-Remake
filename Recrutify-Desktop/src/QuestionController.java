@@ -422,7 +422,7 @@ public class QuestionController {
 
                     String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, Richtig_1, Richtig_2, Richtig_3, Richtig_4, TID) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
                     try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,2 );
+                        ps.setInt(1,0 );
                         ps.setString(2, question);
                         ps.setString(3, answer1);
                         ps.setString(4, answer2);
@@ -452,7 +452,7 @@ public class QuestionController {
 
                     String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, TID) VALUES (?,?,?)";
                     try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,0 );
+                        ps.setInt(1,2);
                         ps.setString(2, question);
                         ps.setInt(3, testID);
                         ps.executeUpdate();
