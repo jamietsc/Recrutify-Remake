@@ -137,7 +137,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //Lädt alle FIDs mit zugehörigen Fragentypen in eine Liste
         questionTypes = (await questionTypeService.GetQuestionTypes(tid)).ToList();
+
+        //Lädt erste FID des aktuellen Tests
+        helperModel.firstFID = questionTypes[0].FID;
+        helperModel.currentFID = helperModel.firstFID;
 
         //Lädt alle Fragen in separate Listen abhängig vom Fragentyp
         foreach (var questionType in questionTypes)
@@ -182,9 +187,9 @@
             StartTimer();
         }
 
-        helperModel.currentFID = 1; // Erste Frage starten
-        currentQuestionType = loadCurrentQuestionType(1);
-        loadCurrentQuestion(1, currentQuestionType);
+        // Erste Frage starten
+        currentQuestionType = loadCurrentQuestionType(helperModel.firstFID);
+        loadCurrentQuestion(helperModel.firstFID, currentQuestionType);
     }
 
     //Lädt Fragentyp der aktuellen Frage
@@ -271,7 +276,10 @@
             }
         }
 
-        //timer.Stop();
+        if (timer != null)
+        {
+            timer.Stop();
+        }
         bewerberModel.Ergebnis = korrekteAntworten;
         await bewerberData.InsertPunktzahl(bewerberModel);
         Console.WriteLine(korrekteAntworten);
@@ -280,17 +288,17 @@
 
     private bool isPreviousButtonDisabled()
     {
-        return helperModel.currentFID == 1;
+        return helperModel.currentFID == helperModel.firstFID;
     }
 
     private bool isLastQuestion()
     {
-        return helperModel.currentFID == questionTypes.Count;
+        return helperModel.currentFID == questionTypes.Count + helperModel.firstFID - 1; //damit Differenz zwischen Wert der ersten FID und Wert 1 ausgeglichen und somit oberste Grenze entsprechend gesetzt
     }
 
     private void previousPage()
     {
-        if (helperModel.currentFID > 1)
+        if (helperModel.currentFID > helperModel.firstFID)
         {
             helperModel.currentFID--;
             currentQuestionType = loadCurrentQuestionType(helperModel.currentFID);
@@ -335,7 +343,7 @@
             // Countdown ist abgelaufen, Timer stoppen
             timer.Stop();
             verbleibendeZeit = TimeSpan.Zero;
-            OpenModal();
+            InvokeAsync(OpenModal);
         }
 
         // Aktualisiere die Anzeige im UI
