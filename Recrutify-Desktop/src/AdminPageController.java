@@ -34,6 +34,15 @@ public class AdminPageController {
     private TableColumn<Bewerber, String> lastNameColumn;
 
     @FXML
+    private TableColumn<Bewerber, String> text_1;
+
+    @FXML
+    private TableColumn<Bewerber, String> text_2;
+
+    @FXML
+    private TableColumn<Bewerber, String> text_3;
+
+    @FXML
     private TableColumn<Bewerber, Integer> scoreColumn;
 
     @FXML
@@ -120,6 +129,9 @@ public class AdminPageController {
         if(!allApplicants.isEmpty()){
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("vorname"));
             lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("nachname"));
+            text_1.setCellValueFactory(new PropertyValueFactory<>("text_1"));
+            text_2.setCellValueFactory(new PropertyValueFactory<>("text_2"));
+            text_3.setCellValueFactory(new PropertyValueFactory<>("text_3"));
             scoreColumn.setCellValueFactory(new PropertyValueFactory<>("ergebnis"));
             resultTable.setItems(allApplicants);
             resultTable.setVisible(true);

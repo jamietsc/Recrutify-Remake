@@ -10,13 +10,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminPageController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminPageController">
    <children>
-      <Label fx:id="noEntriesToThisTestLabel" layoutX="52.0" layoutY="199.0" styleClass="testauswahl-label" stylesheets="@style.css" text="Keine Ergebnisse zu dem Test." visible="false" />
-      <TableView fx:id="resultTable" layoutX="300.0" layoutY="250.0" prefHeight="400.0" prefWidth="600.0" styleClass="tabellen-ansicht" stylesheets="@style.css" visible="false">
+      <Label fx:id="noEntriesToThisTestLabel" layoutX="52.0" layoutY="220.0" styleClass="testauswahl-label" stylesheets="@style.css" text="Keine Ergebnisse zu dem Test." visible="false" />
+      <TableView fx:id="resultTable" layoutX="50.0" layoutY="250.0" prefHeight="400.0" prefWidth="1100.0" styleClass="tabellen-ansicht" stylesheets="@style.css" visible="false">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="185.0" text="Vorname" />
           <TableColumn fx:id="lastNameColumn" prefWidth="185.0" text="Nachname" />
+            <TableColumn fx:id="text_1" prefWidth="75.0" text="Freitext_1" />
+            <TableColumn fx:id="eva_text_1" prefWidth="75.0" text="Bewertung_text_1" />
+            <TableColumn fx:id="text_2" prefWidth="75.0" text="Freitext_2" />
+            <TableColumn fx:id="eva_text_2" prefWidth="75.0" text="Bewertung_text_2" />
+            <TableColumn fx:id="text_3" prefWidth="75.0" text="Freitext_3" />
+            <TableColumn fx:id="eva_text_3" prefWidth="75.0" text="Bewertung_text_3" />
             <TableColumn fx:id="scoreColumn" prefWidth="185.0" text="Punktzahl" />
         </columns>
       </TableView>

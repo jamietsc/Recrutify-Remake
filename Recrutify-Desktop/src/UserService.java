@@ -2,7 +2,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import passwordSecurity.BCrypt;
 
-import javax.xml.transform.Result;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 
 
 public class UserService {
-    public static String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/Recrutify-Desktop/recrutify.db";
+    public static String url = "jdbc:sqlite:C:/Jamie Jentsch/BachelorOfScience - Informatik/4. Semester/Software_Engineering/recrutify.db";
     /**
      * function to initizalize the database
      * @return the path where the db is located
@@ -265,7 +264,7 @@ public class UserService {
                 }
 
                 //get all applicants
-                String sqlQuery = "SELECT BID, VORNAME, NACHNAME, ERGEBNIS FROM BEWERBER WHERE BID = ?";
+                String sqlQuery = "SELECT BID, VORNAME, NACHNAME, ANTWORT_FREITEXT_1, ANTWORT_FREITEXT_2, ANTWORT_FREITEXT_3, ERGEBNIS FROM BEWERBER WHERE BID = ?";
                 try (PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery)) {
                     for (String bid : allBIDs) {
                         preparedStatement.setString(1, bid);
@@ -275,6 +274,9 @@ public class UserService {
                                         rs.getString("BID"),
                                         rs.getString("VORNAME"),
                                         rs.getString("NACHNAME"),
+                                        rs.getString("ANTWORT_FREITEXT_1") != null ? rs.getString("ANTWORT_FREITEXT_1") : "" ,
+                                        rs.getString("ANTWORT_FREITEXT_2") != null ? rs.getString("ANTWORT_FREITEXT_2") : "",
+                                        rs.getString("ANTWORT_FREITEXT_3") != null ? rs.getString("ANTWORT_FREITEXT_3") : "",
                                         rs.getInt("ERGEBNIS")
                                 );
                                 //System.out.println("Neuer Bewerber: " + applicant.toString());
@@ -286,6 +288,7 @@ public class UserService {
             }
         } catch (SQLException e) {
             System.out.println("Error while connecting to the database.");
+            e.printStackTrace();
         }
         return allApplicants;
     }

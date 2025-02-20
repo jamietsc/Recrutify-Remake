@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class QuestionController {
-    public static String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/Recrutify-Desktop/recrutify.db";
+    public static String url = "jdbc:sqlite:C:/Jamie Jentsch/BachelorOfScience - Informatik/4. Semester/Software_Engineering/recrutify.db";
 
     private final List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
     private final List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
