@@ -343,7 +343,7 @@
             // Countdown ist abgelaufen, Timer stoppen
             timer.Stop();
             verbleibendeZeit = TimeSpan.Zero;
-            InvokeAsync(OpenModal);
+            InvokeAsync(OpenEndOfTimeModal);
         }
 
         // Aktualisiere die Anzeige im UI
@@ -353,7 +353,13 @@
     private void UpdateAnzeige()
     {
         // Formatierte Zeit anzeigen: Minuten:Sekunden
-        zeitAnzeigen = $"{(int)verbleibendeZeit.TotalHours:D2}:{verbleibendeZeit.Minutes:D2}:{verbleibendeZeit.Seconds:D2}";
+        if (verbleibendeZeit.TotalMinutes < 60)
+        {
+            zeitAnzeigen = $"{verbleibendeZeit.Minutes:D2}:{verbleibendeZeit.Seconds:D2}";
+        } else
+        {
+            zeitAnzeigen = $"{(int)verbleibendeZeit.TotalHours:D2}:{verbleibendeZeit.Minutes:D2}:{verbleibendeZeit.Seconds:D2}";
+        }
         StateHasChanged();
     }
 
@@ -363,8 +369,8 @@
         timer?.Dispose();
     }
 
-    private async void OpenModal()
+    private async void OpenEndOfTimeModal()
     {
-        await JSRuntime.InvokeVoidAsync("OpenModal"); // JavaScript-Funktion aufrufen
+        await JSRuntime.InvokeVoidAsync("OpenEndOfTimeModal"); // JavaScript-Funktion aufrufen
     }
 }

@@ -12,5 +12,7 @@ namespace Recrutify.DataAccessLayer.Repositories
 
         //Dauer des Tests durch die TID erhalten
         Task<int> GetDauer(int TID);
+
+        Task<bool> CheckTID(int TID);
     }
 }

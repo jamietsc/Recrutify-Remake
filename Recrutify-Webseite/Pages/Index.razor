@@ -3,6 +3,8 @@
 @using Recrutify.Models
 @using Recrutify.DataAccessLayer.Data
 @using Recrutify.DataAccessLayer.Repositories
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
 @inject IBewerber<BewerberModel> bewerberData
 @inject BewerberModel bewerberModel
 @inject BewerberTestModel bewerberTestModel
@@ -32,16 +34,42 @@
     <button type="button" @onclick="start">Weiter</button>
 </div>
 
+@* Container für fehlerhafte TID *@
+<dialog id="modalWrongTID" style="border: 1px solid firebrick; border-radius: 5px;">
+    <h2 style="margin: 10px;">Achtung!</h2>
+    <p style="margin: 10px;">Der von Ihnen eingegebene Einladungscode ist ungültig. Bitte geben Sie einen gültigen Code ein.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center;">
+        <div></div>
+        <div></div>
+        <button class="important" style="margin: 10px; justify-self: end;" onclick="document.getElementById('modalWrongTID').close()">Bestätigen</button>
+    </div>
+</dialog>
+
+
 @code {
     //Einladungscode wird eingegeben und der Bewerber wird weitergeleitet
     //TID und UNternehmensnamen werden im Model gespeichert
-    async void start()
+    async void start() 
     {
-        testModel.TID = bewerberTestModel.TID;
-        testModel.UID = await unternehmenService.GetUIDFromTID(testModel.TID ?? 0);
-        testModel.Name = await unternehmenService.GetName(testModel.UID);
-        Console.WriteLine(testModel.UID);
-        Console.WriteLine(testModel.Name);
-        navigationManager.NavigateTo($"/welcome/{bewerberTestModel.TID}");
+        bool TIDexists = await unternehmenService.CheckTID(bewerberTestModel.TID ?? 0);
+        if (TIDexists)
+        {
+            testModel.TID = bewerberTestModel.TID;
+            testModel.UID = await unternehmenService.GetUIDFromTID(testModel.TID ?? 0);
+            testModel.Name = await unternehmenService.GetName(testModel.UID);
+            Console.WriteLine(testModel.UID);
+            Console.WriteLine(testModel.Name);
+            navigationManager.NavigateTo($"/welcome/{bewerberTestModel.TID}");
+        } else
+        {
+            Console.WriteLine("TID existiert nicht");
+            InvokeAsync(OpenWrongTIDModal);
+        }
+
+    }
+
+    private async void OpenWrongTIDModal()
+    {
+        await JSRuntime.InvokeVoidAsync("OpenWrongTIDModal"); // JavaScript-Funktion aufrufen
     }
 }

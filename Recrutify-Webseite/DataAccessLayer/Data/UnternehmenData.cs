@@ -39,5 +39,13 @@ namespace Recrutify.DataAccessLayer.Data
             var result = await _db.LoadData<int, dynamic>(sqlQuery, parameters);
             return result.FirstOrDefault();
         }
+
+        public async Task<bool> CheckTID(int TID)
+        {
+            var parameters = new { TID };
+            string sqlQuery = "SELECT EXISTS (SELECT 1 FROM Test WHERE TID = @TID)";
+            var result = await _db.LoadData<bool, dynamic>(sqlQuery, parameters);
+            return result.FirstOrDefault();
+        }
     }
 }
