@@ -296,6 +296,11 @@ public class UserService {
         return allApplicants;
     }
 
+    /**
+     * method to load the current account information
+     * @param UID company id to load the information for
+     * @return a user object with the information of the current account
+     */
     public static User loadCurrentAccountInformation(Integer UID) {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -323,6 +328,15 @@ public class UserService {
         return null; // Rückgabe null, wenn Benutzer nicht gefunden oder Fehler aufgetreten
     }
 
+    /**
+     * method to update the current account information
+     * @param enteredSurname new Surname
+     * @param enteredLastname new Lastname
+     * @param enteredUsername new username
+     * @param enteredPassword new password
+     * @param UID company id to change the information
+     * @return true if successful changed, otherwise false
+     */
     public static boolean accountInformationUpdate(String enteredSurname, String enteredLastname, String enteredUsername, String enteredPassword, Integer UID) {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -347,6 +361,11 @@ public class UserService {
         return false;
     }
 
+    /**
+     * checks if a username already exits
+     * @param username username the account will get if it doesnt already exits
+     * @return true if exits, otherwise false
+     */
     public static boolean usernameExists(String username){
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -369,6 +388,14 @@ public class UserService {
         return true;
     }
 
+    /**
+     * method to update the evaluation in for the free text in the database
+     * @param eva_text_1 first evaluation
+     * @param eva_text_2 second evaluation
+     * @param eva_text_3 third evaluation
+     * @param BID bewerer id of the evaluated applicant
+     * @return
+     */
     public static boolean updateEvaluation(Integer eva_text_1, Integer eva_text_2, Integer eva_text_3, Integer BID){
         try (Connection connection = DriverManager.getConnection(url)) {
             if (connection != null) {
@@ -389,10 +416,21 @@ public class UserService {
         return false;
     }
 
+    /**
+     * check if the inserted Password is the stored hash password
+     * @param plainTextPassword inserted password
+     * @param storedHashedPassword the stored hashPassword
+     * @return true if correct password, otherwise false
+     */
     public static boolean verifyPassword(String plainTextPassword, String storedHashedPassword) {
         return BCrypt.checkpw(plainTextPassword, storedHashedPassword);
     }
 
+    /**
+     * hash a plain text password
+     * @param plainTextPassword the password which will be get hashed
+     * @return the hash?
+     */
     public static String hashPassword(String plainTextPassword) {
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
