@@ -274,9 +274,12 @@ public class UserService {
                                         rs.getString("BID"),
                                         rs.getString("VORNAME"),
                                         rs.getString("NACHNAME"),
-                                        rs.getString("ANTWORT_FREITEXT_1") != null ? rs.getString("ANTWORT_FREITEXT_1") : "" ,
-                                        rs.getString("ANTWORT_FREITEXT_2") != null ? rs.getString("ANTWORT_FREITEXT_2") : "",
-                                        rs.getString("ANTWORT_FREITEXT_3") != null ? rs.getString("ANTWORT_FREITEXT_3") : "",
+                                        rs.getString("ANTWORT_FREITEXT_1") != "" ? rs.getString("ANTWORT_FREITEXT_1") : "Keine Antwort" ,
+                                        0,
+                                        rs.getString("ANTWORT_FREITEXT_2") != "" ? rs.getString("ANTWORT_FREITEXT_2") : "Keine Antwort",
+                                        0,
+                                        rs.getString("ANTWORT_FREITEXT_3") != "" ? rs.getString("ANTWORT_FREITEXT_3") : "Keine Antwort",
+                                        0,
                                         rs.getInt("ERGEBNIS")
                                 );
                                 //System.out.println("Neuer Bewerber: " + applicant.toString());
@@ -364,6 +367,26 @@ public class UserService {
             System.out.println("Datenbankfehler: " + e.getMessage());
         }
         return true;
+    }
+
+    public static boolean updateEvaluation(Integer eva_text_1, Integer eva_text_2, Integer eva_text_3, Integer BID){
+        try (Connection connection = DriverManager.getConnection(url)) {
+            if (connection != null) {
+                String sql = "UPDATE BEWERBER SET Bewertung_1 = ?, Bewertung_2 = ?, Bewertung_3 = ? WHERE BID = ?";
+                try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                    ps.setInt(1, eva_text_1);
+                    ps.setInt(2, eva_text_2);
+                    ps.setInt(3, eva_text_3);
+                    ps.setInt(4, BID);
+                    ps.executeUpdate();
+                    System.out.println("Evaluation succesfully updated.");
+                    return true;
+                }
+            }
+        } catch (SQLException e){
+            System.out.println("Error while updating evaluation: " + e.getMessage());
+        }
+        return false;
     }
 
     public static boolean verifyPassword(String plainTextPassword, String storedHashedPassword) {

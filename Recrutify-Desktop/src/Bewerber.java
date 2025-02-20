@@ -6,8 +6,11 @@ public class Bewerber {
     private String nachname;
     private String bewerberID;
     private String text_1;
+    private Integer eva_text_1;
     private String text_2;
+    private Integer eva_text_2;
     private String text_3;
+    private Integer eva_text_3;
     private Integer ergebnis;
 
     /**
@@ -20,13 +23,16 @@ public class Bewerber {
      * @param text_3 third answer in free text
      * @param ergebnis test result of the applicant
      */
-    public Bewerber(String BewerberID,String Vorname, String Nachname, String text_1, String text_2, String text_3, int ergebnis) {
+    public Bewerber(String BewerberID,String Vorname, String Nachname, String text_1, Integer eva_text_1, String text_2, Integer eva_text_2, String text_3, Integer eva_text_3, int ergebnis) {
         this.bewerberID = BewerberID;
         this.vorname = Vorname;
         this.nachname = Nachname;
         this.text_1 = text_1;
+        this.eva_text_1 = eva_text_1;
         this.text_2 = text_2;
+        this.eva_text_2 = eva_text_2;
         this.text_3 = text_3;
+        this.eva_text_3 = eva_text_3;
         this.ergebnis = ergebnis;
     }
 
@@ -86,6 +92,34 @@ public class Bewerber {
 
     public String getText_1() {
         return text_1;
+    }
+
+    public Integer getEva_text_1() {
+        return eva_text_1;
+    }
+
+    public Integer getEva_text_2() {
+        return eva_text_2;
+    }
+
+    public Integer getEva_text_3() {
+        return eva_text_3;
+    }
+
+    public String getBewerberID() {
+        return bewerberID;
+    }
+
+    public void setEva_text_1(Integer eva_text_1) {
+        this.eva_text_1 = eva_text_1;
+    }
+
+    public void setEva_text_2(Integer eva_text_2) {
+        this.eva_text_2 = eva_text_2;
+    }
+
+    public void setEva_text_3(Integer eva_text_3) {
+        this.eva_text_3 = eva_text_3;
     }
 
     public void setText_1(String text_1) {

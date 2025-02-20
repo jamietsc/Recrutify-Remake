@@ -6,12 +6,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.ComboBoxBaseSkin;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.util.Callback;
 
 
 public class AdminPageController {
@@ -43,6 +45,15 @@ public class AdminPageController {
     private TableColumn<Bewerber, String> text_3;
 
     @FXML
+    private TableColumn<Bewerber, Integer> eva_text_1;
+
+    @FXML
+    private TableColumn<Bewerber, Integer> eva_text_2;
+
+    @FXML
+    private TableColumn<Bewerber, Integer> eva_text_3;
+
+    @FXML
     private TableColumn<Bewerber, Integer> scoreColumn;
 
     @FXML
@@ -57,12 +68,14 @@ public class AdminPageController {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    private final ObservableList<String> evaluations = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+
     /**
      * Method for the button which will go back to the main menu
      * can be user in the whole program
      */
     @FXML
-    private void goBackToMainMenuButtonAction() throws Exception{
+    private void goBackToMainMenuButtonAction() throws Exception {
         openStage("/user.fxml");
         Stage stage = (Stage) goBackToMainMenuButton.getScene().getWindow();
         stage.close();
@@ -105,10 +118,11 @@ public class AdminPageController {
 
     /**
      * method for the dropdown menu where all the test ids of the company will be load and displayed in the dropdownmenu
+     *
      * @throws Exception
      */
     @FXML
-    private void onOpenDropDownMenu() throws Exception{
+    private void onOpenDropDownMenu() throws Exception {
         User regiseredUser = UserSession.getCurrentUser();
         options = FXCollections.observableArrayList(
                 UserService.getTIDsFromCompany(regiseredUser.getUserID())
@@ -119,17 +133,95 @@ public class AdminPageController {
 
     /**
      * method for the button where the test results for a company will be load and displayed in the table view
+     *
      * @throws Exception
      */
     @FXML
-    private void searchResultsButtonAction() throws Exception{
+    private void searchResultsButtonAction() throws Exception {
+        User registeredUser = UserSession.getCurrentUser();
+
         ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList(
                 UserService.loadAllTestResults(Integer.parseInt(dropDownMenu.getValue()))
         );
-        if(!allApplicants.isEmpty()){
+        if (!allApplicants.isEmpty()) {
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("vorname"));
             lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("nachname"));
             text_1.setCellValueFactory(new PropertyValueFactory<>("text_1"));
+
+            // Bewertungsoptionen für alle drei Spalten
+            ObservableList<Integer> evaluationOptions = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+            // Setzt die Werte-Felder
+            eva_text_1.setCellValueFactory(new PropertyValueFactory<>("eva_text_1"));
+            eva_text_2.setCellValueFactory(new PropertyValueFactory<>("eva_text_2"));
+            eva_text_3.setCellValueFactory(new PropertyValueFactory<>("eva_text_3"));
+
+            // Gemeinsame CellFactory-Funktion für alle Bewertungs-Spalten
+            Callback<TableColumn<Bewerber, Integer>, TableCell<Bewerber, Integer>> comboBoxCellFactory = column -> new TableCell<>() {
+                private final ComboBox<Integer> comboBox = new ComboBox<>(evaluationOptions);
+
+                {
+                    comboBox.getStyleClass().add("combo-box");
+
+                    comboBox.setOnAction(event -> {
+                        Bewerber bewerber = getTableRow().getItem();
+                        if (bewerber != null) {
+                            Integer selectedValue = comboBox.getValue();
+
+                            // Richtige Bewertungsspalte setzen
+                            if (column == eva_text_1) {
+                                bewerber.setEva_text_1(selectedValue);
+                            } else if (column == eva_text_2) {
+                                bewerber.setEva_text_2(selectedValue);
+                            } else if (column == eva_text_3) {
+                                bewerber.setEva_text_3(selectedValue);
+                            }
+
+                            // Datenbank-Update
+                            boolean success = UserService.updateEvaluation(
+                                    bewerber.getEva_text_1(),
+                                    bewerber.getEva_text_2(),
+                                    bewerber.getEva_text_3(),
+                                    Integer.parseInt(bewerber.getBewerberID())
+                            );
+
+                            if (success) {
+                                System.out.println("Datenbank aktualisiert für BID: " + bewerber.getBewerberID());
+                            } else {
+                                System.out.println("Fehler beim Aktualisieren der Datenbank.");
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    Bewerber bewerber = getTableRow() != null ? getTableRow().getItem() : null;
+
+                    if (empty || bewerber == null) {
+                        setGraphic(null);
+                    } else {
+                        // Prüfen, ob das zugehörige Freitextfeld leer ist
+                        boolean hasText = (column == eva_text_1 && bewerber.getText_1() != null)
+                                || (column == eva_text_2 && bewerber.getText_2() != null)
+                                || (column == eva_text_3 && bewerber.getText_3() != null);
+
+                        if (hasText) {
+                            comboBox.setValue(item);
+                            setGraphic(comboBox);
+                        } else {
+                            setGraphic(null);
+                        }
+                    }
+                }
+            };
+
+// CellFactory für alle drei Spalten setzen
+            eva_text_1.setCellFactory(comboBoxCellFactory);
+            eva_text_2.setCellFactory(comboBoxCellFactory);
+            eva_text_3.setCellFactory(comboBoxCellFactory);
+
             text_2.setCellValueFactory(new PropertyValueFactory<>("text_2"));
             text_3.setCellValueFactory(new PropertyValueFactory<>("text_3"));
             scoreColumn.setCellValueFactory(new PropertyValueFactory<>("ergebnis"));
