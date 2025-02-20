@@ -158,11 +158,13 @@ public class AdminPageController {
 
             // Gemeinsame CellFactory-Funktion für alle Bewertungs-Spalten
             Callback<TableColumn<Bewerber, Integer>, TableCell<Bewerber, Integer>> comboBoxCellFactory = column -> new TableCell<>() {
-                private final ComboBox<Integer> comboBox = new ComboBox<>(evaluationOptions);
+                private final ComboBox<Integer> comboBox = new ComboBox<>(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
                 {
-                    comboBox.getStyleClass().add("combo-box");
+                    // CSS-Style der ComboBox setzen
+                    comboBox.getStyleClass().add("my-combo-box");
 
+                    // Event-Handler für Änderungen
                     comboBox.setOnAction(event -> {
                         Bewerber bewerber = getTableRow().getItem();
                         if (bewerber != null) {
@@ -202,20 +204,37 @@ public class AdminPageController {
                     if (empty || bewerber == null) {
                         setGraphic(null);
                     } else {
-                        // Prüfen, ob das zugehörige Freitextfeld leer ist
-                        boolean hasText = (column == eva_text_1 && bewerber.getText_1() != null)
-                                || (column == eva_text_2 && bewerber.getText_2() != null)
-                                || (column == eva_text_3 && bewerber.getText_3() != null);
+                        // Prüfen, ob das zugehörige Textfeld leer ist
+                        boolean hasText = false;
+                        if (column == eva_text_1) {
+                            hasText = bewerber.getText_1() != null;
+                        } else if (column == eva_text_2) {
+                            hasText = bewerber.getText_2() != null;
+                        } else if (column == eva_text_3) {
+                            hasText = bewerber.getText_3() != null;
+                        }
 
-                        if (hasText) {
-                            comboBox.setValue(item);
-                            setGraphic(comboBox);
-                        } else {
+                        if (!hasText) {
+                            // Falls kein zugehöriger Text existiert, keine ComboBox anzeigen
                             setGraphic(null);
+                        } else {
+                            // Den aktuellen Wert aus der DB setzen
+                            Integer valueFromDB = null;
+                            if (column == eva_text_1) {
+                                valueFromDB = bewerber.getEva_text_1();
+                            } else if (column == eva_text_2) {
+                                valueFromDB = bewerber.getEva_text_2();
+                            } else if (column == eva_text_3) {
+                                valueFromDB = bewerber.getEva_text_3();
+                            }
+
+                            comboBox.setValue(valueFromDB); // Setzt den aktuellen Wert als Standard
+                            setGraphic(comboBox);
                         }
                     }
                 }
             };
+
 
 // CellFactory für alle drei Spalten setzen
             eva_text_1.setCellFactory(comboBoxCellFactory);

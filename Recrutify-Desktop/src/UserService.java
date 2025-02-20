@@ -264,7 +264,7 @@ public class UserService {
                 }
 
                 //get all applicants
-                String sqlQuery = "SELECT BID, VORNAME, NACHNAME, ANTWORT_FREITEXT_1, ANTWORT_FREITEXT_2, ANTWORT_FREITEXT_3, ERGEBNIS FROM BEWERBER WHERE BID = ?";
+                String sqlQuery = "SELECT BID, VORNAME, NACHNAME, ANTWORT_FREITEXT_1, Bewertung_1, ANTWORT_FREITEXT_2, Bewertung_2, ANTWORT_FREITEXT_3, Bewertung_3, ERGEBNIS FROM BEWERBER WHERE BID = ?";
                 try (PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery)) {
                     for (String bid : allBIDs) {
                         preparedStatement.setString(1, bid);
@@ -275,11 +275,11 @@ public class UserService {
                                         rs.getString("VORNAME"),
                                         rs.getString("NACHNAME"),
                                         rs.getString("ANTWORT_FREITEXT_1") != "" ? rs.getString("ANTWORT_FREITEXT_1") : "Keine Antwort" ,
-                                        0,
+                                        rs.getInt("Bewertung_1"),
                                         rs.getString("ANTWORT_FREITEXT_2") != "" ? rs.getString("ANTWORT_FREITEXT_2") : "Keine Antwort",
-                                        0,
+                                        rs.getInt("Bewertung_2"),
                                         rs.getString("ANTWORT_FREITEXT_3") != "" ? rs.getString("ANTWORT_FREITEXT_3") : "Keine Antwort",
-                                        0,
+                                        rs.getInt("Bewertung_3"),
                                         rs.getInt("ERGEBNIS")
                                 );
                                 //System.out.println("Neuer Bewerber: " + applicant.toString());
