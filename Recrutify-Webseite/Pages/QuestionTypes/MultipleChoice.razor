@@ -1,4 +1,4 @@
-﻿@*Ungenutzt/Veraltet*@
+﻿@*Routing ungenutzt/veraltet*@
 @page "/test2/{tid:int}"
 
 @using Recrutify.Models
@@ -52,11 +52,13 @@ else
     [Parameter]
     public MultipleChoiceModel currentQuestion { get; set; }
 
+    //Initialisierung der Multiple-Choice-Unterseite
     protected override async Task OnInitializedAsync()
     {
         //Console.WriteLine("MultipleChoice");
     }
 
+    //Speichert gesetzte Antworten in multipleChoiceModel
     private void SetAnswer(MultipleChoiceModel multipleChoiceModel, int selectedAnswer)
     {
         switch(selectedAnswer)

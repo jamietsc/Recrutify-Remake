@@ -2,6 +2,7 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Repositories
 {
+    //Klasse für Methoden basierend auf Klasse BewerberTestModel
     public interface IBewerberTest<T> where T : class
     {
         //TID und BID in der Verknüpfungstabelle speichern

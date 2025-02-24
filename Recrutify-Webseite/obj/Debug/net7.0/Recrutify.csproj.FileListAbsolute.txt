@@ -276,7 +276,6 @@ C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recruti
 C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.Recrutify.props
 C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\obj\Debug\net7.0\staticwebassets.pack.json
 C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
-C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
 C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\obj\Debug\net7.0\scopedcss\bundle\Recrutify.styles.css
 C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\obj\Debug\net7.0\scopedcss\projectbundle\Recrutify.bundle.scp.css
 C:\Users\Finn Luca\OneDrive\HWR\Semester 4\Software Engineering 2\GitHub\Recrutify-Remake\Recrutify-Webseite\obj\Debug\net7.0\Recrutify.csproj.Up2Date

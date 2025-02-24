@@ -2,6 +2,7 @@
 
 namespace Recrutify.DataAccessLayer.Repositories
 {
+    //Repository für Methoden basierend auf Klasse TestModel
     public interface IUnternehmen<T> where T : class
     {
         //UID von der TID erhalten
@@ -13,6 +14,7 @@ namespace Recrutify.DataAccessLayer.Repositories
         //Dauer des Tests durch die TID erhalten
         Task<int> GetDauer(int TID);
 
+        //Überprüfen, ob TID existiert
         Task<bool> CheckTID(int TID);
     }
 }

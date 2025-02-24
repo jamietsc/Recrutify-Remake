@@ -2,6 +2,7 @@
 
 namespace Recrutify.DataAccessLayer.Repositories
 {
+    //Repository für Methoden basierend auf Klasse BewerberModel
     public interface IBewerber<T> where T : class
     {
         //Vor- und Nachname in der Datenbank abspeichern

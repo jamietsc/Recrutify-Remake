@@ -53,11 +53,13 @@
     [Parameter]
     public SingleChoiceModel currentQuestion { get; set; }
 
+    //Initialisierung der Single-Choice-Unterseite
     protected override async Task OnInitializedAsync()
     {
         //Console.WriteLine("SingleChoice");
     }
 
+    //Speichert gesetzte Antwort in singleChoiceModel
     private void SetAnswer(SingleChoiceModel singleChoiceModel, int selectedAnswer)
     {
         singleChoiceModel.Gewaehlte_Antwort = selectedAnswer;

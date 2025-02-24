@@ -15,6 +15,7 @@
 
 <PageTitle>Startseite</PageTitle>
 
+<!-- Container für Willkommens-Text und Eingabefeld für Einladungscode -->
 <div style="height: calc(100vh - 200px); overflow-y: auto;">
     <h1>Herzlich willkommen</h1>
 
@@ -28,13 +29,14 @@
     </div>
 </div>
 
+<!-- Container für untere Navigationsleiste -->
 <div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
     <div></div>
     <div></div>
     <button type="button" @onclick="start">Weiter</button>
 </div>
 
-@* Container für fehlerhafte TID *@
+<!-- Container für fehlerhafte TID -->
 <dialog id="modalWrongTID" style="border: 1px solid firebrick; border-radius: 5px;">
     <h2 style="margin: 10px;">Achtung!</h2>
     <p style="margin: 10px;">Der von Ihnen eingegebene Einladungscode ist ungültig. Bitte geben Sie einen gültigen Code ein.</p>
@@ -68,6 +70,7 @@
 
     }
 
+    //Öffnet Modal, wenn ungültiger Einladungscode eingegeben wurde
     private async void OpenWrongTIDModal()
     {
         await JSRuntime.InvokeVoidAsync("OpenWrongTIDModal"); // JavaScript-Funktion aufrufen

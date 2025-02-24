@@ -20,7 +20,7 @@
 
 <PageTitle>Einstellungstest</PageTitle>
 
-@* Container für anzuzeigende Fragen *@
+<!-- Container für anzuzeigende Fragen -->
 <div style="height: calc(100vh - 200px); overflow-y: auto;">
     <h1>Einstellungstest @testModel.Name</h1>
     @switch (currentQuestionType)
@@ -51,7 +51,7 @@
     }
 </div>
 
-@* Container für untere Navigationsleiste *@
+<!-- Container für untere Navigationsleiste -->
 <div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
     <button type="button" disabled="@isPreviousButtonDisabled()" @onclick="previousPage">Zurück</button>
     <div style="display:flex; justify-content: center;">
@@ -77,7 +77,7 @@
     }
 </div>
 
-@* Container für Abgabe-Fenster *@
+<!-- Container für Abgabe-Fenster -->
 <dialog id="modal" style="border: 1px solid firebrick; border-radius: 5px;">
     <h2 style="margin: 10px;">Achtung!</h2>
     <p style="margin: 10px;">Sind Sie sicher, dass Sie abgeben wollen? Es sind keine Änderungen mehr möglich.</p>
@@ -88,7 +88,7 @@
     </div>
 </dialog>
 
-@* Container für Abgabe-Fenster nach Ablauf des Timers *@
+<!-- Container für Abgabe-Fenster nach Ablauf des Timers -->
 <dialog id="modalEndOfTime" style="border: 1px solid firebrick; border-radius: 5px;">
     <h2 style="margin: 10px;">Achtung!</h2>
     <p style="margin: 10px;">Die Zeit ist abgelaufen. Sie müssen nun abgeben.</p>
@@ -135,6 +135,7 @@
     private System.Timers.Timer timer;
     private bool timerEnded = false;
 
+    //Initialisierung der Test-Seite
     protected override async Task OnInitializedAsync()
     {
         //Lädt alle FIDs mit zugehörigen Fragentypen in eine Liste
@@ -208,7 +209,6 @@
     //Setzt aktuelle Frage in bestimmte Variable abhängig vom Fragentyp
     private void loadCurrentQuestion(int FID, int questionType)
     {
-        //SingleChoiceModel singleChoiceQuestion;
         switch(questionType)
         {
             case 0:
@@ -236,6 +236,7 @@
     //Wertet die gesetzten Antworten nach Abgabe aus
     private async void auswerten()
     {
+        //Vergleicht gesetzte Antworten der Single-Choice-Fragen mit richtigen Antworten aus DB und zählt korrekte Antworten entsprechend hoch
         foreach (var singleChoiceQuestion in singleChoiceQuestions)
         {
             if ((singleChoiceQuestion.Gewaehlte_Antwort == 1 && singleChoiceQuestion.Richtig_1) ||
@@ -247,6 +248,7 @@
             }
         }
 
+        //Vergleicht gesetzte Antworten der Multiple-Choice-Fragen mit richtigen Antworten aus DB und zählt korrekte entsprechend Antworten hoch
         foreach (var multipleChoiceQuestion in multipleChoiceQuestions)
         {
             if ((multipleChoiceQuestion.Gewaehlte_Antwort_1 == multipleChoiceQuestion.Richtig_1) && 
@@ -258,6 +260,7 @@
             }
         }
 
+        //Speichert Freitext-Antworten in DB ab
         helperModel.currentFreeTextAnswer = 1;
         foreach (var freeTextQuestion in freeTextQuestions)
         {
@@ -268,6 +271,7 @@
             }
         }
 
+        //Vergleicht gesetzte Antworten der Ja-Nein-Fragen mit richtigen Antworten aus DB und zählt korrekte Antworten hoch
         foreach (var trueFalseQuestion in trueFalseQuestions)
         {
             if (trueFalseQuestion.Gewaehlte_Antwort == Convert.ToInt32(trueFalseQuestion.Antwort_JaNein))
@@ -276,26 +280,31 @@
             }
         }
 
+        //Stoppt Timer, sobald abgegeben
         if (timer != null)
         {
             timer.Stop();
         }
+
         bewerberModel.Ergebnis = korrekteAntworten;
         await bewerberData.InsertPunktzahl(bewerberModel);
         Console.WriteLine(korrekteAntworten);
         navigationManager.NavigateTo("/end");
     }
 
+    //Prüft, ob aktuelle FID gleich der ersten FID ist
     private bool isPreviousButtonDisabled()
     {
         return helperModel.currentFID == helperModel.firstFID;
     }
 
+    //Prüft, ob aktuelle FID gleich der letzten FID ist
     private bool isLastQuestion()
     {
         return helperModel.currentFID == questionTypes.Count + helperModel.firstFID - 1; //damit Differenz zwischen Wert der ersten FID und Wert 1 ausgeglichen und somit oberste Grenze entsprechend gesetzt
     }
 
+    //navigiert zu vorheriger Seite
     private void previousPage()
     {
         if (helperModel.currentFID > helperModel.firstFID)
@@ -303,11 +312,11 @@
             helperModel.currentFID--;
             currentQuestionType = loadCurrentQuestionType(helperModel.currentFID);
             loadCurrentQuestion(helperModel.currentFID, currentQuestionType);
-            //Console.WriteLine(helperModel.currentFreeTextAnswer);
             StateHasChanged();
         }
     }
 
+    //navigiert zu nächster Seite
     private void nextPage()
     {
         if (isLastQuestion() == false)
@@ -320,39 +329,41 @@
         }
     }
 
+    //Startet Timer
     private void StartTimer()
     {
-        // Setze die verbleibende Zeit auf die gewünschte Startzeit
+        //Setzt die verbleibende Zeit auf die gewünschte Startzeit
         verbleibendeZeit = TimeSpan.FromMinutes(startMinuten);
-        UpdateAnzeige(); // Initiale Anzeige aktualisieren
+        UpdateAnzeige(); //Initiale Anzeige aktualisieren
 
-        // Initialisiere den Timer für sekündliche Updates
-        timer = new System.Timers.Timer(1000); // 1000ms = 1 Sekunde
+        //Initialisiert den Timer für sekündliche Updates
+        timer = new System.Timers.Timer(1000); //1000ms = 1 Sekunde
         timer.Elapsed += OnTimerElapsed;
         timer.AutoReset = true;
         timer.Enabled = true;
     }
 
+    //wird jede Sekunde durch den Timer getriggert
     private void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
     {
-        // Reduziere die verbleibende Zeit um eine Sekunde
+        //Reduziert die verbleibende Zeit um eine Sekunde
         verbleibendeZeit = verbleibendeZeit.Subtract(TimeSpan.FromSeconds(1));
 
         if (verbleibendeZeit.TotalSeconds <= 0)
         {
-            // Countdown ist abgelaufen, Timer stoppen
+            //Countdown ist abgelaufen, Timer stoppen
             timer.Stop();
             verbleibendeZeit = TimeSpan.Zero;
             InvokeAsync(OpenEndOfTimeModal);
         }
 
-        // Aktualisiere die Anzeige im UI
+        //Aktualisiert die Anzeige im UI
         InvokeAsync(UpdateAnzeige);
     }
 
+    //aktualisiert die Timer-Anzeige und unterscheidet, falls Zeit unter 60 Minuten ist
     private void UpdateAnzeige()
     {
-        // Formatierte Zeit anzeigen: Minuten:Sekunden
         if (verbleibendeZeit.TotalMinutes < 60)
         {
             zeitAnzeigen = $"{verbleibendeZeit.Minutes:D2}:{verbleibendeZeit.Seconds:D2}";
@@ -363,12 +374,13 @@
         StateHasChanged();
     }
 
+    //Ressourcen aufgeräumt, wenn Timer beendet wird
     public void Dispose()
     {
-        // Ressourcen aufräumen, wenn die Komponente entfernt wird
         timer?.Dispose();
     }
 
+    //ruft Abgabe-Fenster nach Ablauf des Timers auf
     private async void OpenEndOfTimeModal()
     {
         await JSRuntime.InvokeVoidAsync("OpenEndOfTimeModal"); // JavaScript-Funktion aufrufen

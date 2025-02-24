@@ -14,6 +14,7 @@
 
 <PageTitle>Startseite</PageTitle>
 
+<!-- Container für Erklärungstext und Eingabefelder für Vor- und Nachnamen -->
 <div style="height: calc(100vh - 200px); overflow-y: auto;">
     <h1>Einstellungstest @testModel.Name</h1>
 
@@ -36,6 +37,7 @@
     </div>
 </div>
 
+<!-- Container für untere Navigationsleiste -->
 <div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
     <div></div>
     <div></div>
@@ -46,6 +48,7 @@
     [Parameter]
     public int tid { get; set; }
 
+    //Initialisierung der Welcome-Seite
     protected override async Task OnInitializedAsync()
     {
         testModel.Dauer = await unternehmenService.GetDauer(testModel.TID ?? 0);

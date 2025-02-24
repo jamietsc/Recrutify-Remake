@@ -4,6 +4,7 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse MultipleChoiceModel
     public class MultipleChoiceData : IMultipleChoice<MultipleChoiceModel>
     {
         private readonly ISqlDataAccess _db;
@@ -12,7 +13,7 @@ namespace Recrutify.DataAccessLayer.Data
             _db = db;
         }
 
-        //sämtliche Fragen zu einem Test aus der Datenbank laden
+        //Multiple-Choice-Fragen aus DB laden
         public async Task<MultipleChoiceModel> GetMultipleChoiceQuestion(int TID, int FID)
         {
             string sqlQuery = "SELECT FID, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4," +

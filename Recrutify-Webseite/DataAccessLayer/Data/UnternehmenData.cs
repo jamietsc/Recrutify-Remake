@@ -4,6 +4,7 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse TestModel
     public class UnternehmenData : IUnternehmen<TestModel>
     {
         private readonly ISqlDataAccess _db;
@@ -40,6 +41,7 @@ namespace Recrutify.DataAccessLayer.Data
             return result.FirstOrDefault();
         }
 
+        //Überprüfen, ob TID existiert
         public async Task<bool> CheckTID(int TID)
         {
             var parameters = new { TID };

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse BewerberModel
     public class BewerberData : IBewerber<BewerberModel>
     {
         private readonly ISqlDataAccess _db;
