@@ -45,6 +45,9 @@ public class QuestionController {
     @FXML
     private Button backButton;
 
+    /**
+     * fügt eine neue Multiple-Choice-Frage hinzu
+     */
     @FXML
     private void multipleChoiceButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -86,9 +89,6 @@ public class QuestionController {
         answerBoxesMultipleChoice.add(hBox3);
         answerBoxesMultipleChoice.add(hBox4);
 
-        //hBox1.getStyleClass().add("hbox-top");
-        //hBox2.getStyleClass().add("hbox");
-        //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
         Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
@@ -106,6 +106,9 @@ public class QuestionController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
+    /**
+     * fügt eine neue Single-Choice-Frage hinzu
+     */
     @FXML
     private void singleChoiceButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -154,9 +157,6 @@ public class QuestionController {
         answerBoxesSingleChoice.add(hBox3);
         answerBoxesSingleChoice.add(hBox4);
 
-        //hBox1.getStyleClass().add("hbox-top");
-        //hBox2.getStyleClass().add("hbox");
-        //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
         Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
@@ -174,6 +174,9 @@ public class QuestionController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
+    /**
+     * fügt eine neue freitext-Frage hinzu
+     */
     @FXML
     private void freitextButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -193,6 +196,9 @@ public class QuestionController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
     }
 
+    /**
+     * fügt eine neue wahr oder falsch Frage hinzu
+     */
     @FXML
     private void wahrFalschButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -224,18 +230,28 @@ public class QuestionController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, radioButton1, radioButton2);
     }
 
+    /**
+     * Methode um das aktuelle Fenster zu schließen, wenn auf den Schließen-Button gedrückt wird
+     */
     @FXML
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Methode um das aktuelle Fenster zu minimieren, wenn auf den Minimieren-Knopf gedrückt wurde
+     */
     @FXML
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();
         stage.setIconified(true);
     }
 
+    /**
+     * Öffnet wieder User Stage
+     * @throws Exception wenn die Stage nicht geöffnet werden kann
+     */
     @FXML
     private void backButtonAction() throws Exception {
         openStage("/user.fxml");
@@ -243,6 +259,9 @@ public class QuestionController {
         stage.close();
     }
 
+    /**
+     * legt die Zeitbegrenzung für den Test fest
+     */
     private void setTime () {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Zeit einstellen");
@@ -271,6 +290,10 @@ public class QuestionController {
 
     }
 
+    /**
+     * Methode, welche sich die größte TestID aus der Datenbank holt und um eins erhöht, wenn ein neuer Test erstellt wird
+     * @return TestID
+     */
     private int getTestID() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -295,11 +318,18 @@ public class QuestionController {
         return testID;
     }
 
+    /**
+     * führt die setTime() Methode aus, wenn der Zeitbegrenzungs-Button gedrückt wird
+     */
     @FXML
     private void zeitButtonAction() {
         setTime();
     }
 
+    /**
+     * führt Alle Methoden zur Speicherung der einzelnen Fragen aus
+     * @return false wenn noch eine Zeit eingestellt werden soll, oder keine Fragen hinzugefügt wurden. True wenn die Fragen gespeichert wurden
+     */
     @FXML
     private boolean saveQuestionsButtonAction() {
         System.out.println("TestID: " + testID);
@@ -354,7 +384,10 @@ public class QuestionController {
         return true;
     }
 
-        private void saveMultipleChoiceQuestions() {
+    /**
+     * speichert die Multiple-Choice-Fragen in der Datenbank
+     */
+    private void saveMultipleChoiceQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 for (int i = 0; i < questionFieldsMultipleChoice.size(); i++) {
@@ -399,6 +432,9 @@ public class QuestionController {
         }
     }
 
+    /**
+     * speichert die Single-Choice-Fragen in der Datenbank
+     */
     private void saveSingleChoiceQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -444,6 +480,9 @@ public class QuestionController {
         }
     }
 
+    /**
+     * speichert die freitext-Fragen in der Datenbank
+     */
     public void saveFreitextQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -466,6 +505,9 @@ public class QuestionController {
         }
     }
 
+    /**
+     * speichert die wahr oder falsch Fragen in der Datenbank
+     */
     public void saveWahrFalschQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -493,8 +535,10 @@ public class QuestionController {
         }
     }
 
-
-
+    /**
+     * gibt dem User eine Erfolgsmeldung
+     * @param message welche ausgegeben werden soll
+     */
     @FXML
     private void showSuccessDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
@@ -503,6 +547,11 @@ public class QuestionController {
         alert.showAndWait();
     }
 
+    /**
+     * öffne eine andere Stage
+     * @param fxmlFile welche Stage soll geöffnet werden
+     * @throws Exception wenn die Stage nicht geöffnet werden kann
+     */
     @FXML
     private void openStage(String fxmlFile) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

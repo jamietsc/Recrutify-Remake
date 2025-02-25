@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.skin.ComboBoxBaseSkin;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
@@ -14,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
-
 
 public class AdminPageController {
 
@@ -71,8 +69,10 @@ public class AdminPageController {
     private final ObservableList<String> evaluations = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
     /**
-     * Method for the button which will go back to the main menu
-     * can be user in the whole program
+     * Method for the button which will go back to the main menu.
+     * This method can be used throughout the program.
+     *
+     * @throws Exception if there is an error during stage opening
      */
     @FXML
     private void goBackToMainMenuButtonAction() throws Exception {
@@ -81,6 +81,12 @@ public class AdminPageController {
         stage.close();
     }
 
+    /**
+     * Opens a new stage with the specified FXML file.
+     *
+     * @param fxmlFile the path to the FXML file to be loaded
+     * @throws Exception if there is an error during loading or displaying the stage
+     */
     @FXML
     private void openStage(String fxmlFile) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -104,12 +110,18 @@ public class AdminPageController {
         stage.show();
     }
 
+    /**
+     * Closes the current stage when the close button is pressed.
+     */
     @FXML
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Minimizes the current stage when the minimize button is pressed.
+     */
     @FXML
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();
@@ -117,24 +129,24 @@ public class AdminPageController {
     }
 
     /**
-     * method for the dropdown menu where all the test ids of the company will be load and displayed in the dropdownmenu
+     * Loads and displays all test IDs of the company in the dropdown menu.
      *
-     * @throws Exception
+     * @throws Exception if there is an error during loading test IDs
      */
     @FXML
     private void onOpenDropDownMenu() throws Exception {
-        User regiseredUser = UserSession.getCurrentUser();
+        User registeredUser = UserSession.getCurrentUser();
         options = FXCollections.observableArrayList(
-                UserService.getTIDsFromCompany(regiseredUser.getUserID())
+                UserService.getTIDsFromCompany(registeredUser.getUserID())
         );
 
         dropDownMenu.setItems(options);
     }
 
     /**
-     * method for the button where the test results for a company will be load and displayed in the table view
+     * Loads and displays the test results for a company in the table view.
      *
-     * @throws Exception
+     * @throws Exception if there is an error during loading test results
      */
     @FXML
     private void searchResultsButtonAction() throws Exception {
@@ -235,8 +247,7 @@ public class AdminPageController {
                 }
             };
 
-
-// CellFactory für alle drei Spalten setzen
+            // CellFactory für alle drei Spalten setzen
             eva_text_1.setCellFactory(comboBoxCellFactory);
             eva_text_2.setCellFactory(comboBoxCellFactory);
             eva_text_3.setCellFactory(comboBoxCellFactory);
@@ -252,5 +263,4 @@ public class AdminPageController {
         }
         System.out.println("Die Dropdown Value beträgt: " + dropDownMenu.getValue());
     }
-
 }

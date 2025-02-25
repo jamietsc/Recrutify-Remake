@@ -1,13 +1,21 @@
 public class User {
-    private String username;
-    private String password;
-    private int UID;
-    private boolean admin;
-    private String surname;
-    private String lastname;
-    private String company;
+    // Attribute für Benutzerinformationen
+    private String username; // Benutzername des Users
+    private String password; // Passwort des Users (sollte idealerweise gehasht gespeichert werden)
+    private int UID; // Eindeutige Benutzer-ID
+    private boolean admin; // Gibt an, ob der User Administratorrechte hat
+    private String surname; // Vorname des Users
+    private String lastname; // Nachname des Users
+    private String company; // Zugehöriges Unternehmen des Users
 
-
+    /**
+     * Konstruktor für die Erstellung eines Benutzers mit grundlegenden Informationen.
+     *
+     * @param username Benutzername
+     * @param password Passwort
+     * @param UID Eindeutige Benutzer-ID
+     * @param admin Gibt an, ob der Benutzer Adminrechte hat
+     */
     public User(String username, String password, int UID, boolean admin) {
         this.username = username;
         this.password = password;
@@ -15,7 +23,16 @@ public class User {
         this.admin = admin;
     }
 
-    //user model for the account information
+    /**
+     * Konstruktor für Benutzer mit zusätzlichen Informationen wie Vorname, Nachname und Unternehmen.
+     *
+     * @param company Unternehmen des Benutzers
+     * @param surname Vorname des Benutzers
+     * @param lastname Nachname des Benutzers
+     * @param username Benutzername
+     * @param password Passwort
+     * @param UID Eindeutige Benutzer-ID
+     */
     public User(String company, String surname, String lastname, String username, String password, Integer UID) {
         this.company = company;
         this.surname = surname;
@@ -24,6 +41,8 @@ public class User {
         this.password = password;
         this.UID = UID;
     }
+
+    // Getter- und Setter-Methoden für die Attribute
 
     public String getCompany() {
         return company;
@@ -65,8 +84,14 @@ public class User {
         this.lastname = lastname;
     }
 
+    /**
+     * Gibt eine String-Darstellung des Benutzers zurück.
+     */
     @Override
     public String toString() {
-        return "Username: " + username + "\n" + "Passwort: " + password + "\n" + "UID: " + UID + "\n" + "Admin: " + admin;
+        return "Username: " + username + "\n"
+                + "Passwort: " + password + "\n"
+                + "UID: " + UID + "\n"
+                + "Admin: " + admin;
     }
 }

@@ -441,7 +441,7 @@ public class EditController {
 
     /**
      * Öffnet wieder User Stage
-     * @throws Exception
+     * @throws Exception wenn die Stage nicht geöffnet werden kann
      */
     @FXML
     private void backButtonAction() throws Exception{
@@ -910,7 +910,7 @@ public class EditController {
     /**
      * öffne eine andere Stage
      * @param fxmlFile welche Stage soll geöffnet werden
-     * @throws Exception
+     * @throws Exception wenn die Stage nicht geöffnet werden kann
      */
     @FXML
     private void openStage(String fxmlFile) throws Exception {

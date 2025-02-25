@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
 
+/**
+ * Controller-Klasse für die Benutzeroberfläche.
+ * Verwaltet die Navigation zwischen verschiedenen Ansichten und grundlegende Fenstersteuerungen.
+ */
 public class UserController {
 
     private double xOffset = 0;
@@ -34,6 +38,11 @@ public class UserController {
     @FXML
     private Button logoutButton;
 
+    /**
+     * Öffnet die Ansicht zum Erstellen eines neuen Tests und schließt das aktuelle Fenster.
+     *
+     * @throws Exception Falls ein Fehler beim Laden der FXML-Datei auftritt.
+     */
     @FXML
     private void testErstellenButtonAction() throws Exception {
         openStage("/questions.fxml");
@@ -42,8 +51,9 @@ public class UserController {
     }
 
     /**
-     * method which will open the view for the results
-     * @throws Exception
+     * Öffnet die Auswertungsseite und schließt das aktuelle Fenster.
+     *
+     * @throws Exception Falls ein Fehler beim Laden der FXML-Datei auftritt.
      */
     @FXML
     private void auswertungÖffnenButtonAction() throws Exception {
@@ -52,6 +62,11 @@ public class UserController {
         stage.close();
     }
 
+    /**
+     * Öffnet die Ansicht zum Bearbeiten eines Tests und schließt das aktuelle Fenster.
+     *
+     * @throws Exception Falls ein Fehler beim Laden der FXML-Datei auftritt.
+     */
     @FXML
     private void testBearbeitenButtonAction() throws Exception {
         openStage("/edit.fxml");
@@ -59,6 +74,11 @@ public class UserController {
         stage.close();
     }
 
+    /**
+     * Öffnet die Kontoeinstellungen und schließt das aktuelle Fenster.
+     *
+     * @throws Exception Falls ein Fehler beim Laden der FXML-Datei auftritt.
+     */
     @FXML
     private void accountButtonAction() throws Exception {
         openStage("/accountSetting.fxml");
@@ -66,6 +86,12 @@ public class UserController {
         stage.close();
     }
 
+    /**
+     * Öffnet eine neue Ansicht basierend auf der übergebenen FXML-Datei.
+     *
+     * @param fxmlFile Der Pfad zur FXML-Datei der neuen Ansicht.
+     * @throws Exception Falls ein Fehler beim Laden der FXML-Datei auftritt.
+     */
     @FXML
     private void openStage(String fxmlFile) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -74,6 +100,8 @@ public class UserController {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/Logo_Recrutify_small.png")));
         stage.setResizable(false);
+
+        // Ermöglicht das Verschieben des Fensters durch Ziehen mit der Maus
         root.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -83,12 +111,18 @@ public class UserController {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Meldet den Benutzer ab, öffnet die Login-Seite und schließt das aktuelle Fenster.
+     *
+     * @throws Exception Falls ein Fehler beim Laden der FXML-Datei auftritt.
+     */
     @FXML
     private void logoutButtonAction() throws Exception {
         openStage("/login.fxml");
@@ -96,12 +130,18 @@ public class UserController {
         stage.close();
     }
 
+    /**
+     * Schließt das aktuelle Fenster.
+     */
     @FXML
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Minimiert das aktuelle Fenster.
+     */
     @FXML
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();

@@ -11,6 +11,11 @@ import passwordSecurity.BCrypt;
 
 import java.util.Objects;
 
+/**
+ * Der Controller für die Kontoeinstellungen in der Anwendung.
+ * Dieser Controller ermöglicht es Benutzern, ihre Kontoinformationen zu bearbeiten,
+ * einschließlich des Firmennamens, Nachnamens, Vornamens, Benutzernamens und Passworts.
+ */
 public class AccountSettingController {
 
     private double xOffset = 0;
@@ -55,12 +60,16 @@ public class AccountSettingController {
     @FXML
     private Label labelConfirmNewPassword;
 
+    /**
+     * Initialisiert den Controller und lädt die aktuellen Benutzerinformationen.
+     * Setzt die Textfelder auf nicht editierbar und verbirgt die Passwortfelder.
+     */
     @FXML
     public void initialize() {
         User user = UserSession.getCurrentUser();
         System.out.println("Aktuelle UserID: " + user.getUserID());
         User currenUserInformation = UserService.loadCurrentAccountInformation(user.getUserID());
-        if(currenUserInformation != null) {
+        if (currenUserInformation != null) {
             companyName.setText(currenUserInformation.getCompany());
             surname.setText(currenUserInformation.getSurname());
             lastName.setText(currenUserInformation.getLastname());
@@ -79,9 +88,14 @@ public class AccountSettingController {
         labelConfirmNewPassword.setVisible(false);
         saveAccountButton.setVisible(false);
         saveAccountButton.setDisable(true);
-
     }
 
+    /**
+     * Öffnet eine neue Stage mit dem angegebenen FXML-Dateinamen.
+     *
+     * @param fxmlFile der Name der FXML-Datei, die geladen werden soll
+     * @throws Exception wenn beim Laden der FXML-Datei ein Fehler auftritt
+     */
     @FXML
     private void openStage(String fxmlFile) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -105,25 +119,41 @@ public class AccountSettingController {
         stage.show();
     }
 
+    /**
+     * Schließt das aktuelle Fenster.
+     */
     @FXML
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Minimiert das aktuelle Fenster.
+     */
     @FXML
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();
         stage.setIconified(true);
     }
 
+    /**
+     * Öffnet das Hauptmenü und schließt das aktuelle Fenster.
+     *
+     * @throws Exception wenn beim Öffnen der FXML-Datei ein Fehler auftritt
+     */
     @FXML
-    private void goBackToMainMenuButtonAction() throws Exception{
+    private void goBackToMainMenuButtonAction() throws Exception {
         openStage("/user.fxml");
         Stage stage = (Stage) goBackToMainMenuButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Aktiviert die Bearbeitung der Kontoinformationen für den Benutzer.
+     *
+     * @throws Exception wenn ein Fehler auftritt
+     */
     @FXML
     private void editButtonAction() throws Exception {
         User user = UserSession.getCurrentUser();
@@ -136,7 +166,7 @@ public class AccountSettingController {
         newPassword.setEditable(true);
         confirmNewPassword.setEditable(true);
 
-        if(currenUserInformation != null) {
+        if (currenUserInformation != null) {
             surname.setText("");
             lastName.setText("");
             username.setText("");
@@ -156,9 +186,13 @@ public class AccountSettingController {
             saveAccountButton.setVisible(true);
             saveAccountButton.setDisable(false);
         }
-
     }
 
+    /**
+     * Speichert die aktualisierten Kontoinformationen des Benutzers.
+     *
+     * @throws Exception wenn ein Fehler auftritt
+     */
     @FXML
     private void saveAccountButtonAction() throws Exception {
         User user = UserSession.getCurrentUser();
@@ -170,21 +204,21 @@ public class AccountSettingController {
         String enteredNewPassword = newPassword.getText();
         String enteredConfirmNewPassword = confirmNewPassword.getText();
 
-        if(!Objects.equals(enteredNewPassword, enteredConfirmNewPassword)) {
+        if (!Objects.equals(enteredNewPassword, enteredConfirmNewPassword)) {
             showErrorDialog("Passwörter stimmen nicht überein.");
             return;
         }
 
-        if(enteredSurname.equals("")) {
+        if (enteredSurname.equals("")) {
             enteredSurname = currentUserInformation.getSurname();
         }
-        if(enteredLastName.equals("")) {
+        if (enteredLastName.equals("")) {
             enteredLastName = currentUserInformation.getLastname();
         }
-        if(enteredUsername.equals("")) {
+        if (enteredUsername.equals("")) {
             enteredUsername = currentUserInformation.getusername();
         }
-        if(enteredNewPassword.equals("")) {
+        if (enteredNewPassword.equals("")) {
             enteredNewPassword = (currentUserInformation.getpassword());
         }
         enteredNewPassword = UserService.hashPassword(enteredNewPassword);
@@ -203,6 +237,11 @@ public class AccountSettingController {
         }
     }
 
+    /**
+     * Zeigt ein Fehlerdialogfeld mit der angegebenen Fehlermeldung an.
+     *
+     * @param message die Fehlermeldung, die angezeigt werden soll
+     */
     @FXML
     private void showErrorDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
@@ -211,6 +250,11 @@ public class AccountSettingController {
         alert.showAndWait();
     }
 
+    /**
+     * Zeigt ein Erfolgsdialogfeld mit der angegebenen Erfolgsnachricht an.
+     *
+     * @param message die Erfolgsnachricht, die angezeigt werden soll
+     */
     @FXML
     private void showSuccessDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
@@ -218,7 +262,4 @@ public class AccountSettingController {
         alert.setHeaderText(null);
         alert.showAndWait();
     }
-
-
-
 }
