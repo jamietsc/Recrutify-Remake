@@ -1,5 +1,6 @@
 ﻿namespace Recrutify.Models
 {
+    //Model zum Speichern der Freitext-Fragen 
     public class FreeTextModel
     {
         public int FID { get; set; }

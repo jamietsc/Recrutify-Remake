@@ -1,5 +1,6 @@
 ﻿namespace Recrutify.Models
 {
+    //Model zum Speichern der Ja-Nein-Fragen
     public class TrueFalseModel
     {
         public int FID { get; set; }

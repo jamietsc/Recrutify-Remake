@@ -1,5 +1,6 @@
 ﻿namespace Recrutify.Models
 {
+    //Model zum Speichern der Single-Choice-Fragen
     public class SingleChoiceModel
     {
         public int FID { get; set; }

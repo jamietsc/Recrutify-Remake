@@ -36,8 +36,4 @@
     <_ContentIncludedByDefault Remove="Pages\Ergebnis.razor" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Pages\Ergebnis.razor" />
-  </ItemGroup>
-
 </Project>

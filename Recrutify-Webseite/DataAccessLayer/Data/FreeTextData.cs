@@ -5,6 +5,7 @@ using System.Reflection.Metadata;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse FreeTextModel
     public class FreeTextData : IFreeText<FreeTextModel>
     {
         private readonly ISqlDataAccess _db;
@@ -21,6 +22,7 @@ namespace Recrutify.DataAccessLayer.Data
             return result.FirstOrDefault();
         }
 
+        //Fügt Freitext-Antwort in DB ein
         public async Task InsertFreeTextAnswer(FreeTextModel freeTextModel, int BID, int currentFreeTextAnswer)
         {
             object parameter;

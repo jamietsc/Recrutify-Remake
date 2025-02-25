@@ -1,4 +1,5 @@
-﻿@page "/adminlogin"
+﻿@* ungenutzt *@
+@page "/adminlogin"
 
 @using Recrutify.Pages
 @using Recrutify.Models
@@ -12,6 +13,7 @@
 
 <h3>AdminPageLogin</h3>
 
+<!-- Container für Login -->
 <div class="mb-3" style="margin: 30px  40px 5px 40px;">
     <label for="Nutzername" class="form-label">Benutzername:</label>
     <input @bind-value="@adminModel.Benutzername" type="text" class="form-control" id="Nutzername" placeholder="Benutzername" />
@@ -19,6 +21,7 @@
     <input @bind-value="@adminModel.Passwort" type="password" class="form-control" id="Passwort" placeholder="********" />
 </div>
 
+<!-- Container für untere Navigationsleiste -->
 <div class="position-absolute bottom-0" style="display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; height: 100px; width: 1280px; background-color: white; border-top: 1px solid lightgrey;">
     <div></div>
     <div></div>

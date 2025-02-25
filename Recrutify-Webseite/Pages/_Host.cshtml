@@ -15,8 +15,12 @@
     <link rel="icon" type="image/png" href="favicon.png"/>
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
     <script>
-        function OpenModal() {
+        function OpenEndOfTimeModal() {
             const modal = document.getElementById('modalEndOfTime');
+            modal.showModal();
+        }
+        function OpenWrongTIDModal() {
+            const modal = document.getElementById('modalWrongTID');
             modal.showModal();
         }
     </script>

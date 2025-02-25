@@ -10,7 +10,7 @@
     {
         <!-- Stellt aktuelle Frage des Typs SingleChoice dar -->
 
-        <h2>Frage @helperModel.currentFID: @currentQuestion.Fragentext</h2>
+        <h2>Frage @helperModel.currentQuestionNumber: @currentQuestion.Fragentext</h2>
 
         <div @key="currentQuestion.FID">
             <div class="answer">
@@ -33,11 +33,13 @@
     [Parameter]
     public TrueFalseModel currentQuestion { get; set; }
 
+    //Initialisierung der True-False-Unterseite
     protected override async Task OnInitializedAsync()
     {
         //Console.WriteLine("TrueFalse");
     }
 
+    //Speichert gesetzte Antwort in trueFalseModel
     private void SetAnswer(TrueFalseModel trueFalseModel, int selectedAnswer)
     {
         trueFalseModel.Gewaehlte_Antwort = selectedAnswer;

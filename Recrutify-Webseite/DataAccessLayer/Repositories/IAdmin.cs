@@ -2,6 +2,7 @@
 
 namespace Recrutify.DataAccessLayer.Repositories
 {
+    //Repository für Methoden basierend auf Klasse AdminModel
     public interface IAdmin<T> where T : class
     {
         //Anmeldedaten überprüfen

@@ -9,7 +9,7 @@
 {
     <!-- Stellt aktuelle Frage des Typs MultipleChoice dar -->
 
-    <h2>Frage @helperModel.currentFID: @currentQuestion.Fragentext</h2>
+    <h2>Frage @helperModel.currentQuestionNumber: @currentQuestion.Fragentext</h2>
 
     <div @key="currentQuestion.FID">
         <div class="answer">
@@ -36,6 +36,7 @@ else
     [Parameter]
     public FreeTextModel currentQuestion { get; set; }
 
+    //Initialisierung der Freetext-Unterseite
     protected override async Task OnInitializedAsync()
     {
         //Console.WriteLine("Freitext");

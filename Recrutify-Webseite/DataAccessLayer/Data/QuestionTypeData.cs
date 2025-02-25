@@ -4,6 +4,7 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse QuestionTypeModel
     public class QuestionTypeData : IQuestionType<QuestionTypeModel>
     {
         private readonly ISqlDataAccess _db;
@@ -12,6 +13,7 @@ namespace Recrutify.DataAccessLayer.Data
             _db = db;
         }
 
+        //Fragentypen aus DB laden
         public async Task<IEnumerable<QuestionTypeModel>> GetQuestionTypes(int TID)
         {
             string sqlQuery = "SELECT FID, Fragentyp FROM Fragen WHERE TID = @TID;";
