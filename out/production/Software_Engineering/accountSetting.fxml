@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccountSettingController">
+   <children>
+      <AnchorPane prefHeight="700.0" prefWidth="400.0">
+         <children>
+            <Label layoutX="50.0" layoutY="105.0" text="UNTERNEHMEN">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="companyName" layoutX="50.0" layoutY="130.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
+            <Label layoutX="50.0" layoutY="185.0" text="VORNAME">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="surname" layoutX="50.0" layoutY="210.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
+            <Label layoutX="50.0" layoutY="265.0" text="NACHNAME">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="lastName" layoutX="50.0" layoutY="290.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
+            <Label layoutX="50.0" layoutY="345.0" text="BENUTZERNAME">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="username" layoutX="50.0" layoutY="370.0" prefHeight="40.0" prefWidth="310.0" styleClass="username-label" stylesheets="@style.css" />
+            <Label fx:id="labelNewPassword" layoutX="46.0" layoutY="425.0" text="NEUES PASSWORD">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="newPassword" layoutX="50.0" layoutY="450.0" prefHeight="40.0" prefWidth="310.0" styleClass="password-label" stylesheets="@style.css" />
+            <Label fx:id="labelConfirmNewPassword" layoutX="50.0" layoutY="505.0" text="NEUES PASSWORT WIEDERHOLEN">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="confirmNewPassword" layoutX="50.0" layoutY="530.0" prefHeight="40.0" prefWidth="310.0" styleClass="password-label" stylesheets="@style.css" />
+            <Button fx:id="saveAccountButton" defaultButton="true" layoutX="50.0" layoutY="580.0" mnemonicParsing="false" onAction="#saveAccountButtonAction" prefHeight="40.0" prefWidth="310.0" styleClass="login-button" stylesheets="@style.css" text="Speichern">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label layoutX="46.0" layoutY="39.0" text="Account Informationen">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Button fx:id="editButton" defaultButton="true" layoutX="50.0" layoutY="450.0" mnemonicParsing="false" onAction="#editButtonAction" prefHeight="40.0" prefWidth="310.0" styleClass="login-button" stylesheets="@style.css" text="Bearbeiten">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="goBackToMainMenuButton" layoutX="277.0" layoutY="640.0" mnemonicParsing="false" onAction="#goBackToMainMenuButtonAction" styleClass="delete-button" stylesheets="@style.css" text="Zurück" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="400.0" prefHeight="700.0" prefWidth="400.0" styleClass="gradient-pane" stylesheets="@style.css">
+         <children>
+            <ImageView fitHeight="106.0" fitWidth="310.0" layoutX="45.0" layoutY="297.0">
+               <image>
+                  <Image url="@img/Logo_Recrutify_full_png_white.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="minimizeButton" layoutX="325.0" layoutY="-6.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="closeButton" layoutX="355.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

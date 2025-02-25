@@ -692,6 +692,19 @@ public class EditController {
      */
     @FXML
     private boolean saveQuestionsButtonAction() {
+        if (questionFieldsSingleChoice.size() == 0 && questionFieldsMultipleChoice.size() == 0 && questionFieldsFreitext.size() == 0 && questionFieldsWahrFalsch.size() == 0) {
+
+            System.out.println("Fragen wurden nicht gespeichert!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("älöörrdd");
+            alert.setHeaderText(null);
+            alert.setContentText("Der Test ist leer, bitte fügen Sie Fragen hinzu!");
+
+            alert.showAndWait();
+
+            return false;
+        }
+
         System.out.println("TestID: " + testID);
         if (time == 0) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

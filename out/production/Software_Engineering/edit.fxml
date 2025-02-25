@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1250.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EditController">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" layoutX="314.0" layoutY="22.0" prefHeight="750.0" prefWidth="625.0" stylesheets="@style.css">
+         <content>
+            <VBox fx:id="questionContainer" prefHeight="750.0" prefWidth="625.0" style="-fx-background-color: white;" />
+         </content>
+         <styleClass>
+            <String fx:value="scroll-bar" />
+            <String fx:value="scroll-pane" />
+            <String fx:value="track" />
+         </styleClass>
+      </ScrollPane>
+      <ImageView fitHeight="79.0" fitWidth="231.0">
+         <image>
+            <Image url="@img/Logo_Recrutify_full.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="35.0" layoutY="306.0" text="Fragen hinzufügen">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Button fx:id="singleChoiceButton" layoutX="35.0" layoutY="360.0" mnemonicParsing="false" onAction="#singleChoiceButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Single Choice" />
+      <Button fx:id="multipleChoiceButton" layoutX="35.0" layoutY="410.0" mnemonicParsing="false" onAction="#multipleChoiceButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Multiple Choice" />
+      <Button fx:id="freitextButton" layoutX="35.0" layoutY="460.0" mnemonicParsing="false" onAction="#freitextButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Freitext" />
+      <Button fx:id="wahrFalschButton" layoutX="35.0" layoutY="510.0" mnemonicParsing="false" onAction="#wahrFalschButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Wahr / Falsch" />
+      <Button fx:id="zeitButton" layoutX="35.0" layoutY="670.0" mnemonicParsing="false" onAction="#zeitButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Zeitbegrenzung hinzufügen" />
+      <Button fx:id="saveQuestionsButton" layoutX="35.0" layoutY="720.0" mnemonicParsing="false" onAction="#saveQuestionsButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="login-button" stylesheets="@style.css" text="Fragen speichern" />
+      <Button fx:id="backButton" layoutX="985.0" layoutY="720.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="40.0" prefWidth="230.0" styleClass="delete-button" stylesheets="@style.css" text="Zurück" />
+      <Button fx:id="minimizeButton" layoutX="1167.0" layoutY="-9.0" mnemonicParsing="false" onAction="#minimizeButtonAction" prefHeight="26.0" prefWidth="44.0" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗕">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="closeButton" layoutX="1206.0" layoutY="-3.0" mnemonicParsing="false" onAction="#closeButtonAction" styleClass="button-close-and-minimize" stylesheets="@style.css" text="🗙" />
+      <ComboBox fx:id="dropDownMenu" layoutX="36.0" layoutY="153.0" onMouseClicked="#onOpenDropDownMenu" prefHeight="40.0" prefWidth="230.0" promptText="Test auswählen" style="-fx-background-color: transparent; -fx-border-color: lightgrey;">
+         <styleClass>
+            <String fx:value="combo-box" />
+            <String fx:value="combo-box-base" />
+            <String fx:value="combo-box-popup" />
+         </styleClass>
+      </ComboBox>
+      <Label layoutX="55.0" layoutY="104.0" text="Test bearbeiten">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

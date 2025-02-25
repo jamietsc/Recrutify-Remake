@@ -333,6 +333,15 @@ public class QuestionController {
     @FXML
     private boolean saveQuestionsButtonAction() {
         System.out.println("TestID: " + testID);
+        if (questionFieldsSingleChoice.isEmpty() && questionFieldsMultipleChoice.isEmpty() && questionFieldsFreitext.isEmpty() && questionFieldsWahrFalsch.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("älöörrdd");
+            alert.setHeaderText(null);
+            alert.setContentText("Der Test ist leer bitte fügen Sie Fragen hinzu!");
+            alert.showAndWait();
+            return false;
+        }
+
         if (time == 0) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Warnung");

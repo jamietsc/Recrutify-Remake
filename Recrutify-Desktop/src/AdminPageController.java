@@ -170,7 +170,7 @@ public class AdminPageController {
 
             // Gemeinsame CellFactory-Funktion für alle Bewertungs-Spalten
             Callback<TableColumn<Bewerber, Integer>, TableCell<Bewerber, Integer>> comboBoxCellFactory = column -> new TableCell<>() {
-                private final ComboBox<Integer> comboBox = new ComboBox<>(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+                private final ComboBox<Integer> comboBox = new ComboBox<>(FXCollections.observableArrayList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
                 {
                     // CSS-Style der ComboBox setzen
