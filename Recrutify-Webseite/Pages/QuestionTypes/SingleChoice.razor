@@ -13,7 +13,7 @@
     {
         <!-- Stellt aktuelle Frage des Typs SingleChoice dar -->
 
-        <h2>Frage @helperModel.currentFID: @currentQuestion.Fragentext</h2>
+        <h2>Frage @helperModel.currentQuestionNumber: @currentQuestion.Fragentext</h2>
 
         <div @key="currentQuestion.FID">
             <div class="answer">
@@ -53,11 +53,13 @@
     [Parameter]
     public SingleChoiceModel currentQuestion { get; set; }
 
+    //Initialisierung der Single-Choice-Unterseite
     protected override async Task OnInitializedAsync()
     {
         //Console.WriteLine("SingleChoice");
     }
 
+    //Speichert gesetzte Antwort in singleChoiceModel
     private void SetAnswer(SingleChoiceModel singleChoiceModel, int selectedAnswer)
     {
         singleChoiceModel.Gewaehlte_Antwort = selectedAnswer;

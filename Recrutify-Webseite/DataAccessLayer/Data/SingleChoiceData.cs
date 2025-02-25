@@ -4,6 +4,7 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse SingleChoiceModel
     public class SingleChoiceData : ISingleChoice<SingleChoiceModel>
     {
         private readonly ISqlDataAccess _db;
@@ -12,7 +13,7 @@ namespace Recrutify.DataAccessLayer.Data
             _db = db;
         }
 
-        //sämtliche Fragen zu einem Test aus der Datenbank laden
+        //Single-Choice-Fragen aus DB laden
         public async Task<SingleChoiceModel> GetSingleChoiceQuestion(int TID, int FID)
         {
             string sqlQuery = "SELECT FID, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4," +

@@ -4,6 +4,7 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse BewerberTestModel
     public class BewerberTestData : IBewerberTest<BewerberTestModel>
     {
         private readonly ISqlDataAccess _db;

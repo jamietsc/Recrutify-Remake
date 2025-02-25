@@ -4,6 +4,7 @@ using Recrutify.Models;
 
 namespace Recrutify.DataAccessLayer.Data
 {
+    //Klasse für Methoden basierend auf Klasse AdminModel
     public class AdminData : IAdmin<AdminModel>
     {
         private readonly ISqlDataAccess _db;
