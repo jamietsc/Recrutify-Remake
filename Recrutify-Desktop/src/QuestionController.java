@@ -15,7 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class QuestionController {
-    public static String url = "jdbc:sqlite:C:/Jamie Jentsch/BachelorOfScience - Informatik/4. Semester/Software_Engineering/recrutify.db";
+    public static final String url = "jdbc:postgresql://ep-still-bonus-a9a9tyuk-pooler.gwc.azure.neon.tech/neondb?sslmode=require";
+    public static final String dbPassword = "npg_aVfGvA2U4nOp";
+    public static final String dbUsername = "neondb_owner";
+
 
     private final List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
     private final List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
@@ -272,7 +275,7 @@ public class QuestionController {
     }
 
     private int getTestID() {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 String sqlTID = "SELECT MAX(TID) FROM Test";
                 try (PreparedStatement ps = conn.prepareStatement(sqlTID)) {
@@ -323,7 +326,7 @@ public class QuestionController {
                 return false;
             }
         }
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             String sqlDeleteQuestions = "DELETE FROM Fragen WHERE TID = ?";
             String sqlDeleteTest = "DELETE FROM Test WHERE TID = ?";
             String sqlInsertTest = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
@@ -364,7 +367,7 @@ public class QuestionController {
     }
 
         private void saveMultipleChoiceQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 for (int i = 0; i < questionFieldsMultipleChoice.size(); i++) {
                     String question = questionFieldsMultipleChoice.get(i).getText();
@@ -409,7 +412,7 @@ public class QuestionController {
     }
 
     private void saveSingleChoiceQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 for (int i = 0; i < questionFieldsSingleChoice.size(); i++) {
                     String question = questionFieldsSingleChoice.get(i).getText();
@@ -454,7 +457,7 @@ public class QuestionController {
     }
 
     public void saveFreitextQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 for (TextField textFieldQuestion : questionFieldsFreitext ) {
                     String question = textFieldQuestion.getText();
@@ -476,7 +479,7 @@ public class QuestionController {
     }
 
     public void saveWahrFalschQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 for (int i = 0; i < questionFieldsWahrFalsch.size(); i++) {
                     String question = questionFieldsWahrFalsch.get(i).getText();

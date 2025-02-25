@@ -7,6 +7,8 @@ import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import passwordSecurity.BCrypt;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -36,6 +38,7 @@ public class Main extends Application {
 
         //auskommentieren um ersten Benutzer zu erstellen
         //UserService.register("JentschJ", hashPassword("1234"), "FBB", "Jamie", "Jentsch", true);
+
 
         root.setOnMouseDragged((MouseEvent event) -> {
             primaryStage.setX(event.getScreenX() - xOffset);
