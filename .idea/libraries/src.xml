@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="src">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/Recrutify-Desktop/libs/jBCrypt-0.4/src" />
+      <root url="file://$PROJECT_DIR$/Recrutify-Desktop/libs/jBCrypt-0.4/test" />
+    </SOURCES>
+  </library>
+</component>

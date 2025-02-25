@@ -1,0 +1,290 @@
+.gradient-pane {
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+}
+
+.login-button,
+.account-button,
+.logout-button{
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
+    -fx-text-fill: white; /* Textfarbe */
+    -fx-text-weight: bold;
+    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-cursor: hand;
+}
+
+.login-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
+}
+
+
+.delete-button {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+}
+
+.logout-button,
+.account-button,
+.delete-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.secondary-button {
+    -fx-background-color: linear-gradient(to bottom right, #a2a2a1, #9a969a);
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px; /* Innenabstand des Buttons */
+    -fx-text-fill: white; /* Textfarbe */
+    -fx-text-weight: bold;
+    -fx-font-size: 14px; /* Schriftgröße */
+    -fx-cursor: hand;
+}
+
+.account-button {
+    /* Hintergrundbild */
+    -fx-background-color: transparent;
+    -fx-background-image: url("img/user.png");
+    -fx-background-size: 20px 20px; /* Das Bild skalieren */
+    -fx-background-position: center; /* Das Bild zentrieren */
+    -fx-background-repeat: no-repeat; /* Wiederholung verhindern */
+
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-background-image: url("img/logout.png");
+    -fx-background-size: 20px 20px; /* Das Bild skalieren */
+    -fx-background-position: center; /* Das Bild zentrieren */
+    -fx-background-repeat: no-repeat; /* Wiederholung verhindern */
+}
+
+
+
+.testauswahl-label{
+    -fx-background-color: #a2a2a1;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.username-label,
+.password-label {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.button-close-and-minimize {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.answer-text-field {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-pref-width: 550px ;
+}
+
+.question-text-field {
+    -fx-background-color: #efefef;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-pref-width: 600px;
+    -fx-max-width: 600px;
+    -fx-min-width: 600px;
+}
+
+.hbox-top {
+    -fx-padding: 20px 0 10px 0;
+}
+
+.hbox {
+    -fx-padding: 10px 0 10px 0;
+}
+
+.hbox-bottom {
+    -fx-padding: 0px 0 50px 0;
+}
+
+.question-container {
+    -fx-padding: 100px;
+}
+
+.checkbox {
+    -fx-padding: 10px 0 10px 0;
+}
+
+
+.radio-button {
+    -fx-font-size: 14px;
+}
+
+.scroll-pane {
+    -fx-background-color: white;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.title-adminPage {
+    -fx-background-color: #a2a2a1;
+    -fx-background-radius: 50px;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+}
+
+.combo-box .list-cell
+{
+    -fx-background: darkgrey;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+}
+
+.combo-box-popup .list-view
+{
+    -fx-background-color: white, white;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+}
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-padding: 4 0 4 5;
+
+    /* No alternate highlighting */
+    -fx-background-color: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-inner-color;
+}
+
+.combo-box-base
+{
+    -fx-background-color: lightgrey, grey,grey,lightgrey;
+    -fx-background-radius: 5, 5, 4, 3;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 0;
+}
+
+.combo-box-base:hover
+{
+    -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing
+{
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-radius: 6.4, 4, 5, 3;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+/* Tabelle zentrieren */
+/* Allgemeine Einstellungen für die TableView */
+.tabellen-ansicht {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
+
+/* Header der TableView */
+.tabellen-ansicht .column-header-background {
+    -fx-background-color: linear-gradient(to bottom right, #FF4500, #C03563);
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.tabellen-ansicht .column-header {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* Zellen der TableView */
+.tabellen-ansicht .cell {
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+/* Abwechselnde Zeilenfarbe */
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+/* Hover-Effekt für Zeilen */
+.table-row-cell:hover {
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+}
+
+/* Ausgewählte Zeile */
+.table-row-cell:selected {
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+    -fx-text-fill: #ffffff;
+}
+
+/* Scrollbar Styling */
+.scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+    -fx-background-insets: 2;
+    -fx-background-radius: 5px;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: linear-gradient(to bottom right, #FF5733, rgb(193, 58, 99));
+    -fx-background-insets: 2;
+    -fx-background-radius: 5px;
+}
+
+
+
