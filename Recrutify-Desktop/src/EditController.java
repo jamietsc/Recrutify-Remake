@@ -16,51 +16,109 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Klasse, welche die Edit Ansicht verwaltet
+ * @author Fynnian Kolbe
+ */
 public class EditController {
+    /**
+     * URL zur Datenbank
+     */
     public static String url = "jdbc:sqlite:C:/Users/fynni/Documents/HWR/Software Engineering II/Recrutify-Remake/Recrutify-Desktop/recrutify.db";
-
+    /**
+     * Liste für die Multiple Choice Fragen
+     */
     private final List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
+    /**
+     * Liste für die Antworten der Mutliple Choice Fragen
+     */
     private final List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
-
+    /**
+     * Liste für die Single Choice Fragen
+     */
     private final List<TextField> questionFieldsSingleChoice = new ArrayList<>();
+    /**
+     * Liste für die Antworten der Mutliple Choice Fragen
+     */
     private final List<HBox> answerBoxesSingleChoice = new ArrayList<>();
-
+    /**
+     * Liste für die Freitext Fragen
+     */
     private final List<TextField> questionFieldsFreitext = new ArrayList<>();
-
+    /**
+     * Liste für die Wahr Falsch Fragen
+     */
     private final List<TextField> questionFieldsWahrFalsch = new ArrayList<>();
+    /**
+     * Liste für die Antworten der Wahr Falsch Fragen
+     */
     private final List<RadioButton> answerBoxesWahrFalsch = new ArrayList<>();
-
+    /**
+     * Liste welche die Fragen ID speichert
+     */
     private List<Integer> FragenID = new ArrayList<>();
-
+    /**
+     * speichert die aktuelle TestID
+     */
     int testID;
+    /**
+     * speichert die Zeitbegrenzung für den Test
+     */
     int time = 0;
+    /**
+     * speichert die Mausposition der X-Achse
+     */
     private double xOffset = 0;
+    /**
+     * speichert die Mausposition der Y-Achse
+     */
     private double yOffset = 0;
+    /**
+     * speichert die TestID, welche zum bearbeiten ausgewählt wurde
+     */
     private String selectedTestID = null;
-
+    /**
+     * speichert alle Fragen die erstellt werden
+     */
     @FXML
     private VBox questionContainer;
-
+    /**
+     * ComboBox für das Dropdown Menu zum auswählen welcher Test bearbeitet werden soll
+     */
     @FXML
     private ComboBox<String> dropDownMenu;
-
+    /**
+     * Schließen Button
+     */
     @FXML
     private Button closeButton;
-
+    /**
+     * Minimieren Button
+     */
     @FXML
     private Button minimizeButton;
-
+    /**
+     * Zurück Button
+     */
     @FXML
     private Button backButton;
-
+    /**
+     * Liste mit den verfügbaren Tests die bearbeitet werden können
+     */
     ObservableList<String> options = FXCollections.observableArrayList();
 
+    /**
+     * Methode um das aktuelle Fenster zu schließen, wenn auf den Schließen-Button gedrückt wird
+     */
     @FXML
     private void closeButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Methode um das aktuelle Fenster zu minimieren, wenn auf den Minimieren-Knopf gedrückt wurde
+     */
     @FXML
     private void minimizeButtonAction() {
         Stage stage = (Stage) minimizeButton.getScene().getWindow();
@@ -68,7 +126,7 @@ public class EditController {
     }
 
     /**
-     * method for the dropdown menu where all the test ids of the company will be load and displayed in the dropdownmenu
+     * Methode um das Dropdpwn-Menü mit den TestIDs der Firma zu laden und anzuzeigen
      * @throws Exception
      */
     @FXML
@@ -86,6 +144,10 @@ public class EditController {
         });
     }
 
+    /**
+     * Methode welche ausgeführt wird, wenn auf den Dropdown-menü gedrückt wird. Setzt die Auswahl Möglichkeiten
+     * @throws Exception
+     */
     @FXML
     private void onOpenDropDownMenu() throws Exception {
         User registeredUser = UserSession.getCurrentUser();
@@ -94,6 +156,9 @@ public class EditController {
         dropDownMenu.setItems(options);
     }
 
+    /**
+     * Methode, welche die Fragen aus der Datenbank lädt und anzeigt, damit diese bearbeitet werden können
+     */
     private void setQuestions() {
         questionContainer.getChildren().clear();
         for (int i = 0; i < FragenID.size(); i++) {
@@ -155,6 +220,10 @@ public class EditController {
         }
     }
 
+    /**
+     * Zeigt die Freitextfragen auf dem Bildschirm an
+     * @param fragentext Fragentext der Freitextfragen
+     */
     private void setFreitextQuestions(String fragentext) {
         TextField textFieldQuestion = new TextField();
         textFieldQuestion.setText(fragentext);
@@ -173,6 +242,18 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
     }
 
+    /**
+     * Zeigt die Multiple-Choice-Fragen auf dem Bildschirm an
+     * @param fragentext Fragentext der Multiple-Choice-Fragen
+     * @param antwort1 Antwort 1 der Multiple-Choice-Fragen
+     * @param antwort2 Antwort 2 der Multiple-Choice-Fragen
+     * @param antwort3 Antwort 3 der Multiple-Choice-Fragen
+     * @param antwort4 Antwort 4 der Multiple-Choice-Fragen
+     * @param richtig1 Richtig 1 der Multiple-Choice-Fragen
+     * @param richtig2 Richtig 2 der Multiple-Choice-Fragen
+     * @param richtig3 Richtig 3 der Multiple-Choice-Fragen
+     * @param richtig4 Richtig 4 der Multiple-Choice-Fragen
+     */
     private void setMultipleChoiceQuestions(String fragentext, String antwort1, String antwort2, String antwort3, String antwort4, Boolean richtig1, Boolean richtig2, Boolean richtig3, Boolean richtig4) {
         TextField textFieldQuestion = new TextField();
         textFieldQuestion.setText(fragentext);
@@ -234,6 +315,18 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
+    /**
+     * Zeigt die Single-Choice-Fragen auf dem Bildschirm an
+     * @param fragentext Fragentext der Single-Choice-Fragen
+     * @param antwort1 Antwort 1 der Single-Choice-Fragen
+     * @param antwort2 Antwort 2 der Single-Choice-Fragen
+     * @param antwort3 Antwort 3 der Single-Choice-Fragen
+     * @param antwort4 Antwort 4 der Single-Choice-Fragen
+     * @param richtig1 Richtig 1 der Single-Choice-Fragen
+     * @param richtig2 Richtig 2 der Single-Choice-Fragen
+     * @param richtig3 Richtig 3 der Single-Choice-Fragen
+     * @param richtig4 Richtig 4 der Single-Choice-Fragen
+     */
     private void setSingleChoiceQuestions(String fragentext, String antwort1, String antwort2, String antwort3, String antwort4, Boolean richtig1, Boolean richtig2, Boolean richtig3, Boolean richtig4) {
         TextField textFieldQuestion = new TextField();
         textFieldQuestion.setText(fragentext);
@@ -302,6 +395,12 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
+    /**
+     * Zeigt die wahr oder falsch Fragen auf dem Bildschirm an
+     * @param fragentext Fragentext der wahr oder falsch Fragen
+     * @param antwortJaNein Antwort der wahr oder falsch Fragen
+     *
+     */
     private void setWahrFalschQuestions(String fragentext, Boolean antwortJaNein) {
         TextField textFieldQuestion = new TextField();
         textFieldQuestion.setText(fragentext);
@@ -340,6 +439,10 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, radioButton1, radioButton2);
     }
 
+    /**
+     * Öffnet wieder User Stage
+     * @throws Exception
+     */
     @FXML
     private void backButtonAction() throws Exception{
         try {
@@ -351,6 +454,9 @@ public class EditController {
         }
     }
 
+    /**
+     * legt die Zeitbegrenzung für den Test fest
+     */
     private void setTime () {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Zeit einstellen");
@@ -379,10 +485,17 @@ public class EditController {
 
     }
 
+    /**
+     * setzt die TestID für den ausgewählten Test
+     * @param choosenTest
+     */
     private void setTestID(String choosenTest) {
         testID = Integer.parseInt(choosenTest);
     }
 
+    /**
+     * fügt eine neue Multiple-Choice-Frage hinzu
+     */
     @FXML
     private void multipleChoiceButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -424,9 +537,6 @@ public class EditController {
         answerBoxesMultipleChoice.add(hBox3);
         answerBoxesMultipleChoice.add(hBox4);
 
-        //hBox1.getStyleClass().add("hbox-top");
-        //hBox2.getStyleClass().add("hbox");
-        //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
         Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
@@ -444,6 +554,9 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
+    /**
+     * fügt eine neue Single-Choice-Frage hinzu
+     */
     @FXML
     private void singleChoiceButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -492,9 +605,6 @@ public class EditController {
         answerBoxesSingleChoice.add(hBox3);
         answerBoxesSingleChoice.add(hBox4);
 
-        //hBox1.getStyleClass().add("hbox-top");
-        //hBox2.getStyleClass().add("hbox");
-        //hBox3.getStyleClass().add("hbox");
         hBox4.getStyleClass().add("hbox-bottom");
 
         Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
@@ -512,6 +622,9 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, hBox1, hBox2, hBox3, hBox4);
     }
 
+    /**
+     * fügt eine neue freitext-Frage hinzu
+     */
     @FXML
     private void freitextButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -531,6 +644,9 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
     }
 
+    /**
+     * fügt eine neue wahr oder falsch Frage hinzu
+     */
     @FXML
     private void wahrFalschButtonAction() {
         TextField textFieldQuestion = new TextField();
@@ -562,11 +678,18 @@ public class EditController {
         questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion, radioButton1, radioButton2);
     }
 
+    /**
+     * führt die setTime() Methode aus, wenn der Zeitbegrenzungs-Button gedrückt wird
+     */
     @FXML
     private void zeitButtonAction() {
         setTime();
     }
 
+    /**
+     * führt Alle Methoden zur Speicherung der einzelnen Fragen aus
+     * @return false wenn noch eine Zeit eingestellt werden soll, oder keine Fragen hinzugefügt wurden. True wenn die Fragen gespeichert wurden
+     */
     @FXML
     private boolean saveQuestionsButtonAction() {
         System.out.println("TestID: " + testID);
@@ -621,6 +744,9 @@ public class EditController {
         return true;
     }
 
+    /**
+     * speichert die Multiple-Choice-Fragen in der Datenbank
+     */
     private void saveMultipleChoiceQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -666,6 +792,9 @@ public class EditController {
         }
     }
 
+    /**
+     * speichert die Single-Choice-Fragen in der Datenbank
+     */
     private void saveSingleChoiceQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -711,6 +840,9 @@ public class EditController {
         }
     }
 
+    /**
+     * speichert die freitext-Fragen in der Datenbank
+     */
     public void saveFreitextQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -733,6 +865,9 @@ public class EditController {
         }
     }
 
+    /**
+     * speichert die wahr oder falsch Fragen in der Datenbank
+     */
     public void saveWahrFalschQuestions() {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -760,8 +895,10 @@ public class EditController {
         }
     }
 
-
-
+    /**
+     * gibt dem User eine Erfolgsmeldung
+     * @param message welche ausgegeben werden soll
+     */
     @FXML
     private void showSuccessDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
@@ -770,6 +907,11 @@ public class EditController {
         alert.showAndWait();
     }
 
+    /**
+     * öffne eine andere Stage
+     * @param fxmlFile welche Stage soll geöffnet werden
+     * @throws Exception
+     */
     @FXML
     private void openStage(String fxmlFile) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
