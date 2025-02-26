@@ -15,7 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class QuestionController {
-    public static String url = "jdbc:sqlite:C:/Jamie Jentsch/BachelorOfScience - Informatik/4. Semester/Software_Engineering/recrutify.db";
+    public static final String url = "jdbc:postgresql://ep-still-bonus-a9a9tyuk-pooler.gwc.azure.neon.tech/neondb?sslmode=require";
+    public static final String dbPassword = "npg_aVfGvA2U4nOp";
+    public static final String dbUsername = "neondb_owner";
+
 
     private final List<TextField> questionFieldsMultipleChoice = new ArrayList<>();
     private final List<HBox> answerBoxesMultipleChoice = new ArrayList<>();
@@ -295,26 +298,25 @@ public class QuestionController {
      * @return TestID
      */
     private int getTestID() {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                String sqlTID = "SELECT MAX(TID) FROM Test";
-                try (PreparedStatement ps = conn.prepareStatement(sqlTID)) {
-                    ResultSet rs = ps.executeQuery();
-                    if (rs.getInt(1) != 0) {
-                        testID = rs.getInt(1);
-                        testID++;
-                    } else {
-                        return 1;
+        int testID = 1; // Standardwert, falls keine TID vorhanden ist
 
-                    }
-                } catch (SQLException e) {
-                    System.out.println("Fehler beim abrufen der TID: " + e.getMessage());
+        String sqlTID = "SELECT MAX(TID) FROM Test";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+             PreparedStatement ps = conn.prepareStatement(sqlTID);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {  // Prüfen, ob es eine Zeile gibt
+                int maxTID = rs.getInt(1);
+                if (!rs.wasNull()) { // Falls maxTID nicht NULL ist
+                    testID = maxTID + 1;
                 }
-                System.out.println("TestID: " + testID);
             }
         } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
+            System.out.println("Fehler beim Abrufen der TID: " + e.getMessage());
         }
+
+        System.out.println("TestID: " + testID);
         return testID;
     }
 
@@ -333,11 +335,14 @@ public class QuestionController {
     @FXML
     private boolean saveQuestionsButtonAction() {
         System.out.println("TestID: " + testID);
-        if (questionFieldsSingleChoice.isEmpty() && questionFieldsMultipleChoice.isEmpty() && questionFieldsFreitext.isEmpty() && questionFieldsWahrFalsch.isEmpty()) {
+
+        if (questionFieldsSingleChoice.isEmpty() && questionFieldsMultipleChoice.isEmpty() &&
+                questionFieldsFreitext.isEmpty() && questionFieldsWahrFalsch.isEmpty()) {
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("älöörrdd");
+            alert.setTitle("Fehler");
             alert.setHeaderText(null);
-            alert.setContentText("Der Test ist leer bitte fügen Sie Fragen hinzu!");
+            alert.setContentText("Der Test ist leer. Bitte fügen Sie Fragen hinzu!");
             alert.showAndWait();
             return false;
         }
@@ -346,201 +351,177 @@ public class QuestionController {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Warnung");
             alert.setHeaderText(null);
-            alert.setContentText("Sie haben keine Zeit eingestellt, sind sie sicher?");
+            alert.setContentText("Sie haben keine Zeit eingestellt. Sind Sie sicher?");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() != ButtonType.OK) {
+            if (result.isPresent() && result.get() != ButtonType.OK) {
                 return false;
             }
         }
-        try (Connection conn = DriverManager.getConnection(url)) {
-            String sqlDeleteQuestions = "DELETE FROM Fragen WHERE TID = ?";
-            String sqlDeleteTest = "DELETE FROM Test WHERE TID = ?";
-            String sqlInsertTest = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
 
-            try (PreparedStatement ps = conn.prepareStatement(sqlDeleteQuestions)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            conn.setAutoCommit(false); // 🔹 Transaktionsmodus aktivieren
+
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Fragen WHERE TID = ?")) {
                 ps.setInt(1, testID);
                 ps.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("Fehler beim löschen aus der Tabelle Fragen: " + e.getMessage());
             }
 
-            try (PreparedStatement ps = conn.prepareStatement(sqlDeleteTest)) {
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Test WHERE TID = ?")) {
                 ps.setInt(1, testID);
                 ps.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("Fehler beim löschen aus der Tabelle Test: " + e.getMessage());
             }
 
-            saveMultipleChoiceQuestions();
-            saveSingleChoiceQuestions();
-            saveFreitextQuestions();
-            saveWahrFalschQuestions();
-
+            String sqlInsertTest = "INSERT INTO Test (Dauer, UID) VALUES (?, ?) RETURNING TID";
             try (PreparedStatement ps = conn.prepareStatement(sqlInsertTest)) {
-                ps.setInt(1, testID);
-                ps.setInt(2, time);
-                ps.setInt(3, UserSession.getCurrentUser().getUserID());
-                ps.executeUpdate();
-                showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
-            } catch (SQLException e) {
-                System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
+                ps.setInt(1, time); // 🔹 PostgreSQL INTERVAL benötigt eine Zeichenkette
+                ps.setInt(2, UserSession.getCurrentUser().getUserID());
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    testID = rs.getInt(1); // 🔹 Automatisch generierte TID speichern
+                }
             }
+
+            saveMultipleChoiceQuestions(conn);
+            saveSingleChoiceQuestions(conn);
+            saveFreitextQuestions(conn);
+            saveWahrFalschQuestions(conn);
+
+            conn.commit(); // 🔹 Alle Änderungen dauerhaft speichern
+            showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
 
         } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
+            System.out.println("Fehler beim Speichern des Tests: " + e.getMessage());
+            return false;
         }
         return true;
     }
 
+
     /**
      * speichert die Multiple-Choice-Fragen in der Datenbank
      */
-    private void saveMultipleChoiceQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                for (int i = 0; i < questionFieldsMultipleChoice.size(); i++) {
-                    String question = questionFieldsMultipleChoice.get(i).getText();
+    private void saveMultipleChoiceQuestions(Connection conn) throws SQLException {
+        String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, " +
+                "Richtig_1, Richtig_2, Richtig_3, Richtig_4, TID) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
-                    HBox hBox1 = answerBoxesMultipleChoice.get(i * 4);
-                    HBox hBox2 = answerBoxesMultipleChoice.get(i * 4 + 1);
-                    HBox hBox3 = answerBoxesMultipleChoice.get(i * 4 + 2);
-                    HBox hBox4 = answerBoxesMultipleChoice.get(i * 4 + 3);
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            for (int i = 0; i < questionFieldsMultipleChoice.size(); i++) {
+                String question = questionFieldsMultipleChoice.get(i).getText();
 
-                    String answer1 = ((TextField)hBox1.getChildren().get(1)).getText();
-                    String answer2 = ((TextField)hBox2.getChildren().get(1)).getText();
-                    String answer3 = ((TextField)hBox3.getChildren().get(1)).getText();
-                    String answer4 = ((TextField)hBox4.getChildren().get(1)).getText();
+                HBox hBox1 = answerBoxesMultipleChoice.get(i * 4);
+                HBox hBox2 = answerBoxesMultipleChoice.get(i * 4 + 1);
+                HBox hBox3 = answerBoxesMultipleChoice.get(i * 4 + 2);
+                HBox hBox4 = answerBoxesMultipleChoice.get(i * 4 + 3);
 
-                    Boolean correct1 = ((CheckBox)hBox1.getChildren().get(0)).isSelected();
-                    Boolean correct2 = ((CheckBox)hBox2.getChildren().get(0)).isSelected();
-                    Boolean correct3 = ((CheckBox)hBox3.getChildren().get(0)).isSelected();
-                    Boolean correct4 = ((CheckBox)hBox4.getChildren().get(0)).isSelected();
+                String answer1 = ((TextField) hBox1.getChildren().get(1)).getText();
+                String answer2 = ((TextField) hBox2.getChildren().get(1)).getText();
+                String answer3 = ((TextField) hBox3.getChildren().get(1)).getText();
+                String answer4 = ((TextField) hBox4.getChildren().get(1)).getText();
 
-                    String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, Richtig_1, Richtig_2, Richtig_3, Richtig_4, TID) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,1 );
-                        ps.setString(2, question);
-                        ps.setString(3, answer1);
-                        ps.setString(4, answer2);
-                        ps.setString(5, answer3);
-                        ps.setString(6, answer4);
-                        ps.setBoolean(7, correct1);
-                        ps.setBoolean(8, correct2);
-                        ps.setBoolean(9, correct3);
-                        ps.setBoolean(10, correct4);
-                        ps.setInt(11, testID);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
-                    }
-                }
+                boolean correct1 = ((CheckBox) hBox1.getChildren().get(0)).isSelected();
+                boolean correct2 = ((CheckBox) hBox2.getChildren().get(0)).isSelected();
+                boolean correct3 = ((CheckBox) hBox3.getChildren().get(0)).isSelected();
+                boolean correct4 = ((CheckBox) hBox4.getChildren().get(0)).isSelected();
+
+                ps.setInt(1, 1); // Fragentyp: Multiple Choice
+                ps.setString(2, question);
+                ps.setString(3, answer1);
+                ps.setString(4, answer2);
+                ps.setString(5, answer3);
+                ps.setString(6, answer4);
+                ps.setBoolean(7, correct1);
+                ps.setBoolean(8, correct2);
+                ps.setBoolean(9, correct3);
+                ps.setBoolean(10, correct4);
+                ps.setInt(11, testID);
+
+                ps.executeUpdate();
             }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
         }
     }
 
     /**
      * speichert die Single-Choice-Fragen in der Datenbank
      */
-    private void saveSingleChoiceQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                for (int i = 0; i < questionFieldsSingleChoice.size(); i++) {
-                    String question = questionFieldsSingleChoice.get(i).getText();
+    private void saveSingleChoiceQuestions(Connection conn) throws SQLException {
+        String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, " +
+                "Richtig_1, Richtig_2, Richtig_3, Richtig_4, TID) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
-                    HBox hBox1 = answerBoxesSingleChoice.get(i * 4);
-                    HBox hBox2 = answerBoxesSingleChoice.get(i * 4 + 1);
-                    HBox hBox3 = answerBoxesSingleChoice.get(i * 4 + 2);
-                    HBox hBox4 = answerBoxesSingleChoice.get(i * 4 + 3);
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            for (int i = 0; i < questionFieldsSingleChoice.size(); i++) {
+                String question = questionFieldsSingleChoice.get(i).getText();
 
-                    String answer1 = ((TextField)hBox1.getChildren().get(1)).getText();
-                    String answer2 = ((TextField)hBox2.getChildren().get(1)).getText();
-                    String answer3 = ((TextField)hBox3.getChildren().get(1)).getText();
-                    String answer4 = ((TextField)hBox4.getChildren().get(1)).getText();
+                HBox hBox1 = answerBoxesSingleChoice.get(i * 4);
+                HBox hBox2 = answerBoxesSingleChoice.get(i * 4 + 1);
+                HBox hBox3 = answerBoxesSingleChoice.get(i * 4 + 2);
+                HBox hBox4 = answerBoxesSingleChoice.get(i * 4 + 3);
 
-                    Boolean correct1 = ((RadioButton)hBox1.getChildren().get(0)).isSelected();
-                    Boolean correct2 = ((RadioButton)hBox2.getChildren().get(0)).isSelected();
-                    Boolean correct3 = ((RadioButton)hBox3.getChildren().get(0)).isSelected();
-                    Boolean correct4 = ((RadioButton)hBox4.getChildren().get(0)).isSelected();
+                String answer1 = ((TextField) hBox1.getChildren().get(1)).getText();
+                String answer2 = ((TextField) hBox2.getChildren().get(1)).getText();
+                String answer3 = ((TextField) hBox3.getChildren().get(1)).getText();
+                String answer4 = ((TextField) hBox4.getChildren().get(1)).getText();
 
-                    String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, Richtig_1, Richtig_2, Richtig_3, Richtig_4, TID) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,0 );
-                        ps.setString(2, question);
-                        ps.setString(3, answer1);
-                        ps.setString(4, answer2);
-                        ps.setString(5, answer3);
-                        ps.setString(6, answer4);
-                        ps.setBoolean(7, correct1);
-                        ps.setBoolean(8, correct2);
-                        ps.setBoolean(9, correct3);
-                        ps.setBoolean(10, correct4);
-                        ps.setInt(11, testID);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
-                    }
-                }
+                boolean correct1 = ((RadioButton) hBox1.getChildren().get(0)).isSelected();
+                boolean correct2 = ((RadioButton) hBox2.getChildren().get(0)).isSelected();
+                boolean correct3 = ((RadioButton) hBox3.getChildren().get(0)).isSelected();
+                boolean correct4 = ((RadioButton) hBox4.getChildren().get(0)).isSelected();
+
+                ps.setInt(1, 0);  // Fragentyp: 0 = Single Choice
+                ps.setString(2, question);
+                ps.setString(3, answer1);
+                ps.setString(4, answer2);
+                ps.setString(5, answer3);
+                ps.setString(6, answer4);
+                ps.setBoolean(7, correct1);
+                ps.setBoolean(8, correct2);
+                ps.setBoolean(9, correct3);
+                ps.setBoolean(10, correct4);
+                ps.setInt(11, testID);
+
+                ps.addBatch();
             }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
+            ps.executeBatch();  // Alle gesammelten Statements ausführen
+
+            System.out.println("Alle Single-Choice-Fragen erfolgreich gespeichert!");
         }
     }
+
 
     /**
      * speichert die freitext-Fragen in der Datenbank
      */
-    public void saveFreitextQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                for (TextField textFieldQuestion : questionFieldsFreitext ) {
-                    String question = textFieldQuestion.getText();
+    private void saveFreitextQuestions(Connection conn) throws SQLException {
+        String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, TID) VALUES (?,?,?)";
 
-                    String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, TID) VALUES (?,?,?)";
-                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,2);
-                        ps.setString(2, question);
-                        ps.setInt(3, testID);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
-                    }
-                }
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            for (TextField textFieldQuestion : questionFieldsFreitext) {
+                ps.setInt(1, 2); // Fragentyp: Freitext
+                ps.setString(2, textFieldQuestion.getText());
+                ps.setInt(3, testID);
+                ps.executeUpdate();
             }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
         }
     }
 
     /**
      * speichert die wahr oder falsch Fragen in der Datenbank
      */
-    public void saveWahrFalschQuestions() {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                for (int i = 0; i < questionFieldsWahrFalsch.size(); i++) {
-                    String question = questionFieldsWahrFalsch.get(i).getText();
+    private void saveWahrFalschQuestions(Connection conn) throws SQLException {
+        String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_JaNein, TID) VALUES (?,?,?,?)";
 
-                    RadioButton radioButton1 = answerBoxesWahrFalsch.get(i);
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            for (int i = 0; i < questionFieldsWahrFalsch.size(); i++) {
+                String question = questionFieldsWahrFalsch.get(i).getText();
+                boolean antwortJaNein = answerBoxesWahrFalsch.get(i).isSelected();
 
-                    Boolean AntwortJaNein = radioButton1.isSelected();
-
-                    String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_JaNein, TID) VALUES (?,?,?,?)";
-                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,3);
-                        ps.setString(2, question);
-                        ps.setBoolean(3, AntwortJaNein);
-                        ps.setInt(4, testID);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        System.out.println("Fehler beim Einfügen der Daten: " + e.getMessage());
-                    }
-                }
+                ps.setInt(1, 3); // Fragentyp: Wahr/Falsch
+                ps.setString(2, question);
+                ps.setBoolean(3, antwortJaNein);
+                ps.setInt(4, testID);
+                ps.executeUpdate();
             }
-        } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
         }
     }
 

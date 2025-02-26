@@ -58,7 +58,7 @@ public class RegisterController {
         }
 
         try {
-            if (!UserService.usernameExists(enteredUsername)) {
+            if(!UserService.usernameExists(enteredUsername, 0)){
                 String hashedPassword = UserService.hashPassword(enteredPassword);
                 UserService.register(enteredUsername, hashedPassword, enteredCompany, enteredFirstName, enteredLastName, false);
                 showSuccessDialog("Unternehmen erfolgreich erstellt!");

@@ -19,6 +19,9 @@ namespace Recrutify.DataAccessLayer.Data
         {
             string sqlQuery = "SELECT FID, Fragentext FROM Fragen WHERE TID = @TID AND FID = @FID;";
             var result = await _db.LoadData<FreeTextModel, dynamic>(sqlQuery, new { TID, FID });
+
+            Console.WriteLine("Result der DB Abfrage: " + (result.Any() ? "Daten gefunden" : "Keine Daten gefunden"));
+
             return result.FirstOrDefault();
         }
 

@@ -73,6 +73,7 @@
     {
         int insertedID = await bewerberData.InsertVornameNachname(bewerberModel);
         bewerberModel.BID = insertedID;
+        Console.WriteLine("bewerberModel.BID: " + bewerberModel.BID);
         bewerberTestModel.BID = insertedID;
 
         System.Diagnostics.Debug.WriteLine("Bewerber ID=" + bewerberModel.BID);

@@ -2,117 +2,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import passwordSecurity.BCrypt;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class UserService {
-    public static String url = "jdbc:sqlite:C:/Jamie Jentsch/BachelorOfScience - Informatik/4. Semester/Software_Engineering/recrutify.db";
-    /**
-     * function to initizalize the database
-     * @return the path where the db is located
-     */
-    static String initializeDatabase() {
-        String projectPath = System.getProperty("user.dir");
-        String dbPath = projectPath + File.separator + "recrutify.db";
+    public static final String url = "jdbc:postgresql://ep-still-bonus-a9a9tyuk-pooler.gwc.azure.neon.tech/neondb?sslmode=require";
+    public static final String dbPassword = "npg_aVfGvA2U4nOp";
+    public static final String dbUsername = "neondb_owner";
 
-        File dbFile = new File(dbPath);
 
-        if (!dbFile.exists()) {
-            System.out.println("Datenbank existiert nicht. Erstelle neue Datenbank...");
-            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath)) {
-                if (conn != null) {
-                    System.out.println("Neue Datenbank erstellt: " + dbPath);
-                    createTables(conn); // Tabellen erstellen
-                }
-            } catch (SQLException e) {
-                System.out.println("Fehler beim Erstellen der Datenbank: " + e.getMessage());
-            }
-        } else {
-            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath)) {
-                if (conn != null) {
-                    //System.out.println("Datenbank gefunden: " + dbPath);
-                    createTables(conn); // Tabellen prüfen und ggf. erstellen
-                }
-            } catch (SQLException e) {
-                System.out.println("Fehler beim Prüfen der Tabellen: " + e.getMessage());
-            }
-        }
 
-        return dbPath;
-    }
-
-    /**
-     * Method to create the tables
-     * @param conn the variable of the connection
-     */
-    private static void createTables(Connection conn) {
-        String[] tableCreationScripts = {
-                """
-            CREATE TABLE IF NOT EXISTS Unternehmen (
-                UID INTEGER PRIMARY KEY AUTOINCREMENT,
-                Name VARCHAR(255) NOT NULL,
-                Benutzername VARCHAR(255) NOT NULL,
-                Passwort VARCHAR(255) NOT NULL,
-                Vorname VARCHAR(255),
-                Nachname VARCHAR(255),
-                is_admin BOOLEAN NOT NULL DEFAULT 0
-            );
-            """,
-                """
-            CREATE TABLE IF NOT EXISTS Test (
-                TID INT PRIMARY KEY,
-                Dauer TIME,
-                UID INT,
-                FOREIGN KEY (UID) REFERENCES Unternehmen(UID)
-            );
-            """,
-                """
-            CREATE TABLE IF NOT EXISTS Bewerber (
-                BID INT PRIMARY KEY,
-                Vorname VARCHAR(255),
-                Nachname VARCHAR(255),
-                Ergebnis INT
-            );
-            """,
-                """
-            CREATE TABLE IF NOT EXISTS MultipleChoiceFragen (
-                FID INT PRIMARY KEY,
-                Text TEXT,
-                Antwort_1 TEXT,
-                Antwort_2 TEXT,
-                Antwort_3 TEXT,
-                Antwort_4 TEXT,
-                Richtig_1 BOOLEAN,
-                Richtig_2 BOOLEAN,
-                Richtig_3 BOOLEAN,
-                Richtig_4 BOOLEAN,
-                TID INT,
-                FOREIGN KEY (TID) REFERENCES Test(TID)
-            );
-            """,
-                """
-            CREATE TABLE IF NOT EXISTS Bewerber_Test (
-                BID INT,
-                TID INT,
-                PRIMARY KEY (BID, TID),
-                FOREIGN KEY (BID) REFERENCES Bewerber(BID),
-                FOREIGN KEY (TID) REFERENCES Test(TID)
-            );
-            """
-        };
-
-        for (String sql : tableCreationScripts) {
-            try (Statement stmt = conn.createStatement()) {
-                stmt.executeUpdate(sql);
-                //System.out.println("Table exists or will be created.");
-            } catch (SQLException e) {
-                System.out.println("Error while Creating the table: " + e.getMessage());
-            }
-        }
-    }
 
     /**
      * method to login as a company user
@@ -122,7 +28,7 @@ public class UserService {
      * @throws Exception if the sql query is not possible
      */
     public static User login(String username, String plainTextPassword) throws Exception {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 String sql = "SELECT * FROM Unternehmen WHERE Benutzername = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -162,7 +68,7 @@ public class UserService {
      * @param lastName last name of the user
      */
     public static void register(String username, String password, String company, String firstName, String lastName, Boolean is_admin) throws Exception {
-            try (Connection conn = DriverManager.getConnection(url)) {
+            try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                 if (conn != null) {
                     //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
                     // insert into
@@ -193,7 +99,7 @@ public class UserService {
     public static ObservableList<String> getTIDsFromCompany(int UID){
         ObservableList<String> results = FXCollections.observableArrayList();
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 //System.out.println("Connected to the database.");
                 //Select from
@@ -220,7 +126,7 @@ public class UserService {
     public static ArrayList<Integer> getFIDsFromTest(int TestID) {
         ArrayList<Integer> questionIDs = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 String sql = "SELECT FID FROM Fragen WHERE TID = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)){
@@ -250,7 +156,7 @@ public class UserService {
         ObservableList<Bewerber> allApplicants = FXCollections.observableArrayList();
         List<String> allBIDs = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 //System.out.println("Connected to the database.");
                 String sql = "SELECT BID FROM BEWERBER_TEST WHERE TID = ? ";
@@ -302,7 +208,7 @@ public class UserService {
      * @return a user object with the information of the current account
      */
     public static User loadCurrentAccountInformation(Integer UID) {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
                 String sql = "SELECT NAME, VORNAME, NACHNAME, BENUTZERNAME FROM UNTERNEHMEN WHERE UID = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -338,22 +244,44 @@ public class UserService {
      * @return true if successful changed, otherwise false
      */
     public static boolean accountInformationUpdate(String enteredSurname, String enteredLastname, String enteredUsername, String enteredPassword, Integer UID) {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        String sql;
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
-                String sql = "UPDATE UNTERNEHMEN SET VORNAME = ?, NACHNAME = ?, BENUTZERNAME = ?, PASSWORT = ? WHERE UID = ?";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, enteredSurname);
-                    ps.setString(2, enteredLastname);
-                    ps.setString(3, enteredUsername);
-                    ps.setString(4, enteredPassword);
-                    ps.setInt(5, UID);
+                if(!enteredPassword.isBlank()) {
+                    sql = "UPDATE UNTERNEHMEN SET VORNAME = ?, NACHNAME = ?, BENUTZERNAME = ?, PASSWORT = ? WHERE UID = ?";
+                    System.out.println("Passwort ändert sich: " + enteredPassword);
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                        ps.setString(1, enteredSurname);
+                        ps.setString(2, enteredLastname);
+                        ps.setString(3, enteredUsername);
+                        ps.setString(4, enteredPassword);
+                        ps.setInt(5, UID);
 
-                    ps.executeUpdate();
-                    System.out.println("Account succesfully updated.");
-                    return true;
-                } catch (SQLException e) {
+                        ps.executeUpdate();
+                        System.out.println("Account succesfully updated.");
+                        return true;
+                    } catch (SQLException e) {
+                        System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                    }
+                } else {
+                    sql = "UPDATE UNTERNEHMEN SET VORNAME = ?, NACHNAME = ?, BENUTZERNAME = ? WHERE UID = ?";
+                    System.out.println("Passwort bleibt gleich.");
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                        ps.setString(1, enteredSurname);
+                        ps.setString(2, enteredLastname);
+                        ps.setString(3, enteredUsername);
+                        ps.setInt(4, UID);
+
+                        ps.executeUpdate();
+                        System.out.println("Account succesfully updated.");
+                        return true;
+                    } catch (SQLException e) {
                     System.out.println("Fehler beim Einfügen der Daten: "  + e.getMessage());
+                    }
                 }
+
+
+
             }
         } catch (SQLException e) {
             System.out.println("Verbindungsfehler: " + e.getMessage());
@@ -366,10 +294,14 @@ public class UserService {
      * @param username username the account will get if it doesnt already exits
      * @return true if exits, otherwise false
      */
-    public static boolean usernameExists(String username){
-        try (Connection conn = DriverManager.getConnection(url)) {
+    public static boolean usernameExists(String username, int UID){
+        try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            String sql = "SELECT * FROM UNTERNEHMEN WHERE BENUTZERNAME = ?";
             if (conn != null) {
-                String sql = "SELECT * FROM UNTERNEHMEN WHERE BENUTZERNAME = ?";
+                if(UID != 0){
+                    System.out.println("Aktueller Benutzer kann seinen Benutzernamenm verändern");
+                    return false;
+                }
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
                     try (ResultSet rs = ps.executeQuery()) {
@@ -397,7 +329,7 @@ public class UserService {
      * @return
      */
     public static boolean updateEvaluation(Integer eva_text_1, Integer eva_text_2, Integer eva_text_3, Integer BID){
-        try (Connection connection = DriverManager.getConnection(url)) {
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (connection != null) {
                 String sql = "UPDATE BEWERBER SET Bewertung_1 = ?, Bewertung_2 = ?, Bewertung_3 = ? WHERE BID = ?";
                 try (PreparedStatement ps = connection.prepareStatement(sql)) {

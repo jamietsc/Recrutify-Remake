@@ -209,7 +209,10 @@ public class AccountSettingController {
             return;
         }
 
-        if (enteredSurname.equals("")) {
+        System.out.println("Passwort der aktuellen Nutzers: " + user.getpassword());
+        System.out.println("Vorname: " + enteredSurname + "\nNachname: " + enteredLastName + "\nNutzername: " + enteredSurname + "\nPasswort: " + enteredNewPassword);
+
+        if(enteredSurname.equals("")) {
             enteredSurname = currentUserInformation.getSurname();
         }
         if (enteredLastName.equals("")) {
@@ -218,12 +221,13 @@ public class AccountSettingController {
         if (enteredUsername.equals("")) {
             enteredUsername = currentUserInformation.getusername();
         }
-        if (enteredNewPassword.equals("")) {
-            enteredNewPassword = (currentUserInformation.getpassword());
-        }
+
+
+        System.out.println("\n\nVorname: " + enteredSurname + "\nNachname: " + enteredLastName + "\nNutzername: " + enteredUsername + "\nPasswort: " + enteredNewPassword);
+
         enteredNewPassword = UserService.hashPassword(enteredNewPassword);
 
-        if (!UserService.usernameExists(enteredUsername)) {
+        if (!UserService.usernameExists(enteredUsername, user.getUserID())) {
             boolean accountGotUpdated = UserService.accountInformationUpdate(enteredSurname, enteredLastName, enteredUsername, enteredNewPassword, currentUserInformation.getUserID());
 
             if (accountGotUpdated) {

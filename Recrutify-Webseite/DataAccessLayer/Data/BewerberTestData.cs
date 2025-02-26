@@ -17,7 +17,7 @@ namespace Recrutify.DataAccessLayer.Data
         public async Task InsertTIDandBID(BewerberTestModel model)
         {
             var paramters = new { model.TID, model.BID };
-            string sqlQuery = "INSERT INTO Bewerber_Test (TID, BID) VALUES (@TID, @BID); SELECT last_insert_rowid();";
+            string sqlQuery = "INSERT INTO Bewerber_Test (TID, BID) VALUES (@TID, @BID);";
             await _db.SaveData(sqlQuery, paramters);
         }
 

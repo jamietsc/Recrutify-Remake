@@ -1,6 +1,8 @@
 ﻿using Dapper;
-using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace Recrutify.DataAccessLayer.SqlDataAccess
 {
@@ -16,24 +18,24 @@ namespace Recrutify.DataAccessLayer.SqlDataAccess
         public string ConnectionStringName { get; set; }
 
         //Daten laden
-        public async Task<IEnumerable<T>> LoadData<T, U>(string storedProcedure, U parameters, string connectionID = "DefaultConnection")
+        public async Task<IEnumerable<T>> LoadData<T, U>(string sql, U parameters, string connectionID = "DefaultConnection")
         {
-            using IDbConnection connection = new SqliteConnection(_config.GetSection("ConnectionStrings")[connectionID]);
-            return await connection.QueryAsync<T>(storedProcedure, parameters, commandType: CommandType.Text); // SQLite nutzt in der Regel SQL Queries statt Stored Procedures
+            using IDbConnection connection = new NpgsqlConnection(_config.GetSection("ConnectionStrings")[connectionID]);
+            return await connection.QueryAsync<T>(sql, parameters); // SQLite nutzt in der Regel SQL Queries statt Stored Procedures
         }
 
         //Daten speicerhn
-        public async Task SaveData<T>(string storedProcedure, T parameters, string connectionID = "DefaultConnection")
+        public async Task SaveData<T>(string sql, T parameters, string connectionID = "DefaultConnection")
         {
-            using IDbConnection connection = new SqliteConnection(_config.GetSection("ConnectionStrings")[connectionID]);
-            await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.Text);
+            using IDbConnection connection = new NpgsqlConnection(_config.GetSection("ConnectionStrings")[connectionID]);
+            await connection.ExecuteAsync(sql, parameters);
         }
 
         //Daten Speichern und ID zurückgeben
-        public async Task<int> SaveDataReturnID<T>(string storedProcedure, T parameters, string connectionID = "DefaultConnection")
+        public async Task<int> SaveDataReturnID<T>(string sql, T parameters, string connectionID = "DefaultConnection")
         {
-            using IDbConnection connection = new SqliteConnection(_config.GetSection("ConnectionStrings")[connectionID]);
-            return await connection.ExecuteScalarAsync<int>(storedProcedure, parameters, commandType: CommandType.Text);
+            using IDbConnection connection = new NpgsqlConnection(_config.GetSection("ConnectionStrings")[connectionID]);
+            return await connection.ExecuteScalarAsync<int>(sql, parameters);
         }
     }
 }
