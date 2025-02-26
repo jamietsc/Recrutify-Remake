@@ -3,3 +3,12 @@
 ################################################################################
 
 .vs/
+# IntelliJ IDEA-Projektdateien
+.idea/
+*.iml
+
+# Build-Ordner und Klassen-Dateien
+out/
+*.class
+
+META-INF/MANIFEST.MF
