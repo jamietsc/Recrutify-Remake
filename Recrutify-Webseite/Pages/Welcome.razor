@@ -8,7 +8,7 @@
 @inject IBewerberTest<BewerberTestModel> bewerberTestData
 @inject TestModel testModel
 @inject IUnternehmen<TestModel> unternehmenService
-
+@inject HelperModel helperModel
 
 @page "/welcome/{tid:int}"
 
@@ -23,8 +23,12 @@
     <p style="margin-top: 5px">
         Herzlich willkommen zum Einstellungstest @testModel.Name. Im Folgenden sollen Sie einige Fragen beantworten, damit wir Ihren Wissensstand prüfen können.
         <br />
-        Sie haben <b>@testModel.Dauer Minuten</b> Zeit.
-        <br />
+        @if (helperModel.useTimer)
+        {
+            <div>
+                Sie haben <b>@testModel.Dauer Minuten</b> Zeit.
+            </div>
+        }
         <br />
         Viel Erfolg!
     </p>
@@ -52,6 +56,16 @@
     protected override async Task OnInitializedAsync()
     {
         testModel.Dauer = await unternehmenService.GetDauer(testModel.TID ?? 0);
+
+        //Ermittelt, ob es ein Zeitlimit gibt und Timer dementsprechend genutzt werden soll
+        if (testModel.Dauer == 0)
+        {
+            helperModel.useTimer = false;
+        }
+        else
+        {
+            helperModel.useTimer = true;
+        }
     }
 
     //Test wird gestartet, Vor- und Nachname in die Datenbank abgespeichert und BID im Model gespeichert

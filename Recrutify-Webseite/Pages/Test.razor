@@ -172,15 +172,6 @@
             }
         }
 
-        //Ermittelt, ob es ein Zeitlimit gibt und Timer dementsprechend genutzt werden soll
-        if (testModel.Dauer == 0)
-        {
-            helperModel.useTimer = false;
-        } else
-        {
-            helperModel.useTimer = true;
-        }
-
         //Startet Timer, falls genutzt
         if (helperModel.useTimer == true)
         {
