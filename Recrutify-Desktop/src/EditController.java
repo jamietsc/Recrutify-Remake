@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,7 @@ public class EditController {
 
     /**
      * method for the dropdown menu where all the test ids of the company will be load and displayed in the dropdownmenu
+     *
      * @throws Exception
      */
     @FXML
@@ -106,12 +108,12 @@ public class EditController {
             try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                 if (conn != null) {
                     String sql = "SELECT Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, Antwort_JaNein, Richtig_1, Richtig_2, Richtig_3, Richtig_4 FROM Fragen WHERE FID = ?";
-                    try (PreparedStatement ps = conn.prepareStatement(sql)){
+                    try (PreparedStatement ps = conn.prepareStatement(sql)) {
                         ps.setInt(1, FragenID.get(i));
-                        try (ResultSet rs = ps.executeQuery()){
-                            while(rs.next()) {
+                        try (ResultSet rs = ps.executeQuery()) {
+                            while (rs.next()) {
                                 // Freitext
-                                if (rs.getInt("Fragentyp") == 0) {
+                                if (rs.getInt("Fragentyp") == 2) {
                                     setFreitextQuestions(rs.getString("Fragentext"));
                                 }
 
@@ -130,7 +132,7 @@ public class EditController {
                                 }
 
                                 // Single Choice
-                                if (rs.getInt("Fragentyp") == 2) {
+                                if (rs.getInt("Fragentyp") == 0) {
                                     setSingleChoiceQuestions(
                                             rs.getString("Fragentext"),
                                             rs.getString("Antwort_1"),
@@ -151,7 +153,7 @@ public class EditController {
                                 }
                             }
                         }
-                    } catch (SQLException e){
+                    } catch (SQLException e) {
                         System.out.println("Error While Loading the Data" + e.getMessage());
                     }
                 }
@@ -347,7 +349,7 @@ public class EditController {
     }
 
     @FXML
-    private void backButtonAction() throws Exception{
+    private void backButtonAction() throws Exception {
         try {
             openStage("/user.fxml"); // Öffnet die neue Stage
             Stage stage = (Stage) backButton.getScene().getWindow();
@@ -357,7 +359,7 @@ public class EditController {
         }
     }
 
-    private void setTime () {
+    private void setTime() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Zeit einstellen");
         dialog.setHeaderText("Hier können sie eine Zeitbegrenzung für den Test festlegen");
@@ -575,8 +577,7 @@ public class EditController {
 
     @FXML
     private boolean saveQuestionsButtonAction() {
-        if (questionFieldsSingleChoice.size() == 0 && questionFieldsMultipleChoice.size() == 0 && questionFieldsFreitext.size() == 0 && questionFieldsWahrFalsch.size() == 0) {
-
+        if (questionFieldsSingleChoice.isEmpty() && questionFieldsMultipleChoice.isEmpty() && questionFieldsFreitext.isEmpty() && questionFieldsWahrFalsch.isEmpty()) {
             System.out.println("Fragen wurden nicht gespeichert!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("älöörrdd");
@@ -588,35 +589,16 @@ public class EditController {
             return false;
         }
 
-        System.out.println("TestID: " + testID);
         if (time == 0) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Warnung");
-            alert.setHeaderText(null);
-            alert.setContentText("Sie haben keine Zeit eingestellt, sind sie sicher?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() != ButtonType.OK) {
-                return false;
-            }
+            return false;
         }
+
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-            String sqlDeleteQuestions = "DELETE FROM Fragen WHERE TID = ?";
-            String sqlDeleteTest = "DELETE FROM Test WHERE TID = ?";
-            String sqlInsertTest = "INSERT INTO Test (TID, Dauer, UID) VALUES (?,?,?)";
+            conn.setAutoCommit(false); // Start einer Transaktion
 
-            try (PreparedStatement ps = conn.prepareStatement(sqlDeleteQuestions)) {
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Fragen WHERE TID = ?")) {
                 ps.setInt(1, testID);
                 ps.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("Fehler beim löschen aus der Tabelle Fragen: " + e.getMessage());
-            }
-
-            try (PreparedStatement ps = conn.prepareStatement(sqlDeleteTest)) {
-                ps.setInt(1, testID);
-                ps.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("Fehler beim löschen aus der Tabelle Test: " + e.getMessage());
             }
 
             saveMultipleChoiceQuestions();
@@ -624,22 +606,26 @@ public class EditController {
             saveFreitextQuestions();
             saveWahrFalschQuestions();
 
-            try (PreparedStatement ps = conn.prepareStatement(sqlInsertTest)) {
-                ps.setInt(1, testID);
-                ps.setInt(2, time);
-                ps.setInt(3, UserSession.getCurrentUser().getUserID());
+            try (PreparedStatement ps = conn.prepareStatement("UPDATE Test SET Dauer = ?, UID = ? WHERE TID = ?")) {
+                ps.setInt(1, time);
+                ps.setInt(2, UserSession.getCurrentUser().getUserID());
+                ps.setInt(3, testID);
                 ps.executeUpdate();
-                showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
-            } catch (SQLException e) {
-                System.out.println("Fehler beim einfügen der Daten in die Tabelle Test: " + e.getMessage());
             }
 
+            conn.commit(); // Transaktion bestätigen
+            showSuccessDialog("Die Fragen wurden erfolgreich gespeichert!");
+            return true;
+
         } catch (SQLException e) {
-            System.out.println("Verbindungsfehler: " + e.getMessage());
+            System.out.println("Fehler: " + e.getMessage());
+            return false;
         }
-        return true;
     }
 
+    /**
+     * speichert die Multiple-Choice-Fragen in der Datenbank
+     */
     private void saveMultipleChoiceQuestions() {
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
@@ -685,6 +671,9 @@ public class EditController {
         }
     }
 
+    /**
+     * speichert die Single-Choice-Fragen in der Datenbank
+     */
     private void saveSingleChoiceQuestions() {
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
@@ -730,6 +719,9 @@ public class EditController {
         }
     }
 
+    /**
+     * speichert die freitext-Fragen in der Datenbank
+     */
     public void saveFreitextQuestions() {
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
@@ -752,6 +744,9 @@ public class EditController {
         }
     }
 
+    /**
+     * speichert die wahr oder falsch Fragen in der Datenbank
+     */
     public void saveWahrFalschQuestions() {
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             if (conn != null) {
@@ -779,6 +774,23 @@ public class EditController {
         }
     }
 
+    @FXML
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private Optional<ButtonType> showConfirmationDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        return alert.showAndWait();
+    }
 
 
     @FXML

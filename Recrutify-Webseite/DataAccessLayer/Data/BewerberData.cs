@@ -22,7 +22,7 @@ namespace Recrutify.DataAccessLayer.Data
             var parameters = new { model.Vorname, model.Nachname };
 
             // SQL-Abfrage ohne den Prefix "model."
-            string sqlQuery = "INSERT INTO Bewerber (Vorname, Nachname) VALUES (@Vorname, @Nachname); SELECT last_insert_rowid();";
+            string sqlQuery = "INSERT INTO Bewerber (Vorname, Nachname) VALUES (@Vorname, @Nachname) RETURNING BID;";
 
             // Aufruf der SaveDataReturnID Methode, um die ID des eingefügten Datensatzes zu erhalten
             int insertedID = await _db.SaveDataReturnID(sqlQuery, parameters);
