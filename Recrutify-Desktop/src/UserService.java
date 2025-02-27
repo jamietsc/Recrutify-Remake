@@ -173,7 +173,7 @@ public class UserService {
                 String sqlQuery = "SELECT BID, VORNAME, NACHNAME, ANTWORT_FREITEXT_1, Bewertung_1, ANTWORT_FREITEXT_2, Bewertung_2, ANTWORT_FREITEXT_3, Bewertung_3, ERGEBNIS FROM BEWERBER WHERE BID = ?";
                 try (PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery)) {
                     for (String bid : allBIDs) {
-                        preparedStatement.setString(1, bid);
+                        preparedStatement.setInt(1, Integer.parseInt(bid));
                         try (ResultSet rs = preparedStatement.executeQuery()) {
                             while (rs.next()) {
                                 Bewerber applicant = new Bewerber(

@@ -13,7 +13,7 @@
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminPageController">
    <children>
       <Label fx:id="noEntriesToThisTestLabel" layoutX="52.0" layoutY="220.0" styleClass="testauswahl-label" stylesheets="@style.css" text="Keine Ergebnisse zu dem Test." visible="false" />
-      <TableView fx:id="resultTable" layoutX="50.0" layoutY="250.0" prefHeight="400.0" prefWidth="1100.0" styleClass="tabellen-ansicht" stylesheets="@style.css" visible="false">
+      <TableView fx:id="resultTable" fixedCellSize="50.0" layoutX="50.0" layoutY="250.0" prefHeight="400.0" prefWidth="1100.0" styleClass="tabellen-ansicht" stylesheets="@style.css" visible="false">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="122.0" text="Vorname" />
           <TableColumn fx:id="lastNameColumn" prefWidth="122.0" text="Nachname" />

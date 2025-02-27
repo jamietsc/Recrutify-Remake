@@ -255,9 +255,9 @@
         helperModel.currentFreeTextAnswer = 1;
         foreach (var freeTextQuestion in freeTextQuestions)
         {
-            await freeTextService.InsertFreeTextAnswer(freeTextQuestion, bewerberModel.BID, helperModel.currentFreeTextAnswer);
-            if (helperModel.currentFreeTextAnswer < 3)
+            if (helperModel.currentFreeTextAnswer <= 3)
             {
+                await freeTextService.InsertFreeTextAnswer(freeTextQuestion, bewerberModel.BID, helperModel.currentFreeTextAnswer);
                 helperModel.currentFreeTextAnswer++;
             }
         }

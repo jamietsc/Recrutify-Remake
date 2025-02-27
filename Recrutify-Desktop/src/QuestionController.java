@@ -49,6 +49,11 @@ public class QuestionController {
     private Button backButton;
 
     /**
+     * speichert wie viele freitext fragen im Test ind da max drei Möglich
+     */
+    private int anzahlFreitextFragen = 0;
+
+    /**
      * fügt eine neue Multiple-Choice-Frage hinzu
      */
     @FXML
@@ -182,21 +187,33 @@ public class QuestionController {
      */
     @FXML
     private void freitextButtonAction() {
-        TextField textFieldQuestion = new TextField();
-        textFieldQuestion.setPromptText("Frage");
-        questionFieldsFreitext.add(textFieldQuestion);
+        if(anzahlFreitextFragen < 3){
+            TextField textFieldQuestion = new TextField();
+            textFieldQuestion.setPromptText("Frage");
+            questionFieldsFreitext.add(textFieldQuestion);
 
-        textFieldQuestion.getStyleClass().add("question-text-field");
+            textFieldQuestion.getStyleClass().add("question-text-field");
 
-        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
-        buttonDeleteQuestion.getStyleClass().add("delete-button");
-        buttonDeleteQuestion.setOnAction(e -> {
-            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion);
-            questionFieldsFreitext.remove(textFieldQuestion);
-        });
+            Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+            buttonDeleteQuestion.getStyleClass().add("delete-button");
+            buttonDeleteQuestion.setOnAction(e -> {
+                questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion);
+                questionFieldsFreitext.remove(textFieldQuestion);
+                anzahlFreitextFragen--;
+            });
 
-        questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
+            questionContainer.setSpacing(20);
+            questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
+            anzahlFreitextFragen++;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("älöörrdd");
+            alert.setHeaderText(null);
+            alert.setContentText("Der Test ist leer, bitte fügen Sie Fragen hinzu!");
+
+            alert.showAndWait();
+        }
+
     }
 
     /**

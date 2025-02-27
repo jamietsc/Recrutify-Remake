@@ -225,7 +225,9 @@ public class AccountSettingController {
 
         System.out.println("\n\nVorname: " + enteredSurname + "\nNachname: " + enteredLastName + "\nNutzername: " + enteredUsername + "\nPasswort: " + enteredNewPassword);
 
-        enteredNewPassword = UserService.hashPassword(enteredNewPassword);
+        if(!enteredNewPassword.isBlank()) {
+            enteredNewPassword = UserService.hashPassword(enteredNewPassword);
+        }
 
         if (!UserService.usernameExists(enteredUsername, user.getUserID())) {
             boolean accountGotUpdated = UserService.accountInformationUpdate(enteredSurname, enteredLastName, enteredUsername, enteredNewPassword, currentUserInformation.getUserID());

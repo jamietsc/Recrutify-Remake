@@ -75,6 +75,11 @@ public class EditController {
      * speichert die Mausposition der Y-Achse
      */
     private double yOffset = 0;
+
+    /**
+     * speichert wie viele freitext fragen im Test ind da max drei Möglich
+     */
+    private int anzahlFreitextFragen = 0;
     /**
      * speichert die TestID, welche zum bearbeiten ausgewählt wurde
      */
@@ -174,6 +179,7 @@ public class EditController {
                                 // Freitext
                                 if (rs.getInt("Fragentyp") == 2) {
                                     setFreitextQuestions(rs.getString("Fragentext"));
+                                    anzahlFreitextFragen++;
                                 }
 
                                 // Multiple Choice
@@ -238,6 +244,7 @@ public class EditController {
         buttonDeleteQuestion.setOnAction(e -> {
             questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion);
             questionFieldsFreitext.remove(textFieldQuestion);
+            anzahlFreitextFragen--;
         });
 
         questionContainer.setSpacing(20);
@@ -629,21 +636,32 @@ public class EditController {
      */
     @FXML
     private void freitextButtonAction() {
-        TextField textFieldQuestion = new TextField();
-        textFieldQuestion.setPromptText("Frage");
-        questionFieldsFreitext.add(textFieldQuestion);
+        if(anzahlFreitextFragen < 3){
+            TextField textFieldQuestion = new TextField();
+            textFieldQuestion.setPromptText("Frage");
+            questionFieldsFreitext.add(textFieldQuestion);
 
-        textFieldQuestion.getStyleClass().add("question-text-field");
+            textFieldQuestion.getStyleClass().add("question-text-field");
 
-        Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
-        buttonDeleteQuestion.getStyleClass().add("delete-button");
-        buttonDeleteQuestion.setOnAction(e -> {
-            questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion);
-            questionFieldsFreitext.remove(textFieldQuestion);
-        });
+            Button buttonDeleteQuestion = new Button("\uD83D\uDDD9");
+            buttonDeleteQuestion.getStyleClass().add("delete-button");
+            buttonDeleteQuestion.setOnAction(e -> {
+                questionContainer.getChildren().removeAll(buttonDeleteQuestion, textFieldQuestion);
+                questionFieldsFreitext.remove(textFieldQuestion);
+                anzahlFreitextFragen--;
+            });
 
-        questionContainer.setSpacing(20);
-        questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
+            questionContainer.setSpacing(20);
+            questionContainer.getChildren().addAll(buttonDeleteQuestion, textFieldQuestion);
+            anzahlFreitextFragen++;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("älöörrdd");
+            alert.setHeaderText(null);
+            alert.setContentText("Der Test ist leer, bitte fügen Sie Fragen hinzu!");
+
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -707,7 +725,15 @@ public class EditController {
         }
 
         if (time == 0) {
-            return false;
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Warnung");
+            alert.setHeaderText(null);
+            alert.setContentText("Sie haben keine Zeit eingestellt. Sind Sie sicher?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() != ButtonType.OK) {
+                return false;
+            }
         }
 
         try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
@@ -814,7 +840,7 @@ public class EditController {
 
                     String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, Antwort_1, Antwort_2, Antwort_3, Antwort_4, Richtig_1, Richtig_2, Richtig_3, Richtig_4, TID) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
                     try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,2 );
+                        ps.setInt(1,0 );
                         ps.setString(2, question);
                         ps.setString(3, answer1);
                         ps.setString(4, answer2);
@@ -847,7 +873,7 @@ public class EditController {
 
                     String sql = "INSERT INTO Fragen (Fragentyp, Fragentext, TID) VALUES (?,?,?)";
                     try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1,0 );
+                        ps.setInt(1,2 );
                         ps.setString(2, question);
                         ps.setInt(3, testID);
                         ps.executeUpdate();
