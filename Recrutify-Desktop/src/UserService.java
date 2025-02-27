@@ -1,15 +1,10 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import passwordSecurity.BCrypt;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 
 public class UserService {
@@ -70,8 +65,6 @@ public class UserService {
     public static void register(String username, String password, String company, String firstName, String lastName, Boolean is_admin) throws Exception {
             try (Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                 if (conn != null) {
-                    //System.out.println("Verbindung zur SQLite-Datenbank hergestellt!");
-                    // insert into
                     String sql = "INSERT INTO Unternehmen (Name, Benutzername, Passwort, Vorname, Nachname, is_admin) VALUES (?,?,?,?,?,?)";
                     try (PreparedStatement ps = conn.prepareStatement(sql)) {
                         ps.setString(1, company);
@@ -87,7 +80,7 @@ public class UserService {
                     }
                 }
             } catch (SQLException e) {
-                System.out.println("Verbindungsfehler: " + e.getMessage());
+                throw new SQLException(e);
             }
     }
 
@@ -180,11 +173,11 @@ public class UserService {
                                         rs.getString("BID"),
                                         rs.getString("VORNAME"),
                                         rs.getString("NACHNAME"),
-                                        rs.getString("ANTWORT_FREITEXT_1") != "" ? rs.getString("ANTWORT_FREITEXT_1") : "Keine Antwort" ,
+                                        !rs.getString("ANTWORT_FREITEXT_1").isBlank() ? rs.getString("ANTWORT_FREITEXT_1") : "Keine Antwort" ,
                                         rs.getInt("Bewertung_1"),
-                                        rs.getString("ANTWORT_FREITEXT_2") != "" ? rs.getString("ANTWORT_FREITEXT_2") : "Keine Antwort",
+                                        !rs.getString("ANTWORT_FREITEXT_2").isBlank() ? rs.getString("ANTWORT_FREITEXT_2") : "Keine Antwort",
                                         rs.getInt("Bewertung_2"),
-                                        rs.getString("ANTWORT_FREITEXT_3") != "" ? rs.getString("ANTWORT_FREITEXT_3") : "Keine Antwort",
+                                        !rs.getString("ANTWORT_FREITEXT_3").isBlank() ? rs.getString("ANTWORT_FREITEXT_3") : "Keine Antwort",
                                         rs.getInt("Bewertung_3"),
                                         rs.getInt("ERGEBNIS")
                                 );
