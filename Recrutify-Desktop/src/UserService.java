@@ -4,7 +4,7 @@ import passwordSecurity.BCrypt;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 
 
 public class UserService {
@@ -173,11 +173,11 @@ public class UserService {
                                         rs.getString("BID"),
                                         rs.getString("VORNAME"),
                                         rs.getString("NACHNAME"),
-                                        !rs.getString("ANTWORT_FREITEXT_1").isBlank() ? rs.getString("ANTWORT_FREITEXT_1") : "Keine Antwort" ,
+                                        !Objects.equals(rs.getString("ANTWORT_FREITEXT_1"), "") ? rs.getString("ANTWORT_FREITEXT_1") : "Keine Antwort" ,
                                         rs.getInt("Bewertung_1"),
-                                        !rs.getString("ANTWORT_FREITEXT_2").isBlank() ? rs.getString("ANTWORT_FREITEXT_2") : "Keine Antwort",
+                                        !Objects.equals(rs.getString("ANTWORT_FREITEXT_2"), "") ? rs.getString("ANTWORT_FREITEXT_2") : "Keine Antwort",
                                         rs.getInt("Bewertung_2"),
-                                        !rs.getString("ANTWORT_FREITEXT_3").isBlank() ? rs.getString("ANTWORT_FREITEXT_3") : "Keine Antwort",
+                                        !Objects.equals(rs.getString("ANTWORT_FREITEXT_3"), "") ? rs.getString("ANTWORT_FREITEXT_3") : "Keine Antwort",
                                         rs.getInt("Bewertung_3"),
                                         rs.getInt("ERGEBNIS")
                                 );

@@ -209,7 +209,7 @@ public class QuestionController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("älöörrdd");
             alert.setHeaderText(null);
-            alert.setContentText("Der Test ist leer, bitte fügen Sie Fragen hinzu!");
+            alert.setContentText("Pro Test dürfen maximal 3 Freitext Fragen hinzugefügt werden!");
 
             alert.showAndWait();
         }
