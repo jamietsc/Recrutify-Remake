@@ -334,10 +334,11 @@ public class QuestionController {
     private boolean saveQuestionsButtonAction() {
         System.out.println("TestID: " + testID);
         if (questionFieldsSingleChoice.isEmpty() && questionFieldsMultipleChoice.isEmpty() && questionFieldsFreitext.isEmpty() && questionFieldsWahrFalsch.isEmpty()) {
+            System.out.println("Fragen wurden nicht gespeichert!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("älöörrdd");
+            alert.setTitle("Fehler");
             alert.setHeaderText(null);
-            alert.setContentText("Der Test ist leer bitte fügen Sie Fragen hinzu!");
+            alert.setContentText("Der Test ist leer, bitte fügen Sie Fragen hinzu!");
             alert.showAndWait();
             return false;
         }
